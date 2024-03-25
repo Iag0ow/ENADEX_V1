@@ -1,0 +1,18 @@
+a{
+    text-decoration: none;
+}
+nav ul{
+    display: flex;
+    align-items: center;
+    list-style: none;
+    background-color: #0ea764;
+}
+
+nav ul li{
+    list-style: none;
+    padding: 10px;
+}
+
+nav ul li a{
+    color: white;
+}
