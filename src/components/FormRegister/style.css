@@ -1,0 +1,13 @@
+.largure-input {
+    width: 30rem;
+}
+
+.custom-width::placeholder {
+    text-align: center;
+    font-size: 15px;
+    color: #908383;
+  }
+
+.btn-success {
+    width: 15rem;
+}

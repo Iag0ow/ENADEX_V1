@@ -1,0 +1,11 @@
+* {
+    scroll-behavior: smooth;
+    margin: 0;
+    paddinh: 0;
+    box-sizing: border-box;
+}
+
+.btn-white {
+    color: white;
+}
+
