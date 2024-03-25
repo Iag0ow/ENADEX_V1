@@ -1,7 +1,7 @@
 import React from "react";
 import "./LoginPage.css";
-import Logo from "../../../../assets/Images/Header-Img/Logo.png";
-import BackGroundIMG from "../../../../assets/Images/LandingPage-Img/LandingPageWeb.png";
+import Logo from "../../assets/Images/Header-Img/Logo.png";
+import BackGroundIMG from "../../assets/Images/LandingPage-Img/LandingPageWeb.png";
 
 export default function LoginPage() {
   return (
