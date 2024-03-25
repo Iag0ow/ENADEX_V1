@@ -1,24 +1,24 @@
-import Logo from "../../../../assets/Images/Header-Img/Logo.png";
+import React from 'react';
 import "./LoginPage.css";
+import Logo from "../../../../assets/Images/Header-Img/Logo.png";
 import BackGroundIMG from "../../../../assets/Images/LandingPage-Img/LandingPageWeb.png";
 
 export default function LoginPage() {
   return (
     <>
-      <img className="BGimage" src={BackGroundIMG} alt="" />
-      <section className="containerLogin row">
-        <div className="divContainerLogo col-md-6">
-          <img className="LogoLeftLogin" src={Logo} alt="" />
-        </div>
-
-        <div className="rightSideLogin col-md-6">
-          <form className="inputsLogin" action="">
-            <input className="inputEmail" type="email" placeholder="Email" />
-            <input className="inputPassword" type="password" placeholder="Password" />
-          </form>
-          <div>
-              <a className="forgotPass" href="./recuperar">Esqueci a senha</a>
-              </div>
+      <img className="backgroundLogin" src={BackGroundIMG} alt="" />
+      <section>
+        <div className="containerLogin">
+          <div className="imageLeft">
+            <img className="logo" src={Logo} alt="" />
+          </div>
+          <div className="inputsRight">
+            <div className="inputsContainer">
+              <input type="text" placeholder="Email" />
+              <input type="password" placeholder="Password" />
+            </div>
+            <button className="buttonLogin">Login</button>
+          </div>
         </div>
       </section>
     </>

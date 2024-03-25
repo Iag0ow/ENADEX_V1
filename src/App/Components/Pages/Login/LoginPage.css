@@ -1,39 +1,77 @@
-.BGimage{
+.backgroundLogin {
     width: 100%;
     height: 100%;
-    object-fit: cover;
     position: absolute;
-    z-index: -999;
-}
-.rightSideLogin{
-    padding: 0%;
-    
-}
-.containerLogin{
+    top: 0;
+    left: 0;
+    z-index: -1;
+    background-image: url('../../../../assets/Images/LandingPage-Img/LandingPageWeb.png');
+  }
+  
+  .containerLogin {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    justify-content: center; /* Alinhar no centro horizontalmente */
+    align-items: center; /* Alinhar no centro verticalmente */
+    height: 100vh; /* Usando altura de viewport */
+  }
+  
+  .imageLeft,
+  .inputsRight {
+    flex: 1; /* Para permitir que ambas as divs cresçam e ocupem o espaço disponível */
+    max-width: 50%; /* Definir a largura máxima de cada div como 50% do container */
+  }
+  
+  .inputsRight {
     width: 100%;
-    padding: 0%;
-}
-.LogoLeftLogin{
-    border-radius: 20px;
-    height: 500px;
-}
-.divContainerLogo{
-    
-}
-.inputsLogin{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.inputEmail, .inputPassword{
-    border-radius: 5px;
-    width: 300px;
-    height: 30px;
+    max-width: 400px; /* Defina a largura máxima para evitar que o conteúdo se espalhe demais */
+    margin-top: 20px; /* Adicione margem superior para separar da div imageLeft */
+  }
+  
+  .inputsContainer {
+    margin-bottom: 20px; /* Adicione margem inferior para separar os inputs do botão */
+  }
+  
+  .inputsContainer input {
+    width: 100%;
+    padding: 10px;
     margin-bottom: 10px;
-    height: 44px;
-    width: 400px;
-}
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .buttonLogin {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .buttonLogin:hover {
+    background-color: #0056b3;
+  }
+  
+  .logo {
+    max-width: 100%;
+  }
+  
+  /* Media query para telas menores */
+  @media screen and (max-width: 768px) {
+    .containerLogin {
+      flex-direction: column; /* Mudar a direção para coluna */
+      height: auto; /* Remover a altura fixa */
+      padding: 20px; /* Adicionar algum espaço ao redor */
+    }
+  
+    .imageLeft,
+    .inputsRight {
+      max-width: 100%; /* Definir a largura máxima como 100% para que cada div ocupe a largura total */
+      margin-bottom: 20px; /* Adicionar espaço entre as divs */
+    }
+  }
+  
