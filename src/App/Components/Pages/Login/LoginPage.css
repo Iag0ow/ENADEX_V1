@@ -13,12 +13,13 @@
     justify-content: center; /* Alinhar no centro horizontalmente */
     align-items: center; /* Alinhar no centro verticalmente */
     height: 100vh; /* Usando altura de viewport */
+
   }
   
   .imageLeft,
   .inputsRight {
     flex: 1; /* Para permitir que ambas as divs cresçam e ocupem o espaço disponível */
-    max-width: 50%; /* Definir a largura máxima de cada div como 50% do container */
+    max-width: 30%; /* Definir a largura máxima de cada div como 50% do container */
   }
   
   .inputsRight {
@@ -43,7 +44,7 @@
   .buttonLogin {
     width: 100%;
     padding: 10px;
-    background-color: #007bff;
+    background-color: #1d9b58;
     border: none;
     border-radius: 5px;
     color: #fff;
@@ -53,13 +54,23 @@
   }
   
   .buttonLogin:hover {
-    background-color: #0056b3;
+    background-color: #0FA958;
+    transform:  scale(1.1);
+    transition: transform 0.5s ease;
   }
   
   .logo {
+    border-radius: 20px;
+    height:  100%;
     max-width: 100%;
   }
-  
+  .forgotPasswordLink{
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    display: block;
+    text-align: right;
+  }
   /* Media query para telas menores */
   @media screen and (max-width: 768px) {
     .containerLogin {

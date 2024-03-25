@@ -15,7 +15,10 @@ export default function LoginPage() {
           <div className="inputsRight">
             <div className="inputsContainer">
               <input type="text" placeholder="Email" />
-              <input type="password" placeholder="Password" />
+              <div className="passwordInput">
+                <input type="password" placeholder="Senha" />
+                <a href="/esqueci-minha-senha" className="forgotPasswordLink">Esqueci minha senha</a>
+              </div>
             </div>
             <button className="buttonLogin">Login</button>
           </div>
