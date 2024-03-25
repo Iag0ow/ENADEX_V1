@@ -1,3 +1,7 @@
+
+import "./App.css";
+import Header from "./components/Header/header";
+import Login from "./pages/Login/LoginPage";
 import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
@@ -17,14 +21,15 @@ function App() {
   }, []);
 
   return (
-    <>
+    <>      
+      <Header />
       <BrowserRouter>
        <Routes>
-        <Route path="/login" element={<div>Home</div>} />
+        <Route path="/login" element={<Login />} />
        </Routes>
       </BrowserRouter>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
