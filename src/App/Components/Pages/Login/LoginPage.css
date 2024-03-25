@@ -1,0 +1,39 @@
+.BGimage{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    z-index: -999;
+}
+.rightSideLogin{
+    padding: 0%;
+    
+}
+.containerLogin{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    padding: 0%;
+}
+.LogoLeftLogin{
+    border-radius: 20px;
+    height: 500px;
+}
+.divContainerLogo{
+    
+}
+.inputsLogin{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.inputEmail, .inputPassword{
+    border-radius: 5px;
+    width: 300px;
+    height: 30px;
+    margin-bottom: 10px;
+    height: 44px;
+    width: 400px;
+}
