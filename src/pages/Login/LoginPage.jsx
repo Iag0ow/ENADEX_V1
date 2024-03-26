@@ -6,7 +6,7 @@ import BackGroundIMG from "../../assets/Images/LandingPage-Img/LandingPageWeb.pn
 export default function LoginPage() {
   return (
     <>
-      <img className="backgroundLogin" src={BackGroundIMG} alt="" />
+      {/* <img className="backgroundLogin" src={BackGroundIMG} alt="" /> */}
       <section>
         <div className="containerLogin">
           <div className="imageLeft">
