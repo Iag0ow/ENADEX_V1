@@ -11,3 +11,14 @@
 .btn-success {
     width: 15rem;
 }
+
+.form-control {
+    appearance: menulist;
+}
+
+select.form-control {
+    color: #908383; /* Largura personalizada desejada */
+    font-size: 15px;
+    width: 30rem;
+    height: 3rem;
+}  
