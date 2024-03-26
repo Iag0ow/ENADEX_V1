@@ -1,6 +1,8 @@
+
+import "./App.css";
+import Header from "./components/Header/header";
+import Login from "./pages/Login/LoginPage";
 import { useState, useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Faq from './pages/faq/Faq'
@@ -19,15 +21,15 @@ function App() {
   }, []);
 
   return (
-    <>
-      <NavBar/>
+    <>      
+      <Header />
       <BrowserRouter>
        <Routes>
-        <Route path="/" element={<Faq/>} />
+        <Route path="/login" element={<div>Home</div>} />
        </Routes>
       </BrowserRouter>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
