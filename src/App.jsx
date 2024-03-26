@@ -1,10 +1,11 @@
 
 import "./App.css";
-import Header from "./components/Header/header";
 import Login from "./pages/Login/LoginPage";
 import { useState, useEffect } from 'react'
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Faq from './pages/faq/Faq'
+import NavBar from './components/NavBar/NavBar'
 
 function App() {
   const user = localStorage.getItem("token");
@@ -19,11 +20,11 @@ function App() {
   }, []);
 
   return (
-    <>      
-      <Header />
+    <> 
+      <NavBar/> 
       <BrowserRouter>
        <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login/>} />
        </Routes>
       </BrowserRouter>
     </>
