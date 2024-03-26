@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Faq from './pages/faq/Faq'
+import Home from "./pages/Home/Home";
 
 function App() {
   const user = localStorage.getItem("token");
@@ -22,7 +23,7 @@ function App() {
     <>
       <BrowserRouter>
        <Routes>
-       <Route path="/" element={<Login/>} />
+       <Route path="/" element={<Home/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/faq" element={<Faq/>} />
        </Routes>

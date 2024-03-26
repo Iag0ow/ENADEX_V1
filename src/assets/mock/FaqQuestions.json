@@ -1,0 +1,37 @@
+[
+    {
+        "id": 1,
+        "question": "O que acontece se eu não fizer a prova do Enade?",
+        "answer": "Você não poderá se formar até a regularização da situação, que só ocorre no ano seguinte à realização do exame."
+    },
+    {
+        "id": 2,
+        "question": "Tem redação na prova do Enade?",
+        "answer": "Quem precisa prestar o ENADE pode se preparar para uma prova de Redação, com o tempo máximo de 1 hora."
+    },
+    {
+        "id": 3,
+        "question": "Qual é a nota mínima e a máxima do Enade?",
+        "answer": "A performance varia de 1 a 5. As que atingem as notas de 1 a 2 são avaliadas como insatisfatórias. A nota 3 propicia atingir um conceito satisfatório. As faculdades e universidades com notas 4 e 5 são consideradas pelo MEC com alto nível de qualidade."
+    },
+    {
+        "id": 4,
+        "question": "Quem não fez o Enade pode colar grau?",
+        "answer": "O estudante, no entanto, que não realizou o Enade por comprovação de doença no dia de realização da prova, por estudar fora do Brasil ou por viagem internacional, poderá colar grau."
+    },
+    {
+        "id": 5,
+        "question": "Quantas questões tem a prova do Enade?",
+        "answer": "A prova do Enade tem duração de quatro horas e é composta por 10 questões de Formação Geral e 30 questões de Componente Específico de cada área de avaliação."
+    },
+    {
+        "id": 6,
+        "question": "Pode usar calculadora na prova do Enade?",
+        "answer": "Não será admitida qualquer forma de consulta ou comunicação entre candidatos nem utilização de livros, manuais, impressos ou anotações, máquinas calculadoras, relógios (analógicos ou digitais), réguas de cálculo, agendas eletrônicas ou similares, telefone celular, smartphones, tablets, ..."
+    },
+    {
+        "id": 7,
+        "question": "Pode levar lanche para o Enade?",
+        "answer": "É permitido levar água e lanche, desde que em embalagens originais e fechadas."
+    }
+]
