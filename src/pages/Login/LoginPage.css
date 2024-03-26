@@ -1,12 +1,9 @@
-.backgroundLogin {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  background-image: url("../../../../assets/Images/LandingPage-Img/LandingPageWeb.png");
+body{
+  background: url(../../assets/Images/LandingPage-Img/LandingPageWeb.png)no-repeat center center fixed;  
+  background-size: cover;
+  background-repeat: no-repeat;
 }
+
 
 .containerLogin {
   display: flex;
