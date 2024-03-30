@@ -9,12 +9,39 @@
     width: 90%;
     border-radius: 10px !important; 
 }
+.hr-home{
+    color:white;
+}
+.container-fluid {
+    position: relative;
+  }
+.container-fluid::after {
+content: "";
+display: block;
+position: absolute;
+bottom: 0;
+width: 90%;
+border-bottom: 5px solid white;
+left: 5%;
+}
 @media (max-width: 992px) {
     .logoHomeDiv {
         padding-left: 3rem !important;
         padding-top: 1rem !important;
         width: 100%;
     }
+
+    .container-fluid::after {
+        content: "";
+        width: 0%;
+    }
   }
+
+
+  @media (min-width: 1900px) {
+    .container-fluid::after {
+        bottom: -5% !important;
+  }
+}
   
   
