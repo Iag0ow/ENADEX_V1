@@ -1,6 +1,7 @@
 import React from "react";
 import "./LoginPage.css";
 import Logo from "../../assets/Images/Header-Img/Logo.png";
+import { Link } from "react-router-dom";
 
 export default function LoginPage() {
   return (
@@ -15,9 +16,11 @@ export default function LoginPage() {
               <input type="text" placeholder="Email" />
               <div className="passwordInput">
                 <input type="password" placeholder="Senha" />
-                <a href="/esqueci-minha-senha" className="forgotPasswordLink">
+                <div className="d-flex justify-content-end">
+                <Link to={"/esqueci-minha-senha"} className="forgotPasswordLink">
                   Esqueci minha senha
-                </a>
+                </Link>
+                </div>
               </div>
             </div>
             <button className="buttonLogin">Login</button>
