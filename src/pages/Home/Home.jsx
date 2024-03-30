@@ -7,11 +7,13 @@ const Home = () => {
     <>
       <NavBar search={false} />
       <div className="container-fluid mt-5">
-        <div className="row">
-        <h4 className="col-md-8 ps-5 pt-3 text-white">
-              Bem-vindo(a) à Enadex - Sua Plataforma Online de Preparação para o
-              ENADE!
-            </h4>
+        <div
+          className="row"
+        >
+          <h4 className="col-md-8 ps-5 pt-3 text-white">
+            Bem-vindo(a) à Enadex - Sua Plataforma Online de Preparação para o
+            ENADE!
+          </h4>
           <div className="col-md-9 mb-5 ps-5 pt-3">
             <p className="text-home pt-4">
               É com grande entusiasmo que lhe damos as boas-vindas à Enadex!
@@ -37,11 +39,7 @@ const Home = () => {
             </p>
           </div>
           <div className="col-md-12 col-lg-3 logoHomeDiv">
-            <img
-              className="logoHome"
-              src={Logo}
-              alt="Logo"
-            />
+            <img className="logoHome" src={Logo} alt="Logo" />
           </div>
         </div>
       </div>
