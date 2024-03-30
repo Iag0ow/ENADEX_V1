@@ -1,0 +1,20 @@
+.text-home{
+    color: white;
+    font-weight: 600;
+    font-size: calc(0.7rem + 0.4vw);
+    width: 90%;
+}
+.logoHome{
+    cursor: pointer;
+    width: 90%;
+    border-radius: 10px !important; 
+}
+@media (max-width: 992px) {
+    .logoHomeDiv {
+        padding-left: 3rem !important;
+        padding-top: 1rem !important;
+        width: 100%;
+    }
+  }
+  
+  

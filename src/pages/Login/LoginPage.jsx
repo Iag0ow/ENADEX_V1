@@ -1,12 +1,10 @@
 import React from "react";
 import "./LoginPage.css";
 import Logo from "../../assets/Images/Header-Img/Logo.png";
-import BackGroundIMG from "../../assets/Images/LandingPage-Img/LandingPageWeb.png";
 
 export default function LoginPage() {
   return (
     <>
-      {/* <img className="backgroundLogin" src={BackGroundIMG} alt="" /> */}
       <section>
         <div className="containerLogin">
           <div className="imageLeft">
