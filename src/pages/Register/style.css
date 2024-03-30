@@ -8,3 +8,7 @@
 .btn-white {
     color: white;
 }
+
+.error-message {
+    color: #dc3545; /
+  }
