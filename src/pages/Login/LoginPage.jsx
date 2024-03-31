@@ -17,13 +17,21 @@ export default function LoginPage() {
               <div className="passwordInput">
                 <input type="password" placeholder="Senha" />
                 <div className="d-flex justify-content-end">
-                <Link to={"/esqueci-minha-senha"} className="forgotPasswordLink">
-                  Esqueci minha senha
-                </Link>
+                  <Link
+                    to={"/esqueci-minha-senha"}
+                    className="forgotPasswordLink"
+                  >
+                    Esqueci minha senha
+                  </Link>
                 </div>
               </div>
             </div>
             <button className="buttonLogin">Login</button>
+            <div className="d-flex justify-content-center">
+              <Link to={"/register"} className="createAccount">
+                Cadastrar-se
+              </Link>
+            </div>
           </div>
         </div>
       </section>
