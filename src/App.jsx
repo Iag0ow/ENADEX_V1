@@ -3,7 +3,7 @@ import "./App.css";
 import Login from "./pages/Login/LoginPage";
 import { useState, useEffect } from 'react'
 import './App.css'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
 import Faq from './pages/faq/Faq'
 import Home from "./pages/Home/Home";
 import { Register } from "./pages/Register";
@@ -11,12 +11,12 @@ import { Register } from "./pages/Register";
 function App() {
   const user = localStorage.getItem("token");
   const [auth, setAuth] = useState(false);
-  const handleUpdateAuth = () => {
-    setAuth(true);
+  const handleUpdateAuth = (value) => {
+    setAuth(value);
   };
   useEffect(() => {
     if (user) {
-      setAuth();
+      setAuth(true);
     }
   }, []);
 
@@ -24,10 +24,10 @@ function App() {
     <>
       <BrowserRouter>
        <Routes>
-       <Route path="/" element={<Home/>} />
-        <Route path="/login" element={<Login/>} />
-        <Route path="/faq" element={<Faq/>} />
-        <Route path="/register" element={<Register/>} />
+        <Route path="/login" element={!auth?(<Login onUpdateAuth={handleUpdateAuth}/>) : (<Navigate to="/"/>)} />
+        <Route path="/" element={auth?(<Home/>) : (<Navigate to="/login"/>)} />
+        <Route path="/faq" element={auth?(<Faq/>) : (<Navigate to="/login"/>) } />
+        <Route path="/register" element={!auth?(<Register/>) : (<Navigate to="/"/>)} />
        </Routes>
       </BrowserRouter>
     </>

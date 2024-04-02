@@ -1,24 +1,19 @@
-const API = process.env.BASE_URL;
+const API = "https://enadex-api-v2.vercel.app";
 
 export const login = async (loginForm) => {
-    const bodyForm = JSON.stringify(loginForm);
-  
-    const config = {
-      method: "POST",
-      body: bodyForm,
-    };
-  
-    const auth = await customFetchNoAuth(`${API}/session/login`, config);
-  
-    if (auth?.error) {
-      return {
-        auth: false,
-        message: auth.error.message,
-      };
-    } else {
-      localStorage.setItem("user_id", auth?.id);
-      localStorage.setItem("token", auth?.access_token);
-  
-      return true;
-    }
+  const bodyForm = JSON.stringify(loginForm);
+
+  const config = {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: bodyForm,
   };
+
+  const response = await fetch(`${API}/session`, config);
+
+  const auth = await response.json();
+
+  return {...auth, status: response.status};
+};
