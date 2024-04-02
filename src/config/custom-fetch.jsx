@@ -35,7 +35,8 @@ export const customFetchNoAuth = async (url, options) => {
     }
   };
 
-export const redirectToLogin = () => {
-    logOut();
-    window.location.href = "/login";
-}
+  export const logOut = () => {
+    localStorage.removeItem("token");
+    window.location.reload();
+    // return true;
+  };
