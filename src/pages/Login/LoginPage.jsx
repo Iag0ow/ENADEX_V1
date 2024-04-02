@@ -21,7 +21,7 @@ export default function LoginPage({ onUpdateAuth }) {
       localStorage.setItem("token", data.access_token);
       onUpdateAuth( true );
     } else {
-      setError(data.status === 400);
+      setError(data.status === 401 ? "Credenciais inválidas" : data.message);
       setLoad(false);
     }
   };
