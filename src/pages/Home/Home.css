@@ -21,9 +21,9 @@ content: "";
 display: block;
 position: absolute;
 bottom: 0;
-width: 100%;
+width: 95%;
 border-bottom: 5px solid white;
-left: 0%;
+left: 2%;
 }
 @media (max-width: 992px) {
     .logoHomeDiv {
