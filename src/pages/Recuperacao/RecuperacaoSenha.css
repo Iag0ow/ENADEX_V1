@@ -41,6 +41,13 @@ body{
     cursor: pointer;
     font-family: 'Besley', sans-serif;
     transition: background-color 0.3s ease;
+    transition: transform 0.5s ease;
+  }
+
+  .buttonRecuperar:hover{
+    background-color: #0fa958;
+    transform: scale(1.1);
+    transition: transform 0.5s ease;
   }
 
   .linkVoltar {
