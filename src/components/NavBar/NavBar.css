@@ -18,14 +18,20 @@ nav ul{
     margin-right: 71px;
 }
 
-nav ul li a{
+.navLinks{
     color: white;
     font-weight: bold;
     font-family: sans-serif;
 }
-
+.navLinks:hover{
+    color: rgb(230, 224, 224);
+}
+.active{
+    color: #4b4b4b;
+}
 .logoNav{
     margin-right: 25px;
+    cursor: pointer;
 }
 .input-group{
     opacity: 76%;
