@@ -31,14 +31,15 @@ body{
   }
 
   .buttonRecuperar {
-    width: 100%;
+    width: 65%;
     padding: 10px;
     background-color: #1d9b58;
     border: none;
     border-radius: 5px;
     color: #fff;
-    font-size: 16px;
+    font-size: 20px;
     cursor: pointer;
+    font-family: 'Besley', sans-serif;
     transition: background-color 0.3s ease;
   }
 
