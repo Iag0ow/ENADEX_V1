@@ -1,0 +1,61 @@
+body{
+    background: url(../../assets/Images/LandingPage-Img/LandingPageWeb.png)no-repeat center center fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .containerRecuperacao {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .itemsRecuperacao {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* align-content: center; */
+    min-width: 20%;
+    margin-bottom: 10px;
+  }
+
+  .itemsRecuperacao input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .buttonRecuperar {
+    width: 65%;
+    padding: 10px;
+    background-color: #1d9b58;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    font-family: 'Besley', sans-serif;
+    transition: background-color 0.3s ease;
+  }
+
+  .linkVoltar {
+    color: white;
+    text-decoration: underline;
+  }
+
+  .itemsRecuperacao input, .buttonRecuperar, .linkVoltar {
+    margin-bottom: 20px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .containerRecuperacao {
+      flex-direction: column;
+      height: auto;
+      padding: 20px;
+    }
+  }

@@ -6,6 +6,7 @@ import './App.css'
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
 import Faq from './pages/faq/Faq'
 import Home from "./pages/Home/Home";
+import RecuperacaoSenha from "./pages/Recuperacao/RecuperacaoSenha";
 import { Register } from "./pages/Register";
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path="/" element={auth?(<Home/>) : (<Navigate to="/login"/>)} />
         <Route path="/faq" element={auth?(<Faq/>) : (<Navigate to="/login"/>) } />
         <Route path="/register" element={!auth?(<Register/>) : (<Navigate to="/"/>)} />
+        <Route path="/esqueci-minha-senha" element={!auth?(<RecuperacaoSenha/>) : (<Navigate to="/"/>)} />
        </Routes>
       </BrowserRouter>
     </>
