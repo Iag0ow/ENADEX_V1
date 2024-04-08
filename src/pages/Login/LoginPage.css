@@ -1,21 +1,24 @@
-body{
-  background: url(../../assets/Images/LandingPage-Img/LandingPageWeb.png)no-repeat center center fixed;  
+/* Estilos para o body */
+body {
+  background: url(../../assets/Images/LoginPage-Img/BGloginPage.png) no-repeat center center fixed;
   background-size: cover;
-  background-repeat: no-repeat;
 }
 
-
+/* Estilos para o container de login */
 .containerLogin {
   display: flex;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
-  height: 100vh;
+  /* height: 100vh; */
 }
 
+/* Estilos para os elementos da esquerda e direita */
 .imageLeft,
 .inputsRight {
   flex: 1;
   max-width: 30%;
+  margin: 25px;
 }
 
 .inputsRight {
@@ -24,6 +27,7 @@ body{
   margin-top: 20px;
 }
 
+/* Estilos para os contêineres de inputs */
 .inputsContainer {
   margin-bottom: 20px;
 }
@@ -37,9 +41,15 @@ body{
   font-size: 16px;
   outline: none;
 }
-
+.formInputs{
+  display: block;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+/* Estilos para o botão de login */
 .buttonLogin {
-  width: 100%;
+  width: 60%;
   padding: 10px;
   background-color: #1d9b58;
   border: none;
@@ -56,30 +66,29 @@ body{
   transition: transform 0.5s ease;
 }
 
-.logo {
-  cursor: pointer;
-  border-radius: 20px;
-  height: 100%;
-  max-width: 100%;
-}
+/* Estilos para o link "Esqueceu sua senha?" */
 .forgotPasswordLink {
   text-decoration: none;
   color: white;
   font-size: 16px;
   text-align: right;
 }
-.createAccount{
+
+/* Estilos para o link "Criar conta" */
+.createAccount {
   text-decoration: none;
   color: white;
   font-size: 16px;
   text-align: center;
 }
 
+/* Media query para telas menores que 768px */
 @media screen and (max-width: 768px) {
   .containerLogin {
-    flex-direction: column;
+    flex-direction: column; /* Mudando a direção para um em cima do outro */
     height: auto;
     padding: 20px;
+    align-items: center; /* Centralizando na horizontal */
   }
 
   .imageLeft,
