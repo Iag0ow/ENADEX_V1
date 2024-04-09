@@ -3,6 +3,7 @@ import "./LoginPage.css";
 import Logo from "../../assets/Images/LoginPage-Img/LogoEnadexLogin.png";
 import { Link } from "react-router-dom";
 import { login } from "../../config/config";
+import BGlogin from "../../assets/Images/LoginPage-Img/BGloginPage.png";
 export default function LoginPage({ onUpdateAuth }) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
@@ -19,15 +20,15 @@ export default function LoginPage({ onUpdateAuth }) {
     const data = await login(loginForm);
     if (data.status === 201) {
       localStorage.setItem("token", data.access_token);
-      onUpdateAuth( true );
+      onUpdateAuth(true);
     } else {
       setError(data.status === 401 ? "Credenciais inválidas" : data.message);
       setLoad(false);
     }
   };
   return (
-    <>
-      <section>
+    <div className="pageWrapper">
+      <section className="loginSection">
         <div className="containerLogin">
           <div className="imageLeft">
             <img href="/" className="logo" src={Logo} alt="" />
@@ -78,6 +79,6 @@ export default function LoginPage({ onUpdateAuth }) {
           </div>
         </div>
       </section>
-    </>
+      </div>
   );
 }
