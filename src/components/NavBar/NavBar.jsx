@@ -23,7 +23,7 @@ const NavBar = ({search}) => {
           <div className='links'>
             <NavLink className="navLinks" exact to="/">Home</NavLink>
             <NavLink className="navLinks" to="/faq">FAQ</NavLink>
-            <NavLink className="navLinks disabled" to="/rank">Rank</NavLink>
+            <NavLink className="navLinks disabled" to="/rank">Ranking</NavLink>
             <Link className="navLinks" onClick={logOut} >Sair</Link>
           </div>
         </ul>
