@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./LoginPage.css";
-import Logo from "../../assets/Images/Header-Img/Logo.png";
+import Logo from "../../assets/Images/LoginPage-Img/LogoEnadexLogin.png";
 import { Link } from "react-router-dom";
 import { login } from "../../config/config";
 export default function LoginPage({ onUpdateAuth }) {
@@ -33,7 +33,7 @@ export default function LoginPage({ onUpdateAuth }) {
             <img href="/" className="logo" src={Logo} alt="" />
           </div>
           <div className="inputsRight">
-            <form onSubmit={handleSubmit}>
+            <form className="formInputs" onSubmit={handleSubmit}>
               <div className="inputsContainer">
                 <h5 className={`text-danger text-center`}>
                   {error ? error : ""}
