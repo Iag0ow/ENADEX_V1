@@ -8,6 +8,8 @@ import Faq from './pages/faq/Faq'
 import Home from "./pages/Home/Home";
 import RecuperacaoSenha from "./pages/Recuperacao/RecuperacaoSenha";
 import { Register } from "./pages/Register";
+import Itens from "./pages/Itens";
+import Courses from "./pages/Courses";
 
 function App() {
   const user = localStorage.getItem("token");
@@ -27,9 +29,11 @@ function App() {
        <Routes>
         <Route path="/login" element={!auth?(<Login onUpdateAuth={handleUpdateAuth}/>) : (<Navigate to="/"/>)} />
         <Route path="/" element={auth?(<Home/>) : (<Navigate to="/login"/>)} />
-        <Route path="/faq" element={auth?(<Faq/>) : (<Navigate to="/login"/>) } />
         <Route path="/register" element={!auth?(<Register/>) : (<Navigate to="/"/>)} />
         <Route path="/esqueci-minha-senha" element={!auth?(<RecuperacaoSenha/>) : (<Navigate to="/"/>)} />
+        <Route path="/faq" element={<Faq/>}/>
+        <Route path="/itens-obrigatorios" element={<Itens />} />
+        <Route path="/cursos" element={<Courses />} />
        </Routes>
       </BrowserRouter>
     </>
