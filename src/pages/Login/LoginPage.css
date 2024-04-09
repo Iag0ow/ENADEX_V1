@@ -1,19 +1,17 @@
-/* Estilos para o body */
-body {
-  background: url(../../assets/Images/LoginPage-Img/BGloginPage.png) no-repeat center center fixed;
+.pageWrapper {
+  background: url('../../assets/Images/LoginPage-Img/BGloginPage.png') no-repeat center;
   background-size: cover;
+  background-attachment: fixed;
+  min-height: 100vh;
 }
 
-/* Estilos para o container de login */
 .containerLogin {
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  /* height: 100vh; */
 }
 
-/* Estilos para os elementos da esquerda e direita */
 .imageLeft,
 .inputsRight {
   flex: 1;
@@ -27,7 +25,6 @@ body {
   margin-top: 20px;
 }
 
-/* Estilos para os contêineres de inputs */
 .inputsContainer {
   margin-bottom: 20px;
 }
@@ -41,13 +38,14 @@ body {
   font-size: 16px;
   outline: none;
 }
-.formInputs{
+
+.formInputs {
   display: block;
   align-items: center;
   justify-content: center;
   text-align: center;
 }
-/* Estilos para o botão de login */
+
 .buttonLogin {
   width: 60%;
   padding: 10px;
@@ -58,7 +56,6 @@ body {
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  transition: transform 0.5s ease;
 }
 
 .buttonLogin:hover {
@@ -67,7 +64,6 @@ body {
   transition: transform 0.5s ease;
 }
 
-/* Estilos para o link "Esqueceu sua senha?" */
 .forgotPasswordLink {
   text-decoration: none;
   color: white;
@@ -75,7 +71,6 @@ body {
   text-align: right;
 }
 
-/* Estilos para o link "Criar conta" */
 .createAccount {
   text-decoration: none;
   color: white;
@@ -83,18 +78,21 @@ body {
   text-align: center;
 }
 
-/* Media query para telas menores que 768px */
 @media screen and (max-width: 768px) {
   .containerLogin {
-    flex-direction: column; /* Mudando a direção para um em cima do outro */
+    flex-direction: column;
     height: auto;
     padding: 20px;
-    align-items: center; /* Centralizando na horizontal */
+    align-items: center;
   }
 
   .imageLeft,
   .inputsRight {
     max-width: 100%;
     margin-bottom: 20px;
+  }
+
+  .logo {
+    width: 290px;
   }
 }
