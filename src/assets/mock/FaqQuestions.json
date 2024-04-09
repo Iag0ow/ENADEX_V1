@@ -1,37 +1,72 @@
 [
     {
         "id": 1,
-        "question": "O que acontece se eu não fizer a prova do Enade?",
-        "answer": "Você não poderá se formar até a regularização da situação, que só ocorre no ano seguinte à realização do exame."
+        "question": "O que é ENADE?",
+        "answer": "O Enade é uma prova do Governo Federal que avalia o desempenho dos estudantes de cursos de graduação (bacharelados, licenciaturas e superiores de tecnologia)."
     },
     {
         "id": 2,
-        "question": "Tem redação na prova do Enade?",
-        "answer": "Quem precisa prestar o ENADE pode se preparar para uma prova de Redação, com o tempo máximo de 1 hora."
+        "question": "Objetivos do ENADE",
+        "answer": "Avaliar o rendimento dos concluintes dos cursos de graduação em relação aos conteúdos programáticos previstos nos respectivos componentes curriculares, com objetivo de conhecer a qualidade dos cursos e instituições de educação superior brasileiras. Os resultados do Enade, aliados às respostas do Questionário do Estudante, são insumos para o cálculo dos Indicadores de Qualidade da Educação Superior, que podem receber a nota de 1 a 5."
     },
     {
         "id": 3,
-        "question": "Qual é a nota mínima e a máxima do Enade?",
-        "answer": "A performance varia de 1 a 5. As que atingem as notas de 1 a 2 são avaliadas como insatisfatórias. A nota 3 propicia atingir um conceito satisfatório. As faculdades e universidades com notas 4 e 5 são consideradas pelo MEC com alto nível de qualidade."
+        "question": "Quem precisa fazer ENADE?",
+        "answer": "O ciclo avaliativo do ENADE define as áreas de conhecimento que terão os cursos avaliados a cada ano, consulte o portal ENADE para verificar se o seu curso será avaliado no ano vigente. O exame é aplicado aos estudantes ingressantes e concluintes habilitados de cursos de bacharelado e superiores de tecnologia."
     },
     {
         "id": 4,
-        "question": "Quem não fez o Enade pode colar grau?",
-        "answer": "O estudante, no entanto, que não realizou o Enade por comprovação de doença no dia de realização da prova, por estudar fora do Brasil ou por viagem internacional, poderá colar grau."
+        "question": "Como eu sei se estou habilitado?",
+        "answer": "a) ingressantes: aqueles que tenham iniciado o respectivo curso no ano vigente, estejam devidamente matriculados e tenham de 0 a 25% da carga horária mínima do currículo do curso integralizada até o último dia do período de retificação de inscrições do Enade; b) concluintes de cursos de bacharelado: aqueles que tenham integralizado 80% ou mais da carga horária mínima do currículo do curso definido pela IES e não tenham colado grau até o último dia do período de retificação de inscrições do Enade; ou aqueles com previsão de integralização de 100% da carga horária do curso até julho do ano vigente; c) concluintes de cursos superiores de tecnologia: aqueles que tenham integralizado 75% ou mais da carga horária mínima do currículo do curso definido pela IES e não tenham colado grau até o último dia do período de retificação de inscrições do Enade; ou aqueles com previsão de integralização de 100% da carga horária do curso até dezembro do ano vigente."
     },
     {
         "id": 5,
-        "question": "Quantas questões tem a prova do Enade?",
-        "answer": "A prova do Enade tem duração de quatro horas e é composta por 10 questões de Formação Geral e 30 questões de Componente Específico de cada área de avaliação."
+        "question": "Quais os instrumentos básicos do Enade?",
+        "answer": "Prova (obrigatória);Questionário do Estudante (obrigatório): destinado a levantar informações que permitam caracterizar o perfil dos estudantes e o contexto de seus processos formativos, relevantes para a compreensão dos resultados dos estudantes no Enade;Questionário de Percepção de Prova: destinado a levantar informações que permitam aferir a percepção dos estudantes em relação à prova, auxiliando, também, na compreensão dos resultados dos estudantes no Enade;Questionário do Coordenador de Curso: destinado a levantar informações que permitam caracterizar o perfil do coordenador de curso e o contexto dos processos formativos, auxiliando, também, na compreensão dos resultados dos estudantes no Enade."
     },
     {
         "id": 6,
-        "question": "Pode usar calculadora na prova do Enade?",
-        "answer": "Não será admitida qualquer forma de consulta ou comunicação entre candidatos nem utilização de livros, manuais, impressos ou anotações, máquinas calculadoras, relógios (analógicos ou digitais), réguas de cálculo, agendas eletrônicas ou similares, telefone celular, smartphones, tablets, ..."
+        "question": "O que é o Questionário do Estudante?",
+        "answer": "O Questionário do Estudante (QE) é destinado a levantar informações que permitam caracterizar o perfil dos estudantes e o contexto de seus processos formativos, relevantes para a compreensão dos resultados dos estudantes no ENADE e para subsidiar os processos de avaliação de cursos de graduação e de IES."
     },
     {
         "id": 7,
-        "question": "Pode levar lanche para o Enade?",
-        "answer": "É permitido levar água e lanche, desde que em embalagens originais e fechadas."
+        "question": "O que acontece se não responder ao Questionário do Estudante?",
+        "answer": "Quem não responder, não consegue consultar seu local de prova, fica em situação irregular junto ao Inep e não poderá colar grau até a finalização do processo."
+    },
+    {
+        "id": 8,
+        "question": "O que acontece se o estudante tiver algum problema que o impossibilite de comparecer e realizar a prova?",
+        "answer":"Caso o estudante possua algum impedimento de ordem pessoal ou profissional, no dia da prova, ele deve atentar para o período de solicitação de dispensa da prova (xx/xx/xxxx a xx/xx/xxxx) realizando o pedido e anexando os documentos comprobatórios dentro no sistema ENADE."
+    },
+    {
+        "id": 9,
+        "question": "Como me inscrevo?",
+        "answer":"Parte do cadastro no portal ENADE é feito pela própria instituição de ensino. É necessário complementar seu cadastro no portal e responder o questionário do aluno."
+    },
+    {
+        "id": 10,
+        "question": "Sobre a prova?",
+        "answer":"Será realizada em um único domingo, e a data, horário e local de realização ficará disponível no Cartão de Confirmação de Inscrição, com tempo de prova de até 4h."
+    },
+    {
+        "id": 11,
+        "question": "Como é a prova?",
+        "answer": "Esta avaliação não tem nota mínima e não reprova ninguém, mas lembramos que quanto melhor for seu desempenho, melhor será avaliada a instituição de ensino em que você estudou. Fazer a prova de forma séria e com concentração pode valorizar ainda mais seu diploma e render frutos importantes ao seu futuro profissional."
+    },
+    {
+        "id": 12,
+        "question": "Sobre divisão da prova",
+        "answer": "A prova é dividida em duas partes, com situações-problema e estudos de caso. Geral (conhecimentos básicos, comum aos cursos de todas as áreas) com 10 questões no total - 1 (uma) discursiva e 9 (nove) de múltipla escolha;Específico (do seu curso) com 30 (trinta) questões no total - 1 (uma) discursiva e 29 (vinte e nove) de múltipla escolha."
+    },
+    {
+        "id": 13,
+        "question": "Como se preparar?",
+        "answer": "Prepare-se conosco, buscamos abordar o melhor conteúdo para você, de acordo com seu curso através de questões de edições anteriores e “vídeo-aulas”."
+    },
+    {
+        "id": 14,
+        "question": "Onde é possível acessar as provas e gabaritos das edições anteriores?",
+        "answer": "As provas e os gabaritos das edições anteriores do ENADE estão disponíveis por meio do link: https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enade/provas-e-gabaritos"
     }
 ]

@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-
 import './style.css'
+import { studentRegister } from '../../config/config'
 
 const createRegisterUserFormSchema = z.object({
   nameComplet: z
@@ -46,12 +46,22 @@ const createRegisterUserFormSchema = z.object({
 
 
 export function FormRegister() {
+
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: zodResolver(createRegisterUserFormSchema)
   })
 
-  function createRegisterUser(data){
-    console.log(data)
+  async function createRegisterUser(data){
+    const student = {
+      name: data.nameComplet,
+      email: data.email,
+      registration: data.registrationNumber,
+      password: data.password,
+     // course: data.course,
+      semester: data.currentSemester,
+      unity: data.selectUnit
+    };
+    console.log(await studentRegister(student)); 
   }
 
   return (

@@ -1,0 +1,52 @@
+.btn-voltar {
+    background-color: white;
+    color: black;
+    border-radius: 20px; 
+    padding: 5px 50px;
+    border: none;
+    font-weight: 500;
+    transition: 0.5s;
+    border: 2px solid transparent;
+}
+
+.btn-voltar:hover {
+    border-color: #0D4688;
+    transition: 0.5s;
+}
+
+.background-transparent{
+    background-color: #ffffff6b;
+    border-radius: 20px;
+    padding: 70px;
+}
+.text-box-itens{
+    font-size: 1.4rem;
+}
+
+@media (max-width: 768px) {
+    .text-box-itens{
+        font-size: 1rem;
+    }
+    .btn-voltar{
+        font-size: 0.8rem;
+    }
+
+}
+@media (max-width: 430px) {
+    .text-box-itens{
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 376px) {
+    .text-box-itens{
+        font-size: 0.7rem;
+    }
+    .btn-voltar{
+        font-size: 0.6rem;
+        padding: 5px 20px;
+    }
+    .title-itens{
+        font-size: 1rem;
+    }
+}
