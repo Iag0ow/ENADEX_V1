@@ -30,6 +30,9 @@
     .btn-voltar{
         font-size: 0.8rem;
     }
+    .btn-acessar{
+        font-size: 0.8rem;
+    }
 
 }
 @media (max-width: 430px) {
@@ -45,6 +48,9 @@
     .btn-voltar{
         font-size: 0.6rem;
         padding: 5px 20px;
+    }
+    .btn-acessar{
+        padding: 8px 20px;
     }
     .title-itens{
         font-size: 1rem;

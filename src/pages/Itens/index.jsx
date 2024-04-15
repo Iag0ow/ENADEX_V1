@@ -1,16 +1,16 @@
 import React from "react";
-import NavBar from "../../components/NavBar/NavBar";
+import NavBarNoAuth from "../../components/NavBarNoAuth/NavBarNoAuth";
 import { Link } from "react-router-dom";
 import "./style.css";
 
 const Itens = () => {
   return (
     <>
-      <NavBar />
+      <NavBarNoAuth />
       <div className="container">
         <div className="row mt-5">
           <div className="col-5">
-            <Link to="/" className="btn-voltar btn-white">
+            <Link to="/index" className="btn-voltar btn-white">
               Voltar
             </Link>
           </div>

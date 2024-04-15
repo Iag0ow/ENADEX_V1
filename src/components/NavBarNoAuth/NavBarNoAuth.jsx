@@ -1,5 +1,5 @@
 import React from 'react'
-import './NavBar.css'
+import './NavBarNoAuth.css'
 import Logo  from '../../assets/Images/Header-Img/Logo.png'
 import glass from '../../assets/Images/SVG/magnifyng_glass.svg'
 import { Link,NavLink } from 'react-router-dom'
@@ -10,7 +10,7 @@ const NavBar = ({search}) => {
       <nav>
         <ul>
           <div className='d-flex align-items-center w-25'>
-          <Link to={"/"}><img className='logoNav' src={Logo} alt="" style={{width: 64, height: 64}} /></Link>
+          <Link to={"/index"}><img className='logoNav' src={Logo} alt="" style={{width: 64, height: 64}} /></Link>
             <div className="input-group">
             {search &&  
             <>
@@ -20,12 +20,9 @@ const NavBar = ({search}) => {
             }
             </div>
           </div>
-          <div className='links'>
-            <NavLink className="navLinks" exact to="/">Home</NavLink>
-            {/* <NavLink className="navLinks" to="/faq">FAQ</NavLink> */}
-            <NavLink className="navLinks disabled" to="/rank">Ranking</NavLink>
-            <Link className="navLinks" onClick={logOut} >Sair</Link>
-          </div>
+          {/* <div className='links'>
+            <NavLink className="navLinks" exact to="/index">Voltar</NavLink>
+          </div> */}
         </ul>
       </nav>
     </>

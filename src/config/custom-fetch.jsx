@@ -28,8 +28,9 @@ export const customFetchNoAuth = async (url, options) => {
       };
   
       const response = await fetch(url, { ...options, headers });
-  
-      return response.json();
+      const data = await response.json();
+      return { ...data, status: response.status };
+      
     } catch (error) {
       return null;
     }
