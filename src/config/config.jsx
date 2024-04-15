@@ -13,7 +13,7 @@ export const login = async (loginForm) => {
     body: bodyForm,
   };
 
-  const response = await fetch(`${API}/session`, config);
+  const response = await fetch(`${API}/session/signin`, config);
 
   const auth = await response.json();
 
@@ -30,5 +30,5 @@ export const studentRegister = async (registerForm) => {
     body: bodyForm,
   };
 
-  return customFetchNoAuth(`${API}/students`, config)
+  return customFetchNoAuth(`${API}/session/signup`, config);
 }

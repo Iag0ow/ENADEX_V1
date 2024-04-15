@@ -1,5 +1,5 @@
 import React from "react";
-import NavBar from "../../components/NavBar/NavBar";
+import NavBarNoAuth from "../../components/NavBarNoAuth/NavBarNoAuth";
 import FaqData from "../../assets/mock/FaqQuestions.json";
 import { Accordion } from "react-bootstrap";
 import "./Faq.css";
@@ -7,7 +7,7 @@ import "./Faq.css";
 const Faq = () => {
   return (
     <>
-      <NavBar search={true} />
+      <NavBarNoAuth search={true} />
       <div className="container">
         <h1 className="text-white text-center mb-5 pb-5 pt-3">
           FAQ - Perguntas frequentes

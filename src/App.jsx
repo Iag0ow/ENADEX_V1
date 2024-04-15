@@ -10,6 +10,7 @@ import RecuperacaoSenha from "./pages/Recuperacao/RecuperacaoSenha";
 import { Register } from "./pages/Register";
 import Itens from "./pages/Itens";
 import Courses from "./pages/Courses";
+import LadingPage from "./pages/LandingPage/LadingPage";
 
 function App() {
   const user = localStorage.getItem("token");
@@ -34,6 +35,7 @@ function App() {
         <Route path="/faq" element={<Faq/>}/>
         <Route path="/itens-obrigatorios" element={<Itens />} />
         <Route path="/cursos" element={<Courses />} />
+        <Route path="/index" element={<LadingPage/>} />
        </Routes>
       </BrowserRouter>
     </>

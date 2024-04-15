@@ -1,8 +1,11 @@
-import { useForm } from 'react-hook-form'
+import { set, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import './style.css'
 import { studentRegister } from '../../config/config'
+import { useState, useEffect } from 'react'
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 const createRegisterUserFormSchema = z.object({
   nameComplet: z
@@ -46,6 +49,9 @@ const createRegisterUserFormSchema = z.object({
 
 
 export function FormRegister() {
+  const MySwal = withReactContent(Swal);
+
+  const [error, setError] = useState([])
 
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: zodResolver(createRegisterUserFormSchema)
@@ -61,11 +67,29 @@ export function FormRegister() {
       semester: data.currentSemester,
       unity: data.selectUnit
     };
-    console.log(await studentRegister(student)); 
+    console.log(student);
+    const result = await studentRegister(student);
+    if (result.status === 201) {
+      MySwal.fire({
+        title: 'Cadastrado com sucesso',
+        text: 'Verifique sua confirmação via email',
+        icon: 'success',
+        timerProgressBar: true,
+        willClose: () => {
+          window.location.href = '/login';
+        }
+      })
+    }else {
+      setError(result.error.message)
+      setTimeout(() => {
+        setError([]);
+      }, 3500);
+    }
   }
 
   return (
     <form className="mt-2" onSubmit={handleSubmit(createRegisterUser)}>
+      {error && error.map((err) => <h3 key={err} className="error-message mt-3 mb-3">{err}</h3>)}
       <div className="row">
         <div className="col-md-6 d-flex flex-column">
           <div className="form-group mb-3 mx-auto">
@@ -149,11 +173,11 @@ export function FormRegister() {
               {...register('selectUnit')}
               >
               <option value="">Selecione sua unidade</option>
-              <option value="Itabuna">Itabuna</option>
-              <option value="Feira de Santana">Feira de Santana</option>
-              <option value="Jequié">Jequié</option>
-              <option value="Vitória da Conquista">Vitória da Conquista</option>
-              <option value="Salvador">Salvador</option>
+              <option value="ITABUNA">Itabuna</option>
+              <option value="FEIRA_DE_SANTANA">Feira de Santana</option>
+              <option value="JEQUIE">Jequié</option>
+              <option value="VITORIA_DA_CONQUISTA">Vitória da Conquista</option>
+              <option value="SALVADOR">Salvador</option>
             </select>
             { errors.selectUnit && <span className="error-message">{ errors.selectUnit.message }</span>}
           </div>

@@ -1,45 +1,30 @@
 import React from "react";
-import NavBar from "../../components/NavBar/NavBar";
+import NavBarNoAuth from "../../components/NavBarNoAuth/NavBarNoAuth";
 import { Link } from "react-router-dom";
 import "./style.css";
 
 const Courses = () => {
   return (
     <>
-      <NavBar />
+        <NavBarNoAuth />
       <div className="container">
         <div className="row mt-5">
           <div className="col-5">
-            <Link to="/" className="btn-voltar btn-white">
+            <Link to="/index" className="btn-voltar btn-white">
               Voltar
             </Link>
           </div>
           <div className="col-7">
-            <h3 className="title-itens text-white">Cursos Participantes</h3>
+            <h3 className="title-itens text-white">Sobre a Prova</h3>
           </div>
         </div>
         <div className="row mt-5 background-transparent text-white">
           <div className="col-12">
-            <p className="text-box-itens">Ano I</p>
-            <ul>
-              <li>Cursos de bacharelado nas áreas de conhecimento de Ciências Agrárias, Ciências da Saúde e áreas afins;</li>
-              <li> Cursos de bacharelado nas áreas de conhecimento de Engenharias e Arquitetura e Urbanismo;</li>
-              <li>Cursos Superiores de Tecnologia nas áreas de Ambiente e Saúde, Produção Alimentícia, Recursos Naturais, Militar e Segurança.</li>
-            </ul>
-            <p className="text-box-itens">Ano II</p>
-            <ul>
-              <li>Cursos de bacharelado nas áreas de conhecimento de Ciências Biológicas; Ciências Exatas e da Terra; Linguística, Letras e Artes e áreas afins;</li>
-              <li>Cursos de licenciatura nas áreas de conhecimento de Ciências da Saúde; Ciências Humanas; Ciências Biológicas; Ciências Exatas e da Terra; Linguística, Letras e Artes;</li>
-              <li>Cursos de bacharelado nas áreas de conhecimento de Ciências Humanas e Ciências da Saúde, com cursos avaliados no âmbito das licenciaturas;</li>
-              <li>Cursos Superiores de Tecnologia nas áreas de Controle e Processos Industriais, Informação e Comunicação, Infraestrutura e Produção Industrial.</li>
-            </ul>
-            <p className="text-box-itens">Ano III</p>
-            <ul>
-              <li>Cursos de bacharelado nas Áreas de Conhecimento Ciências Sociais Aplicadas e áreas afins;</li>
-              <li>Cursos de bacharelado nas Áreas de Conhecimento Ciências Humanas e áreas afins que não tenham cursos também avaliados no âmbito das licenciaturas;</li>
-              <li>Cursos Superiores de Tecnologia nas áreas de Gestão e Negócios, Apoio Escolar, Hospitalidade e Lazer, Produção Cultural e Design.</li>
-            </ul>
-            <p className="text-box-itens">Os resultados das provas e as respostas ao questionário são importantes para os Indicadores de Qualidade da Educação Superior do País. Os cursos e instituições de educação superior recebem notas de 1 a 5 no Enadex.</p>
+            <p className="text-box-itens">A prova do Enade é constituída por uma parte de Formação Geral, comum aos cursos de todas as áreas, e uma de Componente Específico, próprio de cada área de avaliação, conforme as portarias que estabelecem as diretrizes e conteúdos das provas de cada área avaliada no Enade elaborados com base nas Diretrizes Curriculares Nacionais (DCN) de cada área, legislação associada e de profissionais.</p>
+            <p className="text-box-itens">As diretrizes de provas de cada área de avaliação do Enade são definidas pelas Comissões Assessoras de Área e estabelecem o perfil, as competências e os objetos de conhecimento que serão avaliados.</p>
+            <p className="text-box-itens">A parte de Formação Geral terá 10 (dez) questões, sendo 02 (duas) discursivas e 08 (oito) de múltipla escolha, envolvendo situações-problema e estudos de casos. </p>
+            <p className="text-box-itens">A parte de Componente Específico de cada área de avaliação terá 30 (trinta) questões, sendo 03 (três) discursivas e 27 (vinte e sete) de múltipla escolha, envolvendo situações-problema e estudos de casos. O estudante terá quatro horas para resolver toda a prova.</p>
+            <p className="text-box-itens">A prova de Formação Geral tem a concepção dos seus itens balizada pelos princípios dos Direitos Humanos. Suas questões discursivas avaliam aspectos como clareza, coerência, coesão, estratégias argumentativas, utilização de vocabulário adequado e correção gramatical do texto.</p>
           </div> 
         </div>
       </div>
