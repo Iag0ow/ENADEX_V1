@@ -1,0 +1,38 @@
+a{
+    text-decoration: none;
+}
+nav ul{
+    display: flex;
+    align-items: center;
+    list-style: none;
+    background-color: #0D4688;
+    justify-content: space-between;
+    padding: 0px;
+}
+
+.links{
+    list-style: none;
+    padding: 10px;
+    display: flex;
+    gap: 40px;
+    margin-right: 71px;
+}
+
+.navLinks{
+    color: white;
+    font-weight: bold;
+    font-family: sans-serif;
+}
+.navLinks:hover{
+    color: rgb(230, 224, 224);
+}
+.active{
+    color: #c1c1c1;
+}
+.logoNav{
+    margin-right: 25px;
+    cursor: pointer;
+}
+.input-group{
+    opacity: 76%;
+}

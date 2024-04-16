@@ -1,5 +1,5 @@
 import React from 'react'
-import './NavBar.css'
+import './NavBarSimulado.css'
 import Logo  from '../../assets/Images/Header-Img/Logo.png'
 import glass from '../../assets/Images/SVG/magnifyng_glass.svg'
 import { Link,NavLink } from 'react-router-dom'
@@ -24,7 +24,7 @@ const NavBar = ({search}) => {
             <NavLink className="navLinks" exact to="/">Home</NavLink>
             {/* <NavLink className="navLinks" to="/faq">FAQ</NavLink> */}
             <NavLink className="navLinks disabled" to="/rank">Ranking</NavLink>
-            <NavLink className="navLinks" exact to="/simulado">Simulado</NavLink>
+            <NavLink className="navLinks" to="/simulado">Simulado</NavLink>
             <Link className="navLinks" onClick={logOut} >Sair</Link>
           </div>
         </ul>

@@ -1,0 +1,62 @@
+.bg-simulado {
+    background: url(../../assets/mock/bg-enadex.png) no-repeat center;
+    background-size: cover;
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+  .questoes {
+    background: #0fa958;
+    color: white;
+    border-radius: 10px 10px 0px 0px;
+    padding: 10px;
+    
+  }
+  
+  .questoes a {
+    text-decoration: underline;
+    color: white;
+    font-size: 32px;
+    font-weight: bold;
+    
+  
+  }
+  
+  
+  .lista-questao{
+      background: white;
+      min-width: 90%;
+      height: 300px;
+      
+       
+  }
+  
+  .li-style li {
+      width: 50%;
+  }
+  
+  .radius-simulado{
+      border-radius: 0px 0px 10px 10px;
+      padding: 10px;
+      
+  }
+  
+  
+  .list-style li{
+      list-style: none;
+  }
+
+  .radio-container{
+    margin-bottom: 10px;
+  }
+  
+  .label-resposta{
+    margin-left: 10px;
+    size: 20px;
+   
+    
+  }
+
+  .enunciado-simulado{
+    font-weight: 400;
+  }
+  

@@ -1,4 +1,5 @@
 
+
 import "./App.css";
 import Login from "./pages/Login/LoginPage";
 import { useState, useEffect } from 'react'
@@ -11,6 +12,8 @@ import { Register } from "./pages/Register";
 import Itens from "./pages/Itens";
 import Courses from "./pages/Courses";
 import LadingPage from "./pages/LandingPage/LadingPage";
+import Simulado from "./pages/Simulado/simulado";
+import ProvaSimulado from "./pages/ProvaSimulado/provaSimulado";
 
 function App() {
   const user = localStorage.getItem("token");
@@ -36,6 +39,8 @@ function App() {
         <Route path="/itens-obrigatorios" element={<Itens />} />
         <Route path="/cursos" element={<Courses />} />
         <Route path="/index" element={<LadingPage/>} />
+        <Route path="/simulado" element={<Simulado/>}/>
+        <Route path="/prova-simulado/:id" element={<ProvaSimulado/>}/>
        </Routes>
       </BrowserRouter>
     </>
