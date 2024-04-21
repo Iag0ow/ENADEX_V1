@@ -2,8 +2,7 @@ import React from 'react'
 import './NavBarNoAuth.css'
 import Logo  from '../../assets/Images/Header-Img/Logo.png'
 import glass from '../../assets/Images/SVG/magnifyng_glass.svg'
-import { Link,NavLink } from 'react-router-dom'
-import {logOut} from "../../config/custom-fetch";
+import { Link} from 'react-router-dom'
 const NavBar = ({search}) => {
   return (
     <>

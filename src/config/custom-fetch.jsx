@@ -36,8 +36,8 @@ export const customFetchNoAuth = async (url, options) => {
     }
   };
 
-  export const logOut = () => {
-    localStorage.removeItem("token");
-    window.location.reload();
-    // return true;
-  };
+  // export const logOut = () => {
+  //   localStorage.removeItem("token");
+  //   window.location.reload();
+  //   // return true;
+  // };
