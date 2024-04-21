@@ -13,7 +13,7 @@ const Faq = () => {
           FAQ - Perguntas frequentes
         </h1>
         {FaqData.map((item) => (
-        <Accordion defaultActiveKey="1">
+        <Accordion key={item.id} defaultActiveKey="1">
           <Accordion.Item className="mb-5" eventKey="0">
             <Accordion.Header>{item.question}</Accordion.Header>
             <Accordion.Body>

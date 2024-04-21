@@ -2,13 +2,16 @@ import React, { useState } from "react";
 import "./LoginPage.css";
 import Logo from "../../assets/Images/LoginPage-Img/LogoEnadexLogin.png";
 import { Link } from "react-router-dom";
-import { login } from "../../config/config";
+// import { login } from "../../config/config";
+import { useAuth } from "../../context/AuthContextProvider";
 import BGlogin from "../../assets/Images/LoginPage-Img/BGloginPage.png";
-export default function LoginPage({ onUpdateAuth }) {
+export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [error, setError] = useState("");
   const [load, setLoad] = useState(false);
+
+  const { login,verifySigned } = useAuth();
 
   const handleSubmit = async (e) => {
     setLoad(true);
@@ -20,7 +23,7 @@ export default function LoginPage({ onUpdateAuth }) {
     const data = await login(loginForm);
     if (data.status === 201) {
       localStorage.setItem("token", data.access_token);
-      onUpdateAuth(true);
+      verifySigned(true);
     } else {
       setError(data.status === 401 ? "Credenciais inválidas" : data.message);
       setLoad(false);
