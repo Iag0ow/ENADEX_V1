@@ -22,7 +22,7 @@ const LadingPage = () => {
               acompanhar seu progresso e compará-lo com outros estudantes,
               incentivando uma preparação ainda mais motivadora e engajadora.
             </p>
-            <Link to={"/"} className="btn-acessar">
+            <Link to={"/login"} className="btn-acessar">
               Acessar
             </Link>
           </div>

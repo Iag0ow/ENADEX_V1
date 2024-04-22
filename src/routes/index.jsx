@@ -21,7 +21,7 @@ function AppRoutes() {
             <Route path="/register" element={ signed ? <Home /> : <Register />} />
             <Route path="/home" element={ signed ? <Home /> : <Login />} />
             <Route path="/esqueci-minha-senha" element={ signed ? <Home /> : <RecuperacaoSenha />} />
-            <Route path="/" element={ signed ? <Home /> : <Login />} />
+            <Route path="/" element={ signed ? <Home /> : <LadingPage />} />
             <Route path="/faq" element={<Faq />} />
             <Route path="/itens-obrigatorios" element={<Itens />} />
             <Route path="/cursos" element={<Courses />} />
