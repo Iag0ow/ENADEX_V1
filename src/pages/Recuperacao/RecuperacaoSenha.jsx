@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./RecuperacaoSenha.css";
 import { Link } from 'react-router-dom';
 
+
 export default function RecuperacaoSenha() {
   const [email, setEmail] = useState();
   function RecuperarSenha() {
@@ -20,6 +21,9 @@ export default function RecuperacaoSenha() {
                 setEmail(e.target.value);
               }}
             />
+            <div className="code">
+            <a className="recoverCode">Já possuo um codigo</a>
+            </div>
             <button
               className="buttonRecuperar"
               onClick={() => RecuperarSenha()}

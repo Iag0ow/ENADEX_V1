@@ -28,9 +28,24 @@ body{
     font-size: 16px;
     width: 100%;
     text-align: center;
+    font-family: 'Besley', sans-serif;
+  }
+
+  .recoverCode{
+    color: white;
+    align-items: right;
+    margin-left: 270px;
+    font-size: 16px;
+    font-family: 'Besley', sans-serif;
+    cursor: pointer;
+  }
+
+  .recoverCode:hover{
+    text-decoration: underline;
   }
 
   .buttonRecuperar {
+    margin-top: 20px;
     width: 65%;
     padding: 10px;
     background-color: #1d9b58;
@@ -53,16 +68,20 @@ body{
   .linkVoltar {
     color: white;
     text-decoration: underline;
+    font-size: 16px;
+    font-family: 'Besley', sans-serif;
   }
 
-  .itemsRecuperacao input, .buttonRecuperar, .linkVoltar {
-    margin-bottom: 20px;
-  }
+
 
   @media screen and (max-width: 768px) {
-    .containerRecuperacao {
-      flex-direction: column;
-      height: auto;
-      padding: 20px;
+    .itemsRecuperacao input{
+      width: 180%;
+    }
+    .buttonRecuperar{
+      width: 90%;
+    }
+    .recoverCode{
+      margin-left: 0px;
     }
   }
