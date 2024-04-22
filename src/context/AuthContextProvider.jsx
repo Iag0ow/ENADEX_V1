@@ -1,4 +1,4 @@
-import React, { createContext, useState,useContext, useEffect } from 'react';
+import { createContext, useState,useContext, useEffect } from 'react';
 const API = "https://enadex-api-v2.vercel.app";
 
 export const AuthContext = createContext({})
@@ -8,7 +8,9 @@ export const AuthContextProvider = ({children}) => {
   const [user, setUser] = useState('');
   const [email, setEmail] = useState('');
   const [token, setToken] = useState('');
+  const [authRole, setAuthRole] = useState('');
   const [loading, setLoading] = useState(false);
+  
 
   async function login(loginForm){
     setLoading(true);
@@ -28,15 +30,18 @@ export const AuthContextProvider = ({children}) => {
 
     if (response.status === 201) {
     //   localStorage.setItem("token", auth.access_token);  ia colocar aqui mas kadmo já faz isso na tela de login então tenho que ver dps
+      localStorage.setItem("authRole", auth.role);
       setUser(auth.name);
       setToken(auth.access_token);
       setEmail(auth.email);
+      setAuthRole(auth.role)
+      setSigned(true);
     }
 
     setLoading(false);
 
     return {...auth, status: response.status};
-  };
+  }
 
   async function logOut(){
     localStorage.removeItem("token");
@@ -46,12 +51,14 @@ export const AuthContextProvider = ({children}) => {
     setUser('');
     window.location.reload();
     // return true;
-  };
+  }
 
   function verifySigned() {
     const token = localStorage.getItem("token");
+    const authRole = localStorage.getItem("authRole");
     if (token) {
       setSigned(true);
+      setAuthRole(authRole)
     }
   }
 
@@ -61,7 +68,7 @@ export const AuthContextProvider = ({children}) => {
   
 
   return (
-    <AuthContext.Provider value={{signed:signed,user:user,email:email, token:token, login,logOut, loading, verifySigned}}>
+    <AuthContext.Provider value={{signed:signed,user:user,email:email, token:token, login,logOut, loading, verifySigned, authRole}}>
     {children}
    </AuthContext.Provider>
   )
