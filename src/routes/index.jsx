@@ -10,6 +10,8 @@ import Courses from "../pages/Courses";
 import Home from "../pages/Home/Home";
 import WelcomeAfterLogin from "../pages/WelcomeAfterLogin/WelcomeAfterLogin";
 import { Register } from "../pages/Register";
+import { RegisterAdminTeacher } from "../pages/RegisterAdminTeacher";
+
 
 function AppRoutes() {
   const { signed } = useAuth();

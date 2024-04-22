@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./LoginPage.css";
 import Logo from "../../assets/Images/LoginPage-Img/LogoEnadexLogin.png";
 import { Link } from "react-router-dom";
 // import { login } from "../../config/config";
 import { useAuth } from "../../context/AuthContextProvider";
-import BGlogin from "../../assets/Images/LoginPage-Img/BGloginPage.png";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
