@@ -24,6 +24,7 @@ export default function LoginPage() {
     if (data.status === 201) {
       localStorage.setItem("token", data.access_token);
       verifySigned(true);
+      // window.location.href = "/teste"; // redirecionar para a Rota correta
     } else {
       setError(data.status === 401 ? "Credenciais inválidas" : data.message);
       setLoad(false);
