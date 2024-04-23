@@ -35,7 +35,6 @@ body{
   .recoverCode{
     color: white;
     align-items: right;
-    margin-left: 270px;
     font-size: 16px;
     font-family: 'Besley', sans-serif;
     cursor: pointer;
@@ -104,7 +103,7 @@ body{
   .modalconteudo {
     display: flex;
     flex-direction: column;
-    background-color: black;
+    background-color: #16171a;
     justify-content: space-evenly;
     align-items: center;
     width: 30%;
@@ -119,7 +118,7 @@ body{
   .modalAlterado {
     display: flex;
     flex-direction: row;
-    background-color: black;
+    background-color: #16171a;
     justify-content: space-evenly;
     align-items: center;
     max-width: 800px;
@@ -133,7 +132,7 @@ body{
   }
   .modalCaixa {
     display: flex;
-    background-color: black;
+    background-color: #16171a;
     max-width: 1000px;
     min-width: 200px;
     min-height: 400px;
