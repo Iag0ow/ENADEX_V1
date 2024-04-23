@@ -15,13 +15,13 @@ export default function RecuperacaoSenha() {
   const [displayCodigo, setDisplayCodigo] = useState('none');
   const [displaySenha, setDisplaySenha] = useState('none');
   const [displayAlterado, setDisplayAlterado] = useState('none');
+  const [displayErro, setDisplayErro] = useState('none');
   const [imagemRetorno, setImagemRetorno] = useState('');
   const [textoRetorno, setTextoRetorno] = useState('');
   const iCodigo = document.getElementById("inputCodigo");
   const iSenha = document.getElementById("inputSenha");
   const iConfirmaSenha = document.getElementById("inputConfirmacaoSenha");
   const iEmail = document.getElementById("inputEmail");
-  const msgErro = document.getElementById("textoErro");
   const [mensagemErro, setMensagemErro] = useState('');
 
   async function enviarCodigo(){
@@ -54,7 +54,7 @@ export default function RecuperacaoSenha() {
   function confirmarCodigo() {
     setDisplayCodigo('none');
     setDisplaySenha('flex');
-    msgErro.style.display = "none";
+    setDisplayErro('none');
     iCodigo.style.backgroundColor = "white";
     iSenha.style.backgroundColor = "white";
     iConfirmaSenha.style.backgroundColor = "white";
@@ -97,7 +97,7 @@ export default function RecuperacaoSenha() {
   async function recuperarSenha() {
     const critica = verificaForm();
     if (critica == false) {
-      msgErro.style.display = "none";
+      setDisplayErro('none');
       const formChange = {
         otgCode: codigo,
         email: email,
@@ -125,7 +125,7 @@ export default function RecuperacaoSenha() {
         }
       }
     } else {
-      msgErro.style.display = "flex";
+      setDisplayErro('flex');
     }
   }
   function fecharRedefinicao() {
@@ -183,7 +183,7 @@ export default function RecuperacaoSenha() {
               }}
             />
             <div className="modalConfirmar">
-                <span id="textoErro" className="textoErro">{mensagemErro}</span>
+                <span id="textoErro" className="textoErro" style={{display: displayErro}}>{mensagemErro}</span>
                 <a onClick={() => ReenviarCodigo()} style={{textDecoration: "underline", cursor: "pointer"}}>Reenviar Código</a>
                   <button
                   className="buttonRedefinir"

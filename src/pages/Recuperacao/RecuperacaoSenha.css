@@ -185,7 +185,6 @@ body{
     font-size: 28px;
   }
   .textoErro {
-    display: none;
     color: #ff6b6b;
     text-align: left;
     font-size: 12px;
