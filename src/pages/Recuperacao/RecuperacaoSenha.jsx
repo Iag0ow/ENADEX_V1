@@ -7,6 +7,7 @@ import Erro from "../../assets/Images/RecuperacaoSenha-Img/Erro.png";
 import { sendEmailRecovery } from "../../config/config";
 import { changePassword } from "../../config/config";
 
+
 export default function RecuperacaoSenha() {
   const [email, setEmail] = useState('');
   const [codigo, setCodigo] = useState('');
