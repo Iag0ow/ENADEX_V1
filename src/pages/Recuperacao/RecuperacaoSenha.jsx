@@ -54,6 +54,7 @@ export default function RecuperacaoSenha() {
   function confirmarCodigo() {
     setDisplayCodigo('none');
     setDisplaySenha('flex');
+    msgErro.style.display = "none";
     iCodigo.style.backgroundColor = "white";
     iSenha.style.backgroundColor = "white";
     iConfirmaSenha.style.backgroundColor = "white";
