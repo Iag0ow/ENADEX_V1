@@ -1,0 +1,99 @@
+.pageWrapperWelcome {
+  background: url("../../assets/bg-enadex.png") no-repeat center;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+.buttonsHolder {
+  display: flex;
+  justify-content: center;
+}
+.twoButtons {
+  background-color: #38bdf8;
+  color: white;
+  height: 62px;
+  width: 300px;
+  font-size: xx-large;
+  border-radius: 5px;
+  padding: 5px 50px;
+  border: none;
+  font-weight: 500;
+  transition: 0.5s;
+  border: 2px solid transparent;
+  margin: 20px;
+  margin-top: 40px;
+}
+.textsHolder {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.textLeft {
+  font-weight: 900;
+  font-family: "Lato", sans-serif;
+  color: white;
+  font-size: 80px;
+  line-height: 1.1;
+  margin-top: 50px;
+}
+
+.textLeft span {
+  display: block;
+}
+
+.textRight {
+  font-weight: 500;
+  margin-top: 60px;
+  font-size: 27.5px;
+  font-family: "Lato", sans-serif;
+  color: white;
+  line-height: 1.3;
+  text-align: justify;
+}
+.enadexContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.enadexContentText {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+  margin-top: 100px;
+  margin-bottom: 100px;
+  color: white;
+  font-size: 28px;
+  font-family: "Inter", sans-serif;
+  margin-right: 40px;
+  font-weight: 600;
+}
+
+.enadexContentButton {
+  background-color: #292929;
+  font-family: "Inter", sans-serif;
+  color: white;
+  border-radius: 100px;
+  width: 220px;
+  height: 70px;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  transition: 0.5s;
+  border: 2px solid transparent;
+}
+
+.enadexContentButton:hover {
+  border-color: #0D4688;
+  transition: 0.5s;
+  transform:  scale(1.05);
+}
+.buttonIcon {
+  width: 30px;
+  margin-right: 10px;
+}
