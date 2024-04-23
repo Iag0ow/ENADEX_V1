@@ -25,7 +25,7 @@ export default function LoginPage() {
       verifySigned(true);
       // window.location.href = "/teste"; // redirecionar para a Rota correta
     } else {
-      setError(data.status === 401 ? "Credenciais inválidas" : data.message);
+      setError(data.status != 201 ? "Credenciais inválidas" : data.message);
       setLoad(false);
     }
   };
