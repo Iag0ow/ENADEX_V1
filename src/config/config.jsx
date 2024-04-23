@@ -32,3 +32,29 @@ export const studentRegister = async (registerForm) => {
 
   return customFetchNoAuth(`${API}/session/signup`, config);
 }
+
+export const sendEmailRecovery = async (email) => {
+  const bodyForm = JSON.stringify(email);
+  const config = {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: bodyForm,
+  };
+  const response = await fetch(`${API}/forgot-password/request`, config);
+  return response;
+}
+
+export const changePassword = async (formChange) => {
+  const bodyForm = JSON.stringify(formChange);
+  const config = {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: bodyForm,
+  };
+  const response = await fetch(`${API}/forgot-password/validate`, config);
+  return response;
+}

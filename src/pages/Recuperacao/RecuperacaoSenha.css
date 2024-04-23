@@ -1,3 +1,7 @@
+* {
+  font-family: 'Besley', sans-serif;
+}
+
 body{
     background: url(../../assets/Images/LandingPage-Img/LandingPageWeb.png)no-repeat center center fixed;
     background-size: cover;
@@ -10,17 +14,14 @@ body{
     align-items: center;
     height: 100vh;
   }
-
   .itemsRecuperacao {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* align-content: center; */
     min-width: 20%;
     margin-bottom: 10px;
   }
-
   .itemsRecuperacao input {
     padding: 10px;
     border: 1px solid #ccc;
@@ -29,7 +30,6 @@ body{
     width: 100%;
     text-align: center;
   }
-
   .buttonRecuperar {
     width: 65%;
     padding: 10px;
@@ -43,26 +43,180 @@ body{
     transition: background-color 0.3s ease;
     transition: transform 0.5s ease;
   }
-
   .buttonRecuperar:hover{
     background-color: #0fa958;
     transform: scale(1.1);
     transition: transform 0.5s ease;
   }
-
+  .buttonDegrade {
+    width: 65%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    font-family: 'Besley', sans-serif;
+    transition: background-color 0.3s ease;
+    transition: transform 0.5s ease;
+    background-image: linear-gradient(to right, #ff6b6b, #556270)
+  }
   .linkVoltar {
     color: white;
     text-decoration: underline;
   }
-
-  .itemsRecuperacao input, .buttonRecuperar, .linkVoltar {
-    margin-bottom: 20px;
+  .recoverCode, .buttonRecuperar, .linkVoltar {
+    margin-bottom: 10px;
+    cursor: pointer;
   }
-
-  @media screen and (max-width: 768px) {
-    .containerRecuperacao {
-      flex-direction: column;
-      height: auto;
-      padding: 20px;
+  .recoverCode {
+    color: white;
+    text-align: right;
+    justify-content: end;
+    text-decoration: underline;
+    width: 100%;
+    font-size: 14px;
+    padding-bottom: 10px;
+  }
+  .modal {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+  }
+  .modalconteudo {
+    display: flex;
+    flex-direction: column;
+    background-color: black;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 30%;
+    max-width: 500px;
+    min-width: 200px;
+    height: 30%;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    border-radius: 15px;
+  }
+  .modalAlterado {
+    display: flex;
+    flex-direction: row;
+    background-color: black;
+    justify-content: space-evenly;
+    align-items: center;
+    max-width: 800px;
+    min-width: 200px;
+    width: 70%;
+    height: 20%;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    border-radius: 15px;
+  }
+  .modalCaixa {
+    display: flex;
+    background-color: black;
+    max-width: 1000px;
+    min-width: 200px;
+    min-height: 400px;
+    width: 70%;
+    height: 50%;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    border-radius: 15px;
+    flex-direction: column;
+  }
+  .modalRedefinir {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    /* background-color: #0693FA; */
+  }
+  .modalForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 40%;
+    height: 65%;
+    /* background-color: #0fa958; */
+  }
+  .modalConfirmar {
+    display: flex;
+    justify-content: space-between;
+  }
+  .modalFechar {
+    display: flex;
+    justify-content: end;
+    align-content: end;
+    padding-right: 15px;
+    width: 100%;
+  }
+  .buttonRedefinir {
+    width: 30%;
+    border: 5px solid #0693FA;
+    background-color: #0693FA;
+    color: white;
+    border-radius: 10px;
+  }
+  .modalForm input {
+   padding: 5px;
+   border: 4px solid white;
+   border-radius: 10px;
+  }
+  .fechar {
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-weight: bold;
+  }
+  .cadeado {
+    width: 40%;
+  }
+  .retorno {
+    width: 16%;
+  }
+  .tituloModal, .tituloRedefinir {
+    font-size: 28px;
+  }
+  .textoErro {
+    display: none;
+    color: #ff6b6b;
+    text-align: left;
+    font-size: 12px;
+  }
+  @media screen and (max-width: 1008px) {
+    .itemsRecuperacao input{
+      width: 100%;
+      font-size: 17px;
     }
+    .buttonRecuperar{
+      width: 80%;
+      font-size: 17px;
+    }
+    .recoverCode{
+      margin-left: 0px;
+      font-size: 12px;
+    }
+    .modalconteudo {
+      width: 60%;
+      height: 25%;
+    }
+    .tituloModal, .tituloRedefinir {
+      font-size: 22px;
+    }
+    .cadeado {
+      display: none;
+    }
+    .modalForm {
+      width: 80%;
+    }
+    .modalForm input {
+      border: 2px solid white;
+     }
   }
