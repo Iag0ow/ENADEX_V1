@@ -17,15 +17,15 @@ function AppRoutes() {
   const { signed } = useAuth();
   return (
     <>
-<BrowserRouter>
+      <BrowserRouter>
         <Routes>
           <Route path="/login" element={ signed ? <WelcomeAfterLogin /> : <Login />} />
-          <Route path="/register" element={signed ? <Home /> : <Register />} />
-          <Route path="/home" element={signed ? <Home /> : <Login />} />
-          <Route path="/esqueci-minha-senha" element={signed ? <Home /> : <RecuperacaoSenha />} />
+          <Route path="/register" element={signed ? <WelcomeAfterLogin /> : <Register />} />
+          <Route path="/home" element={signed ? <WelcomeAfterLogin /> : <Login />} />
+          <Route path="/esqueci-minha-senha" element={signed ? <WelcomeAfterLogin /> : <RecuperacaoSenha />} />
           {/* <Route path="/register-admin-teacher" element={signed ? <RegisterAdminTeacher /> : <Login />} /> */}
           <Route path="/register-admin-teacher" element={<RegisterAdminTeacher />} />
-          <Route path="/" element={signed ? <Home /> : <LadingPage />} />
+          <Route path="/" element={signed ? <WelcomeAfterLogin /> : <LadingPage />} />
           <Route path="/faq" element={<Faq />} />
           <Route path="/itens-obrigatorios" element={<Itens />} />
           <Route path="/cursos" element={<Courses />} />
