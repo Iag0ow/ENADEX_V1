@@ -50,7 +50,16 @@ export default function RecuperacaoSenha() {
     const sendEmail = {
       email: email
     };
-    await sendEmailRecovery(sendEmail);
+    const result = await sendEmailRecovery(sendEmail);
+    if (result.status === 204) {
+      const reCodigo = document.getElementById("Reenviar");
+      reCodigo.innerHTML = "Código Enviado";
+      reCodigo.style.textDecoration = "none"
+      setTimeout(() => {
+        reCodigo.innerHTML = "Reenviar Código";
+        reCodigo.style.textDecoration = "underline"
+      }, 3000);
+    }
   }
   function confirmarCodigo() {
     setDisplayCodigo('none');
@@ -185,7 +194,7 @@ export default function RecuperacaoSenha() {
             />
             <div className="modalConfirmar">
                 <span id="textoErro" className="textoErro" style={{display: displayErro}}>{mensagemErro}</span>
-                <a onClick={() => ReenviarCodigo()} style={{textDecoration: "underline", cursor: "pointer"}}>Reenviar Código</a>
+                <a id="Reenviar" onClick={() => ReenviarCodigo()} style={{textDecoration: "underline", cursor: "pointer"}}>Reenviar Código</a>
                   <button
                   className="buttonRedefinir"
                   onClick={() => recuperarSenha()}
