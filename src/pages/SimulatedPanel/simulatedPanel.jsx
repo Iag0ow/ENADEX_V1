@@ -10,7 +10,7 @@ export default function SimulatedPanel() {
       <div className="userInfo">
         <img className="profilePic" src={profilePic} alt="foto de perfil" />
         <div className="userProfile">
-          <p className="userName">Bago Macêdo</p>
+          <p className="userName">Jhon Doe</p>
           <label className="mediaAcertos">Média de acertos: 85%</label>
           <label className="simulatedsRealized">Simulados realizados: 4</label>
         </div>
