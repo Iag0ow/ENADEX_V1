@@ -1,0 +1,167 @@
+.pageWrapperSimulatedPanel {
+  background-color: white;
+  min-height: 100vh;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.userInfo {
+  margin: 0 auto;
+  width: calc(100% - 60px);
+  max-width: 96%;
+  height: 110px;
+  background-color: #d9d9d9;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.userProfile {
+  display: block;
+  flex-direction: column;
+  margin-left: 10px;
+}
+
+.profilePic {
+  width: 100px;
+  height: 90px;
+  margin: 10px;
+}
+
+.userName {
+  color: #161616;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.userLabels {
+  display: flex;
+}
+
+.mediaAcertos,
+.simulatedsRealized {
+  width: 300px;
+  height: 30px;
+  color: white;
+  background-color: #0693fa;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 17px;
+  margin-right: 5px;
+  padding: 5px;
+  text-align: center;
+}
+
+.generateSimulated {
+  display: flex;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: 10px;
+  margin-bottom: 18px;
+}
+
+.btnSimulated {
+  background-color: #0693fa;
+  color: white;
+  height: 62px;
+  width: 300px;
+  font-size: 30px;
+  border-radius: 10px;
+  padding: 5px 0px;
+  border: none;
+  font-weight: 500;
+  transition: 0.5s;
+  border: 2px solid transparent;
+  margin: 20px;
+  margin-top: 40px;
+  cursor: pointer;
+}
+
+.btnSimulated:hover {
+  transition: 0.5s;
+  transform: scale(1.05);
+}
+
+.searchBarWrapper {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.searchBar {
+  width: calc(100% - 60px);
+  max-width: 96%;
+  height: 50px;
+  background-color: #d9d9d9;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.searchIcon {
+  margin-left: 15px;
+  margin-right: 10px;
+}
+
+.searchInput {
+  flex: 1;
+  border: none;
+  background-color: transparent;
+  font-size: 16px;
+  outline: none;
+}
+.simulatedWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  margin: auto;
+  margin-top: 20px;
+  width: calc(100% - 60px);
+  max-width: 96%;
+  height: 90vh;
+  border-radius: 10px;
+}
+.btnRealizedSimulated {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #0fa958;
+  color: white;
+  border-radius: 10px;
+  border: none;
+  font-weight: 500;
+  transition: 0.5s;
+  border: 2px solid transparent;
+  padding: 10px;
+  cursor: pointer;
+  text-align: left;
+  font-size: 25px;
+  margin-bottom: 10px; 
+}
+
+.simulatedText {
+  flex-grow: 1;
+  text-decoration: underline;
+}
+
+.simulatedInfo {
+  display: flex;
+  align-items: center;
+}
+
+.simulatedDate,
+.simulatedQuestions {
+  font-size: 20px;
+  color: white;
+  text-decoration: none;
+}
+.labelDateAndQuestions {
+  font-size: 18px;
+  margin-right: 10px;
+  margin-left: 5px;
+  background-color: white;
+  border-radius: 10px;
+  width: auto;
+  padding: 5px;
+  color: black;
+}

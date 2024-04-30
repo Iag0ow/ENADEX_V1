@@ -11,8 +11,7 @@ import Home from "../pages/Home/Home";
 import WelcomeAfterLogin from "../pages/WelcomeAfterLogin/WelcomeAfterLogin";
 import { Register } from "../pages/Register";
 import { RegisterAdminTeacher } from "../pages/RegisterAdminTeacher";
-
-
+import SimulatedPanel from "./../pages/SimulatedPanel/simulatedPanel";
 function AppRoutes() {
   const { signed } = useAuth();
   return (
@@ -22,6 +21,7 @@ function AppRoutes() {
           <Route path="/login" element={ signed ? <WelcomeAfterLogin /> : <Login />} />
           <Route path="/register" element={signed ? <WelcomeAfterLogin /> : <Register />} />
           <Route path="/home" element={signed ? <WelcomeAfterLogin /> : <Login />} />
+          <Route path="/simulados" element={signed ? <SimulatedPanel /> : <Login />} />
           <Route path="/esqueci-minha-senha" element={signed ? <WelcomeAfterLogin /> : <RecuperacaoSenha />} />
           {/* <Route path="/register-admin-teacher" element={signed ? <RegisterAdminTeacher /> : <Login />} /> */}
           <Route path="/register-admin-teacher" element={<RegisterAdminTeacher />} />
