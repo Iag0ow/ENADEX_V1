@@ -1,9 +1,10 @@
 import "./WelcomeAfterLogin.css";
-import SimuladoIcon from "./WelcomeAfteLoginImages/simuladoIcon.svg";
-import DiamondIcon from "./WelcomeAfteLoginImages/diamondIcon.svg";
-import FAQicon from "./WelcomeAfteLoginImages/FAQicon.svg";
-
+import SimuladoIcon from "./assets/images/simuladoIcon.svg";
+import DiamondIcon from "./assets/images/diamondIcon.svg";
+import FAQicon from "./assets/images/FAQicon.svg";
+import enfeiteLateral from "./assets/images/enfeiteLateral.svg";
 import NavBar from "../../components/NavBar/NavBar";
+
 
 export default function WelcomeAfterLogin() {
   return (
@@ -49,6 +50,7 @@ export default function WelcomeAfterLogin() {
           <img src={FAQicon} alt="Hexágono" className="buttonIcon" />
           FAQ Interno
         </button>
+        <div className="enfeiteLateral"></div> {/* Adiciona o elemento enfeiteLateral */}
       </div>
     </div>
   );
