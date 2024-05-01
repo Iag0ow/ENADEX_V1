@@ -3,20 +3,19 @@
   min-height: 100vh;
   box-sizing: border-box;
   position: relative; 
-  z-index: -2;
+  z-index: 1; 
 }
 
 .enfeiteLateral {
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
-  width: 20%; /* Largura responsiva */
-  height: 100%;
+  width: 20%; 
+  height: 100vh; 
   background-image: url('./assets/images/enfeiteLateral.svg');
   background-size: cover;
-  z-index: -1; /* Define a camada abaixo de todos os outros elementos */
+  z-index: -1; 
   opacity: 50%;
-
 }
 
 
