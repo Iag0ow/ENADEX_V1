@@ -1,0 +1,114 @@
+.bg-white {
+    background-color: white; 
+    min-height: 100vh;
+    box-sizing: border-box;
+    position: relative; 
+    z-index: 1; 
+}
+
+.simulatorInfo {
+    margin: 0 auto;
+    width: calc(100% - 60px);
+    max-width: 96%;
+    height: 30px;
+    background-color: #0693FA;
+    border-radius: 5px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+  }
+
+.simulatorInfo p {
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.question {
+    margin: 0 auto;
+    width: calc(100% - 60px);
+    max-width: 96%;
+    height: 70px;
+    background-color: #262525;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.question h1 {
+    font-size: 24px;
+    margin-left: 15px;
+}
+
+.response {
+    margin: 0 auto;
+    width: calc(100% - 28rem);
+    max-width: 96%;
+    height: 50px;
+    background-color: #262525;
+    border-radius: 8px;
+    display: flex;
+    margin-left: 30px;
+}
+
+.response p {
+    font-size: 20px;
+    margin-left: 15px;
+}
+
+.iconMarginRight {
+    margin-right: 23rem;
+}
+
+.trace {
+    margin: 0 auto;
+    width: calc(100% - 60px);
+    max-width: 96%;
+    height: 8px;
+    background-color: #262525;
+    border-radius: 8px;
+    display: flex;
+    margin-left: 30px;
+}
+
+.questionsRightWrong {
+    margin-right: 10rem;
+}
+
+.question-queue {
+    margin-top: 4rem;
+    text-align: center;
+}
+
+.question-queue h2{
+    margin-top: 4rem;
+    text-align: center;
+    font-weight: bold;
+    
+}
+
+.question-circle {
+    margin: 1px; /
+}
+
+.circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%; 
+    background-color: #0FA958; 
+    color: white; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    
+}
+
+.buttonBack {
+    width: 28rem;
+    height: 2.5rem;
+    background-color: #0693FA;
+    color: white; 
+    font-weight: bold;
+}
+
