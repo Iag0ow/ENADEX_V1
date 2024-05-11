@@ -1,97 +1,159 @@
 import React from "react";
-import peopleImg from "../../assets/people.png";
-import arrow from "../../assets/arrow.png";
+import women from "../../assets/landing-page-women.png";
+import exclamation from "../../assets/exclamacao.png";
+import list from "../../assets/list-img.png";
+import Notes from "../../assets/icons/Notes.png";
+import Diploma from "../../assets/icons/Diploma.png";
+import Student from "../../assets/icons/Student.png";
 import { Link } from "react-router-dom";
+import Navbar from "../../components/NavBar/NavBar";
+import Footer from "../../components/Footer/Footer";
 import "./LadingPage.css";
 
 const LadingPage = () => {
   return (
     <>
+      <Navbar />
       <div className="container">
-        <div className="row mt-5">
-          <div className="col-12 col-md-5">
-            <h1 className="text-white title-landing"> Bem vindo(a) á Enadex</h1>
-            <p className="text-white mt-5 mb-5" style={{ fontWeight: "bold", fontSize: "1.3em" }}>
-              Sua Plataforma Online de Preparação para o ENADE!
-            </p>
-            <p className="text-white mb-4" style={{ fontSize: "1.2em" }}>
-              Na Enadex, você encontrará uma vasta coleção de questões de
-              concursos, simulados e materiais de estudo cuidadosamente
-              selecionados para refletir o conteúdo e o formato do ENADE. Além
-              disso, oferecemos um recurso de classificação (rank) para
-              acompanhar seu progresso e compará-lo com outros estudantes,
-              incentivando uma preparação ainda mais motivadora e engajadora.
-            </p>
-            <Link to={"/login"} className="btn-acessar">
-              Acessar
+        <div className="row">
+          <div className="col-12 col-md-6 d-flex flex-column justify-content-center">
+            <h1 className="text-black-landing title-landing mb-4">
+              Sua grande
+              <span className="title-landing-span"> oportunidade</span> de se
+              preparar para o<span className="title-landing-span"> Enade</span>.
+            </h1>
+            <Link to="/login">
+              <button className="btn-acessar">Comece agora!</button>
             </Link>
           </div>
-          <div className="col-md-7">
-            <img className="img-fluid" src={peopleImg} alt="Enadex" />
+          <div className="col-12 col-md-6 d-flex justify-content-center justify-content-md-end">
+            <img className="img-landing" src={women} alt="Imagem de pessoas" />
           </div>
-          <div className="bg-box-landing-page col-12 col-md-10 mt-5">
-            <div className="d-flex p-3 justify-content-between flex-wrap">
-              <Link to="/faq" className="d-flex align-items-center">
-                <div
-                  style={{
-                    backgroundColor: "#C4C4C4",
-                    borderRadius: 10,
-                    width: 45,
-                    height: 45,
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <img style={{ width: 25, height: 25 }} src={arrow} alt="" />
+        </div>
+        <div className="row mt-5 pt-5">
+          <div className="d-none d-md-block col-md-6">
+            <img
+              className="img-exclamation"
+              src={exclamation}
+              alt="Imagem de uma seta"
+            />
+          </div>
+          <div className="col-12 col-md-6 d-flex flex-column justify-content-center justify-content-md-center">
+            <h3 className="text-black-landing">Informações sobre a prova</h3>
+            <p>
+              Tenha acesso a informações essenciais sobre o exame ENADE. Fique
+              por dentro das datas importantes, estrutura da prova e como se
+              preparar adequadamente.
+            </p>
+            <p>
+              Calendário do ENADE: Consulte as datas e prazos importantes para
+              inscrição e realização do exame. Formato da Prova: Conheça a
+              estrutura e o tipo de questões que serão abordadas no exame.
+              Orientações para o Dia da Prova: Saiba o que esperar no dia do
+              exame e como se preparar psicologicamente.
+            </p>
+          </div>
+        </div>
+        <div className="row mt-5 mb-5 pt-5 pb-5">
+          <div className="col-12 col-md-6">
+            <h3 className="text-black-landing">
+              Informações gerais sobre a prova.
+            </h3>
+            <p>Dados gerais sobre a aplicação da prova</p>
+          </div>
+          <div className="col-12 col-md-6">
+            <div className="row">
+              <div className="col-6">
+                <div className="row">
+                  <div className="col-md-3">
+                    <img src={Notes} alt="" />
+                  </div>
+                  <div className="col-md-6">
+                    <h5 className="text-black-landing">1 a 5</h5>
+                    <p className="text-subtitle-landing">Notas Atribuidas</p>
+                  </div>
                 </div>
-                <div className="ms-3 mt-3">
-                  <p className="pb-0 mb-0 text-white">Ir para</p>
-                  <p className="text-white">Perguntas Frequentes</p>
+              </div>
+              <div className="col-6">
+                <div className="row">
+                  <div className="col-md-3">
+                    <img src={Diploma} alt="" />
+                  </div>
+                  <div className="col-md-8">
+                    <h5 className="text-black-landing">40%</h5>
+                    <p className="text-subtitle-landing">
+                      Dos cursos presenciais
+                    </p>
+                  </div>
                 </div>
-              </Link>
-              <Link to="/itens-obrigatorios" className="d-flex align-items-center">
-                <div
-                  style={{
-                    backgroundColor: "#C4C4C4",
-                    borderRadius: 10,
-                    width: 45,
-                    height: 45,
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <img style={{ width: 25, height: 25 }} src={arrow} alt="" />
+              </div>
+            </div>
+            <div className="row mt-3">
+              <div className="col-6">
+                <div className="row">
+                  <div className="col-md-3">
+                    <img src={Diploma} alt="" />
+                  </div>
+                  <div className="col-md-8">
+                    <h5 className="text-black-landing">48,7%</h5>
+                    <p className="text-subtitle-landing">Dos cursos EAD</p>
+                  </div>
                 </div>
-                <div className="ms-3 mt-3">
-                  <p className="pb-0 mb-0 text-white">Ir para</p>
-                  <p className="text-white">Itens obrigatórios</p>
+              </div>
+              <div className="col-6">
+                <div className="row">
+                  <div className="col-md-3">
+                    <img src={Student} alt="" />
+                  </div>
+                  <div className="col-md-8">
+                    <h5 className="text-black-landing">26</h5>
+                    <p className="text-subtitle-landing">Áreas participantes</p>
+                  </div>
                 </div>
-              </Link>
-              <Link to={"/cursos"} className="d-flex align-items-center">
-                <div
-                  style={{
-                    backgroundColor: "#C4C4C4",
-                    borderRadius: 10,
-                    width: 45,
-                    height: 45,
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <img style={{ width: 25, height: 25 }} src={arrow} alt="" />
-                </div>
-                <div className="ms-3 mt-3">
-                  <p className="pb-0 mb-0 text-white">Ir para</p>
-                  <p className="text-white">Sobre a prova</p>
-                </div>
-              </Link>
+              </div>
             </div>
           </div>
         </div>
+        <div className="row mt-5 pt-5">
+          <div className="d-none d-md-block col-md-6">
+            <img
+              className="img-exclamation-list"
+              src={list}
+              alt="Imagem de uma seta"
+            />
+          </div>
+          <div className="col-12 col-md-6 d-flex flex-column justify-content-center justify-content-md-center">
+            <h3 className="text-black-landing">Simulado da prova</h3>
+            <p>
+              Prepare-se para o exame com nossos simulados interativos. Teste
+              seus conhecimentos com questões similares às do ENADE e receba um
+              feedback imediato para melhorar seu desempenho.
+            </p>
+            <p>
+              Acesse uma extensa biblioteca de questões abrangendo todos os
+              tópicos do ENADE. Estude com questões passadas e amplie seu
+              conhecimento sobre os temas mais relevantes.
+            </p>
+          </div>
+        </div>
+        <div className="row mt-5 body-common-questions">
+          <div className="d-flex justify-content-center">
+            <h2 className="frequetes-landing mt-2">Perguntas Frequentes</h2>
+          </div>
+        </div>
+        <div className="row mt-5">
+          <div className="d-flex justify-content-center">
+            <h1 className="title-food">Faça parte dessa jornada!</h1>
+          </div>
+          <div className="d-flex justify-content-center mt-3">
+            <Link to="/login">
+              <button className="btn-acessar-2">Acessar</button>
+            </Link>
+          </div>
+        </div>
+        {/* FAQ DE PERGUNTAS */}
       </div>
+        <Footer />
     </>
   );
 };
