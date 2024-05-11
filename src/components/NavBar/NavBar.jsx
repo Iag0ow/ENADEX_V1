@@ -29,8 +29,7 @@ const NavBar = ({ search }) => {
           <NavLink className="navLinks" to="/faq">Perguntas frequentes</NavLink>
           <NavLink className="navLinks" to="/simulados">Simulado</NavLink>
           <NavLink className="navLinks disabled" to="/material">Material</NavLink>
-         
-          {/* <Link className="navLinks" onClick={logOut} >Sair</Link> */}
+          <Link className="navLinks" onClick={logOut} >Sair</Link>
         </div>
       </ul>
     </nav>
