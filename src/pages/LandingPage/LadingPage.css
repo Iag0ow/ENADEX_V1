@@ -6,19 +6,81 @@
 .title-landing{
     font-size: 4rem;
 }
-
+.img-landing{
+    width: 50%;
+}
 .btn-acessar {
-    background-color: black;
+    background-color: #0693fa;
     color: white;
-    border-radius: 20px; 
-    padding: 12px 50px;
+    border-radius: 5px; 
+    padding: 5px 100px;
     border: none;
     font-weight: 500;
     transition: 0.5s;
     border: 2px solid transparent;
 }
-
-.btn-acessar:hover {
-    border-color: #0D4688;
+.btn-acessar-2{
+    background-color: #0693fa;
+    color: white;
+    border-radius: 5px; 
+    padding: 7px 35px;
+    border: none;
+    font-weight: 500;
     transition: 0.5s;
+    border: 2px solid transparent;
+}
+.btn-acessar-2r:hover {
+    transition: 0.5s;
+    transform: scale(1.05);
+}
+.btn-acessar:hover {
+    transition: 0.5s;
+    transform: scale(1.05);
+}
+.title-landing-span{
+    color: #0693fa;
+}
+.text-black-landing{
+    color: #4d4d4d;
+    font-weight: bold;
+}
+.img-exclamation{
+    width: 50%;
+}
+.img-exclamation-list{
+    width: 35%;
+}
+.text-subtitle-landing{
+    color: #4d4d4d; 
+}
+.frequetes-landing{
+    color: #170f49;
+    font-weight: bold;
+}
+.body-common-questions{
+    width: 100%;
+    border: 1px solid #FFFFFF;
+    margin-bottom: 90px;
+    box-shadow: 0px 10px 20px -5px rgba(0, 0, 0, 0.25);
+}
+.title-food{
+    color:#263238;
+    font-weight: bold;
+}
+
+
+
+@media screen and (max-width: 768px) {
+    .title-landing {
+        font-size: 3rem;
+    }
+    .img-landing{
+        margin-top: 50px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .title-landing {
+        font-size: 2rem;
+    }
 }

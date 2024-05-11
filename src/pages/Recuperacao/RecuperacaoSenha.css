@@ -3,7 +3,7 @@
 }
 
 body{
-    background: url(../../assets/Images/LandingPage-Img/LandingPageWeb.png)no-repeat center center fixed;
+    /* background: url(../../assets/Images/LandingPage-Img/LandingPageWeb.png)no-repeat center center fixed; */
     background-size: cover;
     background-repeat: no-repeat;
   }

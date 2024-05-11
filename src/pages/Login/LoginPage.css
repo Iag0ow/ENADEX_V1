@@ -1,5 +1,5 @@
 .pageWrapper {
-  background: url('../../assets/Images/LoginPage-Img/BGloginPage.png') no-repeat center;
+  /* background: url('../../assets/Images/LoginPage-Img/BGloginPage.png') no-repeat center; */
   background-size: cover;
   background-attachment: fixed;
   min-height: 100vh;
