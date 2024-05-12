@@ -16,7 +16,7 @@ export default function WelcomeAfterLogin() {
       </div>
 
       <div className="textsHolder">
-        <div class="textLeft">
+        <div className="textLeft">
           <span>Bem</span>
           <span>Vindo(a) às</span>
           <span>suas</span>
