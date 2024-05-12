@@ -5,9 +5,11 @@ import glass from '../../assets/Images/SVG/magnifyng_glass.svg'
 import { Link, NavLink } from 'react-router-dom'
 import ModalLogin from "../../components/ModalLogin/ModalLogin";
 import { useState } from "react";
+import { useAuth } from "../../context/AuthContextProvider";
 
 const NavBarNoAuth = ({search}) => {
-  const [modalShow, setModalShow] = useState(false);
+  const { modalShow, setModalShow } = useAuth();
+  
   return (
     <nav>
       <ul>
