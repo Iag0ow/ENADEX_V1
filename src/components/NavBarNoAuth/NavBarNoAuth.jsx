@@ -6,10 +6,11 @@ import { Link, NavLink } from 'react-router-dom'
 import ModalLogin from "../../components/ModalLogin/ModalLogin";
 import ModalRegister from "../../components/ModalRegister/ModalRegister";
 import { useState } from "react";
+import { useAuth } from "../../context/AuthContextProvider";
 
 const NavBarNoAuth = ({search}) => {
-  const [modalShow, setModalShow] = useState(false);
-  const [modalRegisterShow, setModalRegisterShow] = useState(false);
+  const { modalShow, setModalShow } = useAuth();
+  
   return (
     <nav>
       <ul>

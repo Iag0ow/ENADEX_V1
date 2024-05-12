@@ -29,7 +29,7 @@
     transition: 0.5s;
     border: 2px solid transparent;
 }
-.btn-acessar-2r:hover {
+.btn-acessar-2:hover {
     transition: 0.5s;
     transform: scale(1.05);
 }

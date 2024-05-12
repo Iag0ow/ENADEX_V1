@@ -10,6 +10,8 @@ export const AuthContextProvider = ({children}) => {
   const [token, setToken] = useState('');
   const [authRole, setAuthRole] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const [modalShow, setModalShow] = useState(false);
   
 
   async function login(loginForm){
@@ -68,7 +70,7 @@ export const AuthContextProvider = ({children}) => {
   
 
   return (
-    <AuthContext.Provider value={{signed:signed,user:user,email:email, token:token, login,logOut, loading, verifySigned, authRole}}>
+    <AuthContext.Provider value={{signed:signed,user:user,email:email, token:token, login,logOut, loading, verifySigned, authRole, modalShow, setModalShow}}>
     {children}
    </AuthContext.Provider>
   )

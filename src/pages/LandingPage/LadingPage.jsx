@@ -14,7 +14,7 @@ import Faq from "../faq/Faq";
 import NavBarNoAuth from "../../components/NavBarNoAuth/NavBarNoAuth";
 
 const LadingPage = () => {
-  const { signed } = useAuth();
+  const { signed, setModalShow } = useAuth();
   return (
     <>
       {signed ? <Navbar /> : <NavBarNoAuth />}
@@ -26,8 +26,8 @@ const LadingPage = () => {
               <span className="title-landing-span"> oportunidade</span> de se
               preparar para o<span className="title-landing-span"> Enade</span>.
             </h1>
-            <Link to="/login">
-              <button className="btn-acessar">Comece agora!</button>
+            <Link >
+              <button className="btn-acessar" onClick={() => setModalShow(true)}>Comece agora!</button>
             </Link>
           </div>
           <div className="col-12 col-md-6 d-flex justify-content-center justify-content-md-end">
@@ -151,8 +151,8 @@ const LadingPage = () => {
             <h1 className="title-food">Faça parte dessa jornada!</h1>
           </div>
           <div className="d-flex justify-content-center mt-3">
-            <Link to="/login">
-              <button className="btn-acessar-2">Acessar</button>
+            <Link>
+              <button className="btn-acessar-2" onClick={() => setModalShow(true)}>Acessar</button>
             </Link>
           </div>
         </div>
