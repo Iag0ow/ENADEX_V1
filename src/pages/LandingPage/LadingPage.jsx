@@ -9,11 +9,15 @@ import { Link } from "react-router-dom";
 import Navbar from "../../components/NavBar/NavBar";
 import Footer from "../../components/Footer/Footer";
 import "./LadingPage.css";
+import { useAuth } from "../../context/AuthContextProvider";
+import Faq from "../faq/Faq";
+import NavBarNoAuth from "../../components/NavBarNoAuth/NavBarNoAuth";
 
 const LadingPage = () => {
+  const { signed } = useAuth();
   return (
     <>
-      <Navbar />
+      {signed ? <Navbar /> : <NavBarNoAuth />}
       <div className="container">
         <div className="row">
           <div className="col-12 col-md-6 d-flex flex-column justify-content-center">
@@ -137,10 +141,11 @@ const LadingPage = () => {
           </div>
         </div>
         <div className="row mt-5 body-common-questions">
-          <div className="d-flex justify-content-center">
+          <div id="perguntas" className="d-flex justify-content-center">
             <h2 className="frequetes-landing mt-2">Perguntas Frequentes</h2>
           </div>
         </div>
+        <Faq />
         <div className="row mt-5">
           <div className="d-flex justify-content-center">
             <h1 className="title-food">Faça parte dessa jornada!</h1>
@@ -151,9 +156,8 @@ const LadingPage = () => {
             </Link>
           </div>
         </div>
-        {/* FAQ DE PERGUNTAS */}
       </div>
-        <Footer />
+      <Footer />
     </>
   );
 };
