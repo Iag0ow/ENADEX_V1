@@ -15,7 +15,8 @@ export default function Simulated_Guideline() {
           <div className="guidelineListContainer">
             <p className="guidelineTitle">Orientações para o Simulado</p>
             <div className="conclusionTime">
-              Tempo de conclusão do simulado: <span className="timerSimulated"> 04:00:00</span>
+              Tempo de conclusão do simulado:{" "}
+              <span className="timerSimulated"> 04:00:00</span>
             </div>
             <p className="largerText">Duração do simulado</p>
             <ul className="bulletList">
@@ -95,6 +96,7 @@ export default function Simulated_Guideline() {
           </div>
         </div>
         <button className="btnStartSimulated">Iniciar Simulado</button>
+        <a style={{textDecoration: "underline", marginTop: "5px"}} href="javascript:history.go(-1)">Voltar</a>
       </div>
     </div>
   );
