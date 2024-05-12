@@ -171,10 +171,15 @@ const ModalRegister = (props) => {
               </Button>
             </div>
           </form>
+          <p className="text-center mt-2">
+          Já possui uma conta?
+          <Link className="links-modal-login" onClick={handleClick}>
+            <span className="ms-1">Faça login aqui</span>
+          </Link>
+        </p>
         </Modal.Body>
-        <Link className="links-modal-login" onClick={handleClick}>
-          <span className="ms-1">Crie sua conta aqui</span>
-        </Link>
+
+       
       </Modal>
     </>
   );
