@@ -1,9 +1,21 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import facebook from "../../assets/icons/facebook.png";
+import google from "../../assets/icons/google.png";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContextProvider";
 
 const ModalRegister = (props) => {
+  const { modalShow, setModalShow } = useAuth();
+
+  const handleClick = () => {
+    if (!modalShow) {
+      props.onHide();
+      setModalShow(true);
+    }
+  };
+
   return (
     <>
       <Modal
@@ -12,20 +24,30 @@ const ModalRegister = (props) => {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            Para continuar, acesse sua conta
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {/* Botões do Facebook lado a lado */}
-          <div className="d-flex justify-content-between mb-3">
-            <Button variant="primary" onClick={props.onHide}>
-              Continuar com o Facebook
+        <Modal.Body className="p-5">
+          <h5 className="text-center mb-4">Para continuar, acesse sua conta</h5>
+          <div className="d-flex justify-content-evenly">
+            <Button variant="primary" className="me-2" onClick={props.onHide}>
+              <span className="me-2">
+                <img src={facebook} alt="" />
+              </span>
+              Continuar com o facebook
             </Button>
-            <Button variant="primary" onClick={props.onHide}>
-              Continuar com o Facebook
+            <Button
+              variant="white"
+              className="text-black border button-google"
+              onClick={props.onHide}
+            >
+              <span className="me-2">
+                <img src={google} alt="" />
+              </span>
+              Continuar com o google
             </Button>
+          </div>
+          <div className="container-login mb-3">
+            <div className="line"></div>
+            <div className="text">ou acesse com e-mail e senha</div>
+            <div className="line"></div>
           </div>
 
           {/* Inputs */}
@@ -145,19 +167,14 @@ const ModalRegister = (props) => {
             </p>
             <div className="d-flex justify-content-center">
               <Button variant="primary" type="submit">
-                ENTRAR
+                CRIAR CONTA
               </Button>
             </div>
           </form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={props.onHide}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={props.onHide}>
-            Entrar
-          </Button>
-        </Modal.Footer>
+        <Link className="links-modal-login" onClick={handleClick}>
+          <span className="ms-1">Crie sua conta aqui</span>
+        </Link>
       </Modal>
     </>
   );
