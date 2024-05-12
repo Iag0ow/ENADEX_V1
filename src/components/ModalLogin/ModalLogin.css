@@ -1,6 +1,7 @@
 .links-modal-login{
     color: #101010;
     text-decoration: underline;
+    margin: 5px 5px;
 }
 .links-modal-login:hover{
     color: #0693fa;

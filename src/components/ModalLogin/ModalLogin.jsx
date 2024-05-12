@@ -130,7 +130,7 @@ const ModalLogin = (props) => {
             </div>
             <p className="text-center">
               Ao continuar, declaro que estou ciente dos
-              <Link className="links-modal-login" to={"termos-uso"}>
+              <Link className="links-modal-login " to={"termos-uso"}>
                 Termos de Uso
               </Link>
               e <span className="me-1">da</span>
