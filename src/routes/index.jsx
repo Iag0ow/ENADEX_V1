@@ -22,10 +22,10 @@ function AppRoutes() {
         <Routes>
           {/* <Route path="/login" element={ signed ? <WelcomeAfterLogin /> : <Login />} /> */}
           <Route path="/register" element={signed ? <WelcomeAfterLogin /> : <Register />} />
+          <Route path="/home" element={signed ? <WelcomeAfterLogin /> : <LadingPage />} />
+          <Route path="/simulados" element={signed ? <SimulatedPanel /> : <LadingPage />} />
           <Route path="/orientacoes-do-simulado" element={<Simulated_Guideline />} />
-          <Route path="/home" element={signed ? <WelcomeAfterLogin /> : <Login />} />
-          <Route path="/simulados" element={signed ? <SimulatedPanel /> : <Login />} />
-          <Route path="/simulados-concluidos" element={signed ? <CompletedSimulations /> : <Login />} />
+          <Route path="/simulados-concluidos" element={signed ? <CompletedSimulations /> : <LadingPage />} />
           <Route path="/esqueci-minha-senha" element={signed ? <WelcomeAfterLogin /> : <RecuperacaoSenha />} />
           {/* <Route path="/register-admin-teacher" element={signed ? <RegisterAdminTeacher /> : <Login />} /> */}
           <Route path="/register-admin-teacher" element={<RegisterAdminTeacher />} />
