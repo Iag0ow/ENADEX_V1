@@ -3,15 +3,17 @@ import { Link } from "react-router-dom";
 import NavBar from "../../components/NavBar/NavBar";
 import profilePic from "./assets/images/psicopato_profile.svg";
 import search_icon from "./assets/images/search_icon.svg";
+import { useAuth } from "../../context/AuthContextProvider";
 
 export default function SimulatedPanel() {
+  const { user } = useAuth();
   return (
     <div className="pageWrapperSimulatedPanel">
       <NavBar />
       <div className="userInfo">
         <img className="profilePic" src={profilePic} alt="foto de perfil" />
         <div className="userProfile">
-          <p className="userName">Jhon Doe</p>
+          <p className="userName">{user.toUpperCase()}</p>
           <label className="mediaAcertos">Média de acertos: 85%</label>
           <label className="simulatedsRealized">Simulados realizados: 4</label>
         </div>

@@ -11,7 +11,7 @@ const NavBar = ({ search }) => {
     <nav>
       <ul>
         <div className='d-flex align-items-center'>
-          <Link to={"/"}><img className='logoNav' src={Logo} alt="" style={{ width: 64, height: 64 }} /></Link>
+          <Link to={"/home"}><img className='logoNav' src={Logo} alt="" style={{ width: 64, height: 64 }} /></Link>
           <div className="input-group">
             {search &&
               <>
@@ -23,7 +23,7 @@ const NavBar = ({ search }) => {
         </div>
         <div className='links'>
           <NavLink className="navLinks" to="/home">Home</NavLink>
-          <NavLink className="navLinks disabled" to="/">Faq(Interno)</NavLink>
+          <NavLink className="navLinks disabled" to="/teste">Faq(Interno)</NavLink>
           <NavLink className="navLinks" to="/simulados">Simulado</NavLink>
           <NavLink className="navLinks disabled" to="/material">Material</NavLink>
           {(authRole === "TEACHER" || authRole === "COORDINATORS") &&

@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import facebook from "../../assets/icons/facebook.png";
 import google from "../../assets/icons/google.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./ModalLogin.css";
 import ModalRegister from "../ModalRegister/ModalRegister";
 import { useAuth } from "../../context/AuthContextProvider";
@@ -11,6 +11,7 @@ import { useAuth } from "../../context/AuthContextProvider";
 const ModalLogin = (props) => {
   const { modalShow, setModalShow, login, verifySigned } = useAuth();
   const [modalRegisterShow, setModalRegisterShow] = useState(false);
+  const navigate = useNavigate();
   const handleClick = () => {
     if (modalShow) {
       setModalShow(false);
@@ -35,7 +36,7 @@ const ModalLogin = (props) => {
       localStorage.setItem("token", data.access_token);
       verifySigned(true);
       setModalShow(false);
-      // window.location.href = "/teste"; // redirecionar para a Rota correta
+      navigate('/home');
     } else {
       setError(data.status != 201 ? "Credenciais inválidas" : data.message);
       setLoad(false);
@@ -119,14 +120,14 @@ const ModalLogin = (props) => {
               </Link>
             </div>
             <p className="text-center">
-              Ao continuar, declaro que estou ciente dos{" "}
+              Ao continuar, declaro que estou ciente dos
               <Link className="links-modal-login" to={"termos-uso"}>
                 Termos de Uso
-              </Link>{" "}
+              </Link>
               e <span className="me-1">da</span>
               <Link className="links-modal-login" to={"politica-privacidade"}>
                 Política de Privacidade
-              </Link>{" "}
+              </Link>
               da ENADEX
             </p>
             <div className="d-flex justify-content-center pb-3">

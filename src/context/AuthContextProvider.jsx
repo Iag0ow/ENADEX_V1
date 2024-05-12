@@ -1,4 +1,5 @@
 import { createContext, useState,useContext, useEffect } from 'react';
+import { getProfile } from '../config/config';
 const API = "https://enadex-api-v2.vercel.app";
 
 export const AuthContext = createContext({})
@@ -10,6 +11,7 @@ export const AuthContextProvider = ({children}) => {
   const [token, setToken] = useState('');
   const [authRole, setAuthRole] = useState('');
   const [loading, setLoading] = useState(false);
+  const [loadingReaload, setLoadingReload] = useState(false);
 
   const [modalShow, setModalShow] = useState(false);
   
@@ -33,6 +35,7 @@ export const AuthContextProvider = ({children}) => {
     if (response.status === 201) {
     //   localStorage.setItem("token", auth.access_token);  ia colocar aqui mas kadmo já faz isso na tela de login então tenho que ver dps
       localStorage.setItem("authRole", auth.role);
+      localStorage.setItem("userName", auth.name);
       setUser(auth.name);
       setToken(auth.access_token);
       setEmail(auth.email);
@@ -51,17 +54,23 @@ export const AuthContextProvider = ({children}) => {
     setToken('');
     setEmail('');
     setUser('');
-    window.location.href = '/';
     // return true;
   }
 
-  function verifySigned() {
+  async function verifySigned() {
     const token = localStorage.getItem("token");
     const authRole = localStorage.getItem("authRole");
-    if (token) {
+    const userName = localStorage.getItem("userName");
+    setLoadingReload(true);
+    const response = await getProfile();
+    if (token && response.status == 200) {
       setSigned(true);
       setAuthRole(authRole)
+      setUser(userName)
+    } else {
+      setSigned(false);
     }
+    setLoadingReload(false);
   }
 
   useEffect(() => {
@@ -70,7 +79,7 @@ export const AuthContextProvider = ({children}) => {
   
 
   return (
-    <AuthContext.Provider value={{signed:signed,user:user,email:email, token:token, login,logOut, loading, verifySigned, authRole, modalShow, setModalShow}}>
+    <AuthContext.Provider value={{signed:signed,user:user,email:email, token:token, login,logOut, loading, verifySigned, authRole, modalShow, setModalShow, loadingReaload}}>
     {children}
    </AuthContext.Provider>
   )

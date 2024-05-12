@@ -58,3 +58,19 @@ export const changePassword = async (formChange) => {
   const response = await fetch(`${API}/forgot-password/validate`, config);
   return response;
 }
+
+export async function getProfile(){
+  const token = localStorage.getItem("token");
+  const config = {
+    method: "GET",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    }
+  };
+
+  const response = await fetch(`${API}/profile/me`, config);
+  const data = await response.json();
+  
+  return {...data, status: response.status};
+}
