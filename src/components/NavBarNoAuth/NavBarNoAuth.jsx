@@ -3,8 +3,13 @@ import './NavBarNoAuth.css'
 import Logo  from '../NavBar/images/LogoEnadex.svg'
 import glass from '../../assets/Images/SVG/magnifyng_glass.svg'
 import { Link, NavLink } from 'react-router-dom'
+import ModalLogin from "../../components/ModalLogin/ModalLogin";
+import { useState } from "react";
+import { useAuth } from "../../context/AuthContextProvider";
 
-const NavBar = ({search}) => {
+const NavBarNoAuth = ({search}) => {
+  const { modalShow, setModalShow } = useAuth();
+  
   return (
     <nav>
       <ul>
@@ -20,15 +25,16 @@ const NavBar = ({search}) => {
           </div>
         </div>
         <div className='links'>
-          <NavLink className="navLinks" to="/faq">Perguntas frequentes</NavLink>
-          <NavLink className="navLinks" to="/login">Entrar</NavLink>
-          <NavLink className="navLinkPrepareButton" to="/register">Quero me preparar</NavLink>
+          <a className="navLinks" href="#perguntas">Perguntas frequentes</a>
+          <NavLink onClick={() => setModalShow(true)} className="navLinks">Entrar</NavLink>
+          <NavLink  className="navLinkPrepareButton">Quero me preparar</NavLink>
           
           {/* <Link className="navLinks" onClick={logOut} >Sair</Link> */}
         </div>
       </ul>
+      <ModalLogin show={modalShow} onHide={() => setModalShow(false)} />
     </nav>
   )
 }
 
-export default NavBar
+export default NavBarNoAuth

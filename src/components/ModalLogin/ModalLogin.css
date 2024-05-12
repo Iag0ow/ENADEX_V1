@@ -1,0 +1,50 @@
+.links-modal-login{
+    color: #101010;
+    text-decoration: underline;
+}
+.links-modal-login:hover{
+    color: #0693fa;
+}
+.links-modal-forgot{
+    color: #01033f;
+    text-decoration: underline;
+}
+
+.links-modal-forgot:hover{
+    color: #0693fa;
+    text-decoration: underline;
+}
+.background-input-modal-login{
+    background-color: #f0f0f0;
+}
+.fs-7{
+    font-size: 0.7rem !important;
+}
+.container-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.line {
+    flex: 1;
+    height: 1px;
+    background-color: #000;
+}
+
+.text {
+    padding: 0 20px;
+    color: #555;
+    font-size: 0.8rem !important;
+}
+
+.button-google{
+    background-color: #ffff;
+    transition: 0.5s;
+
+}
+.button-google:hover{
+    background-color: #e9e9e9;
+    transition: 0.5s;
+}

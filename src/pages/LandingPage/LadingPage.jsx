@@ -9,11 +9,15 @@ import { Link } from "react-router-dom";
 import Navbar from "../../components/NavBar/NavBar";
 import Footer from "../../components/Footer/Footer";
 import "./LadingPage.css";
+import { useAuth } from "../../context/AuthContextProvider";
+import Faq from "../faq/Faq";
+import NavBarNoAuth from "../../components/NavBarNoAuth/NavBarNoAuth";
 
 const LadingPage = () => {
+  const { signed, setModalShow } = useAuth();
   return (
     <>
-      <Navbar />
+      {signed ? <Navbar /> : <NavBarNoAuth />}
       <div className="container">
         <div className="row">
           <div className="col-12 col-md-6 d-flex flex-column justify-content-center">
@@ -22,8 +26,8 @@ const LadingPage = () => {
               <span className="title-landing-span"> oportunidade</span> de se
               preparar para o<span className="title-landing-span"> Enade</span>.
             </h1>
-            <Link to="/login">
-              <button className="btn-acessar">Comece agora!</button>
+            <Link >
+              <button className="btn-acessar" onClick={() => setModalShow(true)}>Comece agora!</button>
             </Link>
           </div>
           <div className="col-12 col-md-6 d-flex justify-content-center justify-content-md-end">
@@ -137,23 +141,23 @@ const LadingPage = () => {
           </div>
         </div>
         <div className="row mt-5 body-common-questions">
-          <div className="d-flex justify-content-center">
+          <div id="perguntas" className="d-flex justify-content-center">
             <h2 className="frequetes-landing mt-2">Perguntas Frequentes</h2>
           </div>
         </div>
+        <Faq />
         <div className="row mt-5">
           <div className="d-flex justify-content-center">
             <h1 className="title-food">Faça parte dessa jornada!</h1>
           </div>
           <div className="d-flex justify-content-center mt-3">
-            <Link to="/login">
-              <button className="btn-acessar-2">Acessar</button>
+            <Link>
+              <button className="btn-acessar-2" onClick={() => setModalShow(true)}>Acessar</button>
             </Link>
           </div>
         </div>
-        {/* FAQ DE PERGUNTAS */}
       </div>
-        <Footer />
+      <Footer />
     </>
   );
 };

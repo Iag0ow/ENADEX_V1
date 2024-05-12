@@ -30,7 +30,6 @@ function AppRoutes() {
           {/* <Route path="/register-admin-teacher" element={signed ? <RegisterAdminTeacher /> : <Login />} /> */}
           <Route path="/register-admin-teacher" element={<RegisterAdminTeacher />} />
           <Route path="/" element={signed ? <WelcomeAfterLogin /> : <LadingPage />} />
-          <Route path="/faq" element={<Faq />} />
           <Route path="/itens-obrigatorios" element={<Itens />} />
           <Route path="/cursos" element={<Courses />} />
           <Route path="*" element={<LadingPage />} />
