@@ -4,6 +4,10 @@ import profilePic from "./assets/images/psicopato_profile.svg";
 import search_icon from "./assets/images/search_icon.svg";
 
 export default function SimulatedPanel() {
+  const handleGenerateSimulated = () => {
+    window.location.href = "/orientacoes-do-simulado";
+  };
+
   return (
     <div className="pageWrapperSimulatedPanel">
       <NavBar />
@@ -15,7 +19,7 @@ export default function SimulatedPanel() {
           <label className="simulatedsRealized">Simulados realizados: 4</label>
         </div>
         <div className="generateSimulated">
-          <button className="btnSimulated">Gerar simulado</button>
+          <button onClick={handleGenerateSimulated} className="btnSimulated" >Gerar simulado</button>
         </div>
       </div>
       <div className="searchBarWrapper">
@@ -26,7 +30,6 @@ export default function SimulatedPanel() {
       </div>
 
       <div className="simulatedWrapper">
-        {/* Aqui estão os quatro botões */}
         <button className="btnRealizedSimulated">
           <div className="simulatedText">
             IBMEC - 2022 - ENADE Simulado - Direito
