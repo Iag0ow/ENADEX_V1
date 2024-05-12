@@ -51,7 +51,7 @@ export const AuthContextProvider = ({children}) => {
     setToken('');
     setEmail('');
     setUser('');
-    window.location.reload();
+    window.location.href = '/';
     // return true;
   }
 
