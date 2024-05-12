@@ -22,12 +22,12 @@ const NavBar = ({ search }) => {
           </div>
         </div>
         <div className='links'>
-          <NavLink className="navLinks" to="/">Home</NavLink>
-          <NavLink className="navLinks">Faq(Interno)</NavLink>
+          <NavLink className="navLinks" to="/home">Home</NavLink>
+          <NavLink className="navLinks disabled" to="/">Faq(Interno)</NavLink>
           <NavLink className="navLinks" to="/simulados">Simulado</NavLink>
           <NavLink className="navLinks disabled" to="/material">Material</NavLink>
           {(authRole === "TEACHER" || authRole === "COORDINATORS") &&
-            <Link className="navLinks" to={"/register-admin-teacher"} >Cadastrar Admin ou Professor</Link>
+            <NavLink className="navLinks" to={"/register-admin-teacher"} >Cadatro Admin/Professor</NavLink>
           }
           <Link className="navLinks" onClick={logOut} >Sair</Link>
         </div>
