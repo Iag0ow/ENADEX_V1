@@ -26,7 +26,6 @@ const ModalLogin = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoad(true);
-    e.preventDefault();
     const loginForm = {
       email: email,
       password: senha,
@@ -35,6 +34,7 @@ const ModalLogin = (props) => {
     if (data.status === 201) {
       localStorage.setItem("token", data.access_token);
       verifySigned(true);
+      setModalShow(false);
       // window.location.href = "/teste"; // redirecionar para a Rota correta
     } else {
       setError(data.status != 201 ? "Credenciais inválidas" : data.message);

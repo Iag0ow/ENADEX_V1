@@ -20,7 +20,7 @@ function AppRoutes() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/login" element={ signed ? <WelcomeAfterLogin /> : <Login />} />
+          {/* <Route path="/login" element={ signed ? <WelcomeAfterLogin /> : <Login />} /> */}
           <Route path="/register" element={signed ? <WelcomeAfterLogin /> : <Register />} />
           <Route path="/orientacoes-do-simulado" element={<Simulated_Guideline />} />
           <Route path="/home" element={signed ? <WelcomeAfterLogin /> : <Login />} />
