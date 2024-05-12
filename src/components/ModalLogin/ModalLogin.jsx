@@ -7,10 +7,12 @@ import { Link, useNavigate } from "react-router-dom";
 import "./ModalLogin.css";
 import ModalRegister from "../ModalRegister/ModalRegister";
 import { useAuth } from "../../context/AuthContextProvider";
+import ModalPasswordRecover from "../ModalPasswordRecover/ModalPasswordRecover";
 
 const ModalLogin = (props) => {
   const { modalShow, setModalShow, login, verifySigned } = useAuth();
   const [modalRegisterShow, setModalRegisterShow] = useState(false);
+  const [modalPasswordRecoverShow, setModalPasswordRecoverShow] = useState(false);
   const navigate = useNavigate();
   const handleClick = () => {
     if (modalShow) {
@@ -18,6 +20,13 @@ const ModalLogin = (props) => {
       setModalRegisterShow(true);
     }
   };
+
+  const handleClickPasswordRecover = () => {
+    if (modalShow) {
+      setModalShow(false);
+      setModalPasswordRecoverShow(true);
+    }
+  }
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
@@ -115,7 +124,7 @@ const ModalLogin = (props) => {
                   MANTER CONECTADO
                 </label>
               </div>
-              <Link className="links-modal-forgot" to={"esqueci-senha"}>
+              <Link className="links-modal-forgot" onClick={handleClickPasswordRecover}>
                 ESQUECEU A SENHA?
               </Link>
             </div>
@@ -152,6 +161,10 @@ const ModalLogin = (props) => {
       <ModalRegister
         show={modalRegisterShow}
         onHide={() => setModalRegisterShow(false)}
+      />
+      <ModalPasswordRecover
+        show={modalPasswordRecoverShow}
+        onHide={() => setModalPasswordRecoverShow(false)}
       />
     </>
   );
