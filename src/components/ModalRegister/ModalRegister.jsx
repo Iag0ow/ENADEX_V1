@@ -1,19 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import FormControl from "react-bootstrap/FormControl";
 import facebook from "../../assets/icons/facebook.png";
 import google from "../../assets/icons/google.png";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContextProvider";
+import "./ModalRegister.css";
+import { studentRegister } from "../../config/config";
 
 const ModalRegister = (props) => {
   const { modalShow, setModalShow } = useAuth();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [selectedCourseId, setSelectedCourseId] = useState("");
+  const [selectedUnit, setSelectedUnit] = useState("");
+  const [selectedSemester, setSelectedSemester] = useState("");
+  const [registration, setRegistration] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleClick = () => {
     if (!modalShow) {
       props.onHide();
       setModalShow(true);
     }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    // Crie um objeto com os dados do estudante
+    const registerForm = {
+      name,
+      email,
+      registration,
+      password,
+      semester: selectedSemester,
+      course_id: selectedCourseId,
+      unity: selectedUnit,
+    };
+
+    // Chame a função para registrar o estudante na API
+    try {
+      const response = await studentRegister(registerForm);
+      // Verifique a resposta da API e tome medidas apropriadas
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log(responseData);
+      } else {
+      }
+    } catch (error) {}
   };
 
   return (
@@ -31,7 +68,7 @@ const ModalRegister = (props) => {
               <span className="me-2">
                 <img src={facebook} alt="" />
               </span>
-              Continuar com o facebook
+              Continuar com o Facebook
             </Button>
             <Button
               variant="white"
@@ -41,7 +78,7 @@ const ModalRegister = (props) => {
               <span className="me-2">
                 <img src={google} alt="" />
               </span>
-              Continuar com o google
+              Continuar com o Google
             </Button>
           </div>
           <div className="container-login mb-3">
@@ -49,9 +86,8 @@ const ModalRegister = (props) => {
             <div className="text">ou acesse com e-mail e senha</div>
             <div className="line"></div>
           </div>
-
           {/* Inputs */}
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="row mb-3">
               <div className="col">
                 <label htmlFor="name" className="form-label mb-0 fs-7">
@@ -61,6 +97,8 @@ const ModalRegister = (props) => {
                   type="text"
                   className="form-control background-input-modal-login"
                   id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
               <div className="col">
@@ -72,6 +110,8 @@ const ModalRegister = (props) => {
                   className="form-control background-input-modal-login"
                   id="email"
                   required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
             </div>
@@ -80,21 +120,39 @@ const ModalRegister = (props) => {
                 <label htmlFor="curso" className="form-label mb-0 fs-7">
                   Curso
                 </label>
-                <input
-                  type="text"
-                  className="form-control background-input-modal-login"
-                  id="curso"
-                />
+                <FormControl
+                  id="cursoSelect"
+                  as="select"
+                  className="background-input-modal-login p-2 w-100 h-auto"
+                  onChange={(e) => setSelectedCourseId(e.target.value)}
+                  value={selectedCourseId}
+                >
+                  <option value="">Selecione o Curso</option>
+                  <option value="6636d04c2a9c00506b72601b">
+                    Sistemas de Informação
+                  </option>
+                </FormControl>
               </div>
               <div className="col">
-                <label htmlFor="unidade" className="form-label mb-0 fs-7">
+                <label htmlFor="unidade" className="form-label mb-0  fs-7">
                   Unidade
                 </label>
-                <input
-                  type="text"
-                  className="form-control background-input-modal-login"
+                <FormControl
+                  as="select"
+                  className="background-input-modal-login p-2 w-100 h-auto"
                   id="unidade"
-                />
+                  onChange={(e) => setSelectedUnit(e.target.value)}
+                  value={selectedUnit}
+                >
+                  <option value="">Selecione a Unidade</option>
+                  <option value="ITABUNA">Itabuna</option>
+                  <option value="FEIRA_DE_SANTANA">Feira de Santana</option>
+                  <option value="VITORIA_DA_CONQUISTA">
+                    Vitória da Conquista
+                  </option>
+                  <option value="JEQUIÉ">Jequié</option>
+                  <option value="SALVADOR">Salvador</option>
+                </FormControl>
               </div>
             </div>
             <div className="row mb-3">
@@ -106,20 +164,36 @@ const ModalRegister = (props) => {
                   type="text"
                   className="form-control background-input-modal-login"
                   id="matricula"
+                  value={registration}
+                  onChange={(e) => setRegistration(e.target.value)}
                 />
               </div>
               <div className="col">
                 <label htmlFor="semestre" className="form-label mb-0 fs-7">
                   Semestre
                 </label>
-                <input
-                  type="text"
-                  className="form-control background-input-modal-login"
+                <FormControl
+                  as="select"
+                  className="background-input-modal-login p-2 w-100 h-auto"
                   id="semestre"
-                />
+                  onChange={(e) => setSelectedSemester(e.target.value)}
+                  value={selectedSemester}
+                >
+                  <option value="">Selecione o Semestre</option>
+                  <option value="1">1º Semestre</option>
+                  <option value="2">2º Semestre</option>
+                  <option value="3">3º Semestre</option>
+                  <option value="4">4º Semestre</option>
+                  <option value="5">5º Semestre</option>
+                  <option value="6">6º Semestre</option>
+                  <option value="7">7º Semestre</option>
+                  <option value="8">8º Semestre</option>
+                  <option value="9">9º Semestre</option>
+                  <option value="10">10º Semestre</option>
+                </FormControl>
               </div>
             </div>
-            <div className="mb-3">
+            <div className="mb-1">
               <label htmlFor="password" className="form-label mb-0 fs-7">
                 Senha
               </label>
@@ -127,6 +201,8 @@ const ModalRegister = (props) => {
                 type="password"
                 className="form-control background-input-modal-login"
                 id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
             <div className="mb-3">
@@ -137,22 +213,9 @@ const ModalRegister = (props) => {
                 type="password"
                 className="form-control background-input-modal-login"
                 id="confirmPassword"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
               />
-            </div>
-            <div className="d-flex justify-content-between align-items-center mb-3">
-              <div className="form-check">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="keepConnected"
-                />
-                <label className="form-check-label" htmlFor="keepConnected">
-                  MANTER CONECTADO
-                </label>
-              </div>
-              <Link className="links-modal-forgot" to={"esqueci-senha"}>
-                ESQUECEU A SENHA?
-              </Link>
             </div>
             <p className="text-center">
               Ao continuar, declaro que estou ciente dos{" "}
@@ -172,14 +235,12 @@ const ModalRegister = (props) => {
             </div>
           </form>
           <p className="text-center mt-2">
-          Já possui uma conta?
-          <Link className="links-modal-login" onClick={handleClick}>
-            <span className="ms-1">Faça login aqui</span>
-          </Link>
-        </p>
+            Já possui uma conta?
+            <Link className="links-modal-login" onClick={handleClick}>
+              <span className="ms-1">Faça login aqui</span>
+            </Link>
+          </p>
         </Modal.Body>
-
-       
       </Modal>
     </>
   );
