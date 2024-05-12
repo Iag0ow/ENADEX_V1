@@ -5,6 +5,7 @@ import LadingPage from "../pages/LandingPage/LadingPage";
 import Login from "../pages/Login/LoginPage";
 import RecuperacaoSenha from "../pages/Recuperacao/RecuperacaoSenha";
 import Faq from "../pages/faq/Faq";
+import Simulated_Guideline from "../pages/SimulationGuidelines/Guideline";
 import Itens from "../pages/Itens";
 import Courses from "../pages/Courses";
 import Home from "../pages/Home/Home";
@@ -21,6 +22,7 @@ function AppRoutes() {
         <Routes>
           <Route path="/login" element={ signed ? <WelcomeAfterLogin /> : <Login />} />
           <Route path="/register" element={signed ? <WelcomeAfterLogin /> : <Register />} />
+          <Route path="/orientacoes-do-simulado" element={<Simulated_Guideline />} />
           <Route path="/home" element={signed ? <WelcomeAfterLogin /> : <Login />} />
           <Route path="/simulados" element={signed ? <SimulatedPanel /> : <Login />} />
           <Route path="/simulados-concluidos" element={signed ? <CompletedSimulations /> : <Login />} />
