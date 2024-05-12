@@ -1,3 +1,8 @@
 .disabled{
     pointer-events: none;
 }
+.active {
+    text-decoration: underline #0fa958;
+    text-decoration-thickness: 2.2px; /* Ou qualquer valor de espessura que desejar */
+    text-underline-offset: 5px;
+}

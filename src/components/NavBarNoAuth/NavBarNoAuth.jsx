@@ -48,15 +48,15 @@ const NavBarNoAuth = ({ search }) => {
           <a className="navLinks" href="#perguntas">
             Perguntas frequentes
           </a>
-          <NavLink onClick={() => setModalShow(true)} className="navLinks">
+          <Link onClick={() => setModalShow(true)} className="navLinks">
             Entrar
-          </NavLink>
-          <NavLink
+          </Link>
+          <Link
             onClick={() => setModalRegisterShow(true)}
             className="navLinkPrepareButton"
           >
             Quero me preparar
-          </NavLink>
+          </Link>
 
           {/* <Link className="navLinks" onClick={logOut} >Sair</Link> */}
         </div>
