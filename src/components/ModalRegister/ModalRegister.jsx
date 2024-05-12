@@ -19,7 +19,6 @@ const ModalRegister = (props) => {
   const [registration, setRegistration] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [keepConnected, setKeepConnected] = useState(false);
 
   const handleClick = () => {
     if (!modalShow) {
