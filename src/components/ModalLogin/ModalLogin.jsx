@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import facebook from "../../assets/icons/facebook.png";
 import google from "../../assets/icons/google.png";
 import { Link } from "react-router-dom";
 import "./ModalLogin.css";
+import ModalRegister from "../ModalRegister/ModalRegister";
+import { useAuth } from "../../context/AuthContextProvider";
 
 const ModalLogin = (props) => {
+  const { modalShow, setModalShow } = useAuth();
+  const [modalRegisterShow, setModalRegisterShow] = useState(false);
+  const handleClick = () => {
+    if (modalShow) {
+      setModalShow(false);
+      setModalRegisterShow(true);
+    }
+  };
+
   return (
     <>
       <Modal
@@ -35,10 +46,10 @@ const ModalLogin = (props) => {
               Continuar com o google
             </Button>
           </div>
-          <div class="container-login">
-            <div class="line"></div>
-            <div class="text">ou acesse com e-mail e senha</div>
-            <div class="line"></div>
+          <div className="container-login">
+            <div className="line"></div>
+            <div className="text">ou acesse com e-mail e senha</div>
+            <div className="line"></div>
           </div>
           <form>
             <div className="mb-3">
@@ -96,12 +107,17 @@ const ModalLogin = (props) => {
           </form>
           <p className="text-center">
             Não tenho uma conta?
-            <Link className="links-modal-login" to={"criar-conta"}>
+            <Link className="links-modal-login" onClick={handleClick}>
               <span className="ms-1">Crie sua conta aqui</span>
             </Link>
           </p>
         </Modal.Body>
       </Modal>
+
+      <ModalRegister
+        show={modalRegisterShow}
+        onHide={() => setModalRegisterShow(false)}
+      />
     </>
   );
 };
