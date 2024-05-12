@@ -9,12 +9,36 @@ import ModalRegister from "../ModalRegister/ModalRegister";
 import { useAuth } from "../../context/AuthContextProvider";
 
 const ModalLogin = (props) => {
-  const { modalShow, setModalShow } = useAuth();
+  const { modalShow, setModalShow, login, verifySigned } = useAuth();
   const [modalRegisterShow, setModalRegisterShow] = useState(false);
   const handleClick = () => {
     if (modalShow) {
       setModalShow(false);
       setModalRegisterShow(true);
+    }
+  };
+
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [error, setError] = useState("");
+  const [load, setLoad] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoad(true);
+    e.preventDefault();
+    const loginForm = {
+      email: email,
+      password: senha,
+    };
+    const data = await login(loginForm);
+    if (data.status === 201) {
+      localStorage.setItem("token", data.access_token);
+      verifySigned(true);
+      // window.location.href = "/teste"; // redirecionar para a Rota correta
+    } else {
+      setError(data.status != 201 ? "Credenciais inválidas" : data.message);
+      setLoad(false);
     }
   };
 
@@ -51,7 +75,8 @@ const ModalLogin = (props) => {
             <div className="text">ou acesse com e-mail e senha</div>
             <div className="line"></div>
           </div>
-          <form>
+          <form onSubmit={handleSubmit}>
+            <h5 className={`text-danger text-center mt-3`}>{error ? error : ""}</h5>
             <div className="mb-3">
               <label htmlFor="email" className="form-label mb-0 fs-7">
                 Email
@@ -61,6 +86,8 @@ const ModalLogin = (props) => {
                 className="form-control background-input-modal-login"
                 id="email"
                 aria-describedby="emailHelp"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
               />
             </div>
             <div className="mb-3">
@@ -71,6 +98,9 @@ const ModalLogin = (props) => {
                 type="password"
                 className="form-control background-input-modal-login"
                 id="password"
+                onChange={(e) => setSenha(e.target.value)}
+                value={senha}
+                required
               />
             </div>
             <div className="d-flex justify-content-between">
@@ -100,8 +130,12 @@ const ModalLogin = (props) => {
               da ENADEX
             </p>
             <div className="d-flex justify-content-center pb-3">
-              <Button variant="primary" type="submit">
-                ENTRAR
+              <Button
+                variant="primary"
+                className={`${load && "disabled"}`}
+                type="submit"
+              >
+                {load ? "Carregando..." : "ENTRAR"}
               </Button>
             </div>
           </form>
