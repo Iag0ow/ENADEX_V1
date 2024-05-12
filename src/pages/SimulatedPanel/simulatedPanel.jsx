@@ -1,13 +1,10 @@
 import "./simulatedPanel.css";
+import { Link } from "react-router-dom";
 import NavBar from "../../components/NavBar/NavBar";
 import profilePic from "./assets/images/psicopato_profile.svg";
 import search_icon from "./assets/images/search_icon.svg";
 
 export default function SimulatedPanel() {
-  const handleGenerateSimulated = () => {
-    window.location.href = "/orientacoes-do-simulado";
-  };
-
   return (
     <div className="pageWrapperSimulatedPanel">
       <NavBar />
@@ -19,7 +16,7 @@ export default function SimulatedPanel() {
           <label className="simulatedsRealized">Simulados realizados: 4</label>
         </div>
         <div className="generateSimulated">
-          <button onClick={handleGenerateSimulated} className="btnSimulated" >Gerar simulado</button>
+          <Link to="/orientacoes-do-simulado" className="btnSimulated text-center" >Gerar simulado</Link>
         </div>
       </div>
       <div className="searchBarWrapper">
