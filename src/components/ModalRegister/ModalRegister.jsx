@@ -81,10 +81,10 @@ const ModalRegister = (props) => {
         setError(null);
         setSuccessMessage("Registro realizado com sucesso!");
         setTimeout(() => {
-          setSuccessMessage(""); // Limpa a mensagem de sucesso após algum tempo
-          props.onHide(); // Fecha o modal
-          window.location.reload(); // Recarrega a página
-        }, 3000); // Tempo em milissegundos antes de limpar a mensagem e recarregar a página
+          setSuccessMessage(""); 
+          props.onHide(); 
+          window.location.reload();
+        }, 3000); 
       } else {
         setError(
           "Ocorreu um erro ao registrar o usuário. Por favor, tente novamente."
