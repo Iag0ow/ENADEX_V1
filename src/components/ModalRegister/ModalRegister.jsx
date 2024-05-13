@@ -21,7 +21,7 @@ const ModalRegister = (props) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false); 
 
   const handleClick = () => {
     if (!modalShow) {
@@ -29,10 +29,26 @@ const ModalRegister = (props) => {
       setModalShow(true);
     }
   };
+  const handleClose = () => {
+    // Resetar os estados dos campos do formulário
+    setName("");
+    setEmail("");
+    setSelectedCourseId("");
+    setSelectedUnit("");
+    setSelectedSemester("");
+    setRegistration("");
+    setPassword("");
+    setConfirmPassword("");
+    setError("");
+    setSuccessMessage("");
+
+    // Fechar o modal
+    props.onHide();
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setIsSubmitting(true);
+    setIsSubmitting(true); 
 
     try {
       if (!name) {
@@ -76,7 +92,6 @@ const ModalRegister = (props) => {
         course_id: selectedCourseId,
         unity: selectedUnit,
       };
-
       const response = await studentRegister(registerForm);
 
       if (response.status === 201) {
@@ -95,10 +110,13 @@ const ModalRegister = (props) => {
       }
     } catch (error) {
       setError(error.message);
+      console.error("Erro ao registrar o usuário:", error);
     } finally {
       setIsSubmitting(false); // Define isSubmitting como false no final da requisição
     }
   };
+
+
   return (
     <>
       <Modal
@@ -106,6 +124,7 @@ const ModalRegister = (props) => {
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
+        onHide={handleClose}
       >
         <Modal.Body className="p-5">
           <h5 className="text-center mb-4">Para continuar, acesse sua conta</h5>
