@@ -21,6 +21,7 @@ const ModalRegister = (props) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false); 
 
   const handleClick = () => {
     if (!modalShow) {
@@ -31,6 +32,7 @@ const ModalRegister = (props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsSubmitting(true); 
 
     try {
       if (!name) {
@@ -282,8 +284,8 @@ const ModalRegister = (props) => {
               da ENADEX
             </p>
             <div className="d-flex justify-content-center">
-              <Button variant="primary" type="submit">
-                CRIAR CONTA
+              <Button variant="primary" type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Carregando..." : "CRIAR CONTA"}
               </Button>
             </div>
           </form>
