@@ -95,7 +95,6 @@ const ModalRegister = (props) => {
       }
     } catch (error) {
       setError(error.message);
-      console.error("Erro ao registrar o usuário:", error);
     } finally {
       setIsSubmitting(false); // Define isSubmitting como false no final da requisição
     }
