@@ -29,6 +29,22 @@ const ModalRegister = (props) => {
       setModalShow(true);
     }
   };
+  const handleClose = () => {
+    // Resetar os estados dos campos do formulário
+    setName("");
+    setEmail("");
+    setSelectedCourseId("");
+    setSelectedUnit("");
+    setSelectedSemester("");
+    setRegistration("");
+    setPassword("");
+    setConfirmPassword("");
+    setError("");
+    setSuccessMessage("");
+
+    // Fechar o modal
+    props.onHide();
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -76,17 +92,16 @@ const ModalRegister = (props) => {
         course_id: selectedCourseId,
         unity: selectedUnit,
       };
-
       const response = await studentRegister(registerForm);
 
       if (response.status === 201) {
         setError(null);
         setSuccessMessage("Registro realizado com sucesso!");
         setTimeout(() => {
-          setSuccessMessage(""); 
-          props.onHide(); 
+          setSuccessMessage("");
+          props.onHide();
           window.location.reload();
-        }, 3000); 
+        }, 3000);
       } else {
         setError(
           "Ocorreu um erro ao registrar o usuário. Por favor, tente novamente."
@@ -96,8 +111,11 @@ const ModalRegister = (props) => {
     } catch (error) {
       setError(error.message);
       console.error("Erro ao registrar o usuário:", error);
+    } finally {
+      setIsSubmitting(false); // Define isSubmitting como false no final da requisição
     }
   };
+
 
   return (
     <>
@@ -106,6 +124,7 @@ const ModalRegister = (props) => {
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
+        onHide={handleClose}
       >
         <Modal.Body className="p-5">
           <h5 className="text-center mb-4">Para continuar, acesse sua conta</h5>
