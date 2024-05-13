@@ -120,7 +120,7 @@
     margin: 20px;
     margin-top: 40px;
     cursor: pointer;
-    text-align: center; /* Adicionando alinhamento de texto no centro */
+    text-align: center; 
 }
 
 .buttonBack:hover {

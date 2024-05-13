@@ -1,0 +1,51 @@
+.bg {
+    background-color: #D9D9D9;
+    min-height: 100vh;
+    box-sizing: border-box;
+    position: relative; 
+    z-index: 1; 
+}
+
+.toMoveAway {
+    padding-left: 4rem;
+}
+
+.button-add {
+    background-color: #0FA958;
+    color: white;
+    height: 2.5rem;
+    width: 10rem;
+    font-size: 18px;
+    border-radius: 10px;
+    padding: 5px 0px;
+    border: none;
+    font-weight: bold;
+    transition: 0.5s;
+    border: 2px solid transparent;
+    text-align: center; 
+}
+
+.button-add:hover {
+    background-color: #0c8746;
+}
+
+.button-remove {
+    background-color: #E1631C;
+    color: white;
+    height: 2.5rem;
+    width: 10rem;
+    font-size: 18px;
+    border-radius: 10px;
+    padding: 5px 0px;
+    border: none;
+    font-weight: bold;
+    transition: 0.5s;
+    border: 2px solid transparent;
+    text-align: center; 
+}
+
+.button-remove:hover {
+    background-color: #b44f16;
+}
+
+

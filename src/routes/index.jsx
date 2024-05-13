@@ -15,6 +15,7 @@ import { RegisterAdminTeacher } from "../pages/RegisterAdminTeacher";
 import SimulatedPanel from "./../pages/SimulatedPanel/simulatedPanel";
 import { CompletedSimulations } from "../pages/CompletedSimulations";
 import Loading from "../pages/Loading/Loading";
+import { ManagerUsers } from "../pages/ManagerUsers";
 function AppRoutes() {
   const { signed,loadingReaload } = useAuth();
   return (
@@ -35,7 +36,8 @@ function AppRoutes() {
                   <Route path="/simulados-concluidos" element={signed ? <CompletedSimulations /> : <LadingPage />} />
                   {/* <Route path="/esqueci-minha-senha" element={signed ? <WelcomeAfterLogin /> : <RecuperacaoSenha />} /> */}
                   {/* <Route path="/register-admin-teacher" element={signed ? <RegisterAdminTeacher /> : <Login />} /> */}
-                  <Route path="/register-admin-teacher" element={<RegisterAdminTeacher />} />
+                  {/* <Route path="/register-admin-teacher" element={<RegisterAdminTeacher />} /> */}
+                  <Route path="/register-admin-teacher" element={<ManagerUsers />} />
                   {/* <Route path="/" element={signed ? <WelcomeAfterLogin /> : <LadingPage />} /> */}
                   <Route path="/itens-obrigatorios" element={<Itens />} />
                   <Route path="/cursos" element={<Courses />} />
