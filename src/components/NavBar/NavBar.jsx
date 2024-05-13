@@ -26,8 +26,8 @@ const NavBar = ({ search }) => {
           <NavLink className="navLinks disabled" to="/teste">Faq(Interno)</NavLink>
           <NavLink className="navLinks" to="/simulados">Simulado</NavLink>
           <NavLink className="navLinks disabled" to="/material">Material</NavLink>
-          {(authRole === "TEACHER" || authRole === "COORDINATORS") &&
-            <NavLink className="navLinks" to={"/register-admin-teacher"} >Cadatro Admin/Professor</NavLink>
+          {( authRole === "COORDINATORS" ) &&
+            <NavLink className="navLinks" to={"/register-admin-teacher"} >Cadastro </NavLink>
           }
           <Link className="navLinks" onClick={logOut} >Sair</Link>
         </div>
