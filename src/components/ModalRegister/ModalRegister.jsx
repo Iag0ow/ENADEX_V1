@@ -21,7 +21,7 @@ const ModalRegister = (props) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false); 
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleClick = () => {
     if (!modalShow) {
@@ -32,7 +32,7 @@ const ModalRegister = (props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setIsSubmitting(true); 
+    setIsSubmitting(true);
 
     try {
       if (!name) {
@@ -83,10 +83,10 @@ const ModalRegister = (props) => {
         setError(null);
         setSuccessMessage("Registro realizado com sucesso!");
         setTimeout(() => {
-          setSuccessMessage(""); 
-          props.onHide(); 
+          setSuccessMessage("");
+          props.onHide();
           window.location.reload();
-        }, 3000); 
+        }, 3000);
       } else {
         setError(
           "Ocorreu um erro ao registrar o usuário. Por favor, tente novamente."
@@ -96,9 +96,10 @@ const ModalRegister = (props) => {
     } catch (error) {
       setError(error.message);
       console.error("Erro ao registrar o usuário:", error);
+    } finally {
+      setIsSubmitting(false); // Define isSubmitting como false no final da requisição
     }
   };
-
   return (
     <>
       <Modal
