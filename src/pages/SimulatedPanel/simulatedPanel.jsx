@@ -29,7 +29,7 @@ export default function SimulatedPanel() {
       </div>
 
       <div className="simulatedWrapper">
-        <button className="btnRealizedSimulated">
+        <Link to="/simulados-concluidos" className="btnRealizedSimulated">
           <div className="simulatedText">
             IBMEC - 2022 - ENADE Simulado - Direito
           </div>
@@ -39,9 +39,9 @@ export default function SimulatedPanel() {
             <span className="simulatedQuestions">Questões:</span>
             <label className="labelDateAndQuestions"> 40</label>
           </div>
-        </button>
+        </Link>
 
-        <button className="btnRealizedSimulated">
+        {/* <button className="btnRealizedSimulated">
           <div className="simulatedText">
             IBMEC - 2022 - ENADE Simulado - Direito
           </div>
@@ -73,7 +73,7 @@ export default function SimulatedPanel() {
             <span className="simulatedQuestions">Questões:</span>
             <label className="labelDateAndQuestions"> 30</label>
           </div>
-        </button>
+        </button> */}
       </div>
     </div>
   );

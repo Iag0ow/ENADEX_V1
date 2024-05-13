@@ -110,8 +110,9 @@ export function CompletedSimulations() {
                     </div>
 
                     <div className="mt-4">
-                        <button className="buttonBack rounded border-0">Voltar</button>
+                        <button className="buttonBack rounded border-0" onClick={() => window.history.go(-1)}>Voltar</button>
                     </div>
+
                 </div>
             </div>
 
@@ -146,7 +147,7 @@ export function CompletedSimulations() {
             <div className="trace mt-3" />
 
             <div className="mt-3">
-                <div className="question text-white">
+                <div className="question text-white ">
                     <h1 className="mt-2">Pergunta</h1>
                 </div>
                 <div class="d-flex align-items-center">
