@@ -19,6 +19,8 @@ const ModalRegister = (props) => {
   const [registration, setRegistration] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleClick = () => {
     if (!modalShow) {
@@ -30,27 +32,69 @@ const ModalRegister = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Crie um objeto com os dados do estudante
-    const registerForm = {
-      name,
-      email,
-      registration,
-      password,
-      semester: selectedSemester,
-      course_id: selectedCourseId,
-      unity: selectedUnit,
-    };
-
-    // Chame a função para registrar o estudante na API
     try {
-      const response = await studentRegister(registerForm);
-      // Verifique a resposta da API e tome medidas apropriadas
-      if (response.ok) {
-        const responseData = await response.json();
-        console.log(responseData);
-      } else {
+      if (!name) {
+        throw new Error("É necessário informar o nome do usuário.");
       }
-    } catch (error) {}
+
+      if (!registration) {
+        throw new Error(
+          "É necessário informar o número da matrícula do usuário."
+        );
+      }
+
+      if (!password) {
+        throw new Error("É necessário informar a senha do usuário.");
+      }
+
+      if (!selectedSemester) {
+        throw new Error("É necessário informar o semestre do usuário.");
+      }
+
+      if (!selectedCourseId) {
+        throw new Error("É necessário informar o curso do usuário.");
+      }
+
+      if (!selectedUnit) {
+        throw new Error("É necessário informar a unidade do usuário.");
+      }
+
+      if (password !== confirmPassword) {
+        throw new Error(
+          "As senhas não correspondem. Por favor, digite novamente."
+        );
+      }
+
+      const registerForm = {
+        name,
+        email,
+        registration,
+        password,
+        semester: selectedSemester,
+        course_id: selectedCourseId,
+        unity: selectedUnit,
+      };
+
+      const response = await studentRegister(registerForm);
+
+      if (response.status === 201) {
+        setError(null);
+        setSuccessMessage("Registro realizado com sucesso!");
+        setTimeout(() => {
+          setSuccessMessage(""); // Limpa a mensagem de sucesso após algum tempo
+          props.onHide(); // Fecha o modal
+          window.location.reload(); // Recarrega a página
+        }, 3000); // Tempo em milissegundos antes de limpar a mensagem e recarregar a página
+      } else {
+        setError(
+          "Ocorreu um erro ao registrar o usuário. Por favor, tente novamente."
+        );
+        setError(response.error.message);
+      }
+    } catch (error) {
+      setError(error.message);
+      console.error("Erro ao registrar o usuário:", error);
+    }
   };
 
   return (
@@ -86,8 +130,17 @@ const ModalRegister = (props) => {
             <div className="text">ou acesse com e-mail e senha</div>
             <div className="line"></div>
           </div>
-          {/* Inputs */}
           <form onSubmit={handleSubmit}>
+            {error && (
+              <h5 className="error-message  text-danger text-center mt-3">
+                {error}
+              </h5>
+            )}
+            {successMessage && (
+              <h5 className="success-message text-success text-center mt-3">
+                {successMessage}
+              </h5>
+            )}
             <div className="row mb-3">
               <div className="col">
                 <label htmlFor="name" className="form-label mb-0 fs-7">
