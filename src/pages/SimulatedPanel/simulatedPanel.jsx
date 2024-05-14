@@ -31,7 +31,7 @@ export default function SimulatedPanel() {
       <div className="simulatedWrapper">
         <Link to="/simulados-concluidos" className="btnRealizedSimulated">
           <div className="simulatedText">
-            IBMEC - 2022 - ENADE Simulado - Direito
+            IBMEC 2022 ENADE  - Direito
           </div>
           <div className="simulatedInfo">
             <span className="simulatedDate">Data de realização: </span>

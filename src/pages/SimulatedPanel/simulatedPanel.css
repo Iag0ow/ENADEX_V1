@@ -9,54 +9,57 @@
   margin: 0 auto;
   width: calc(100% - 60px);
   max-width: 96%;
-  height: 110px;
+  min-height: 110px; /* Alterei para min-height para garantir que o conteúdo não se sobreponha em telas menores */
   background-color: #d9d9d9;
   border-radius: 10px;
   display: flex;
+  flex-wrap: wrap; /* Permite que os elementos dentro da .userInfo quebrem linha conforme necessário */
+  justify-content: space-between; /* Distribui os elementos ao longo do eixo principal */
   align-items: center;
 }
 
 .userProfile {
-  display: block;
+  display: flex;
   flex-direction: column;
   margin-left: 10px;
+  flex-grow: 1; /* Permite que o perfil ocupe o espaço restante */
 }
 
 .profilePic {
-  width: 100px;
-  height: 90px;
+  width: 90px; /* Reduzi um pouco o tamanho da imagem */
+  height: 90px; /* Mantive a altura */
   margin: 10px;
 }
 
 .userName {
   color: #161616;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 18px; /* Reduzi um pouco o tamanho do nome de usuário */
 }
 
 .userLabels {
   display: flex;
 }
-
 .mediaAcertos,
 .simulatedsRealized {
-  width: 300px;
+  width: calc(
+    20% - 10px
+  ); /* Ajustei a largura para ocupar metade do espaço disponível */
   height: 30px;
   color: white;
   background-color: #0693fa;
   border-radius: 10px;
   font-weight: bold;
-  font-size: 17px;
-  margin-right: 5px;
+  font-size: 14px; /* Reduzi um pouco o tamanho da fonte */
+  margin-top: 10px; /* Adicionei margem superior para separar os elementos */
   padding: 5px;
   text-align: center;
 }
 
 .generateSimulated {
   display: flex;
-  justify-content: center;
-  margin-left: auto;
-  margin-right: 10px;
+  justify-content: flex-end; /* Alinha o botão à direita */
+  margin-right: 10px; /* Ajustei a margem para alinhar com os outros elementos */
   margin-bottom: 18px;
 }
 
@@ -118,9 +121,9 @@
   margin-top: 20px;
   width: calc(100% - 60px);
   max-width: 96%;
-  height: 90vh;
   border-radius: 10px;
 }
+
 .btnRealizedSimulated {
   display: flex;
   justify-content: space-between;
@@ -136,12 +139,11 @@
   cursor: pointer;
   text-align: left;
   font-size: 25px;
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
 }
 
 .simulatedText {
-  flex-grow: 1;
-  text-decoration: none;
+  font-size: 18px;
 }
 
 .simulatedInfo {
@@ -151,12 +153,11 @@
 
 .simulatedDate,
 .simulatedQuestions {
-  font-size: 20px;
-  color: white;
-  text-decoration: none;
-}
-.labelDateAndQuestions {
   font-size: 18px;
+}
+
+.labelDateAndQuestions {
+  font-size: 12px;
   margin-right: 10px;
   margin-left: 5px;
   background-color: white;
@@ -164,4 +165,55 @@
   width: auto;
   padding: 5px;
   color: black;
+}
+
+@media screen and (max-width: 900px) {
+  .simulatedWrapper {
+    width: calc(100% - 30px);
+    max-width: 100%;
+  }
+  .simulatedText {
+    font-size: 12px;
+  }
+  .simulatedDate {
+    font-size: 12px;
+  }
+  .simulatedQuestions {
+    font-size: 12px;
+  }
+  .labelDateAndQuestions {
+    font-size: 12px;
+  }
+  .simulatedInfo {
+    font-size: 12px;
+  }
+  .mediaAcertos,
+.simulatedsRealized {
+  width: calc(
+    70% - 10px
+  ); /* Ajustei a largura para ocupar metade do espaço disponível */
+  height: 30px;
+  color: white;
+  background-color: #0693fa;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 14px; /* Reduzi um pouco o tamanho da fonte */
+  margin-top: 10px; /* Adicionei margem superior para separar os elementos */
+  padding: 5px;
+  text-align: center;
+}
+.generateSimulated {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
+  width: 100%;
+  margin-right: 0px;
+  text-align: center; /* Adicionado para centralizar o conteúdo */
+}
+.userName {
+  color: #161616;
+  font-weight: bold;
+  font-size: 18px; /* Reduzi um pouco o tamanho do nome de usuário */
+  margin-bottom: 0px;
+}
 }
