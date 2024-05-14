@@ -2,7 +2,7 @@ import React from "react";
 import "./NavBarNoAuth.css";
 import Logo from "../NavBar/images/LogoEnadex.svg";
 import glass from "../../assets/Images/SVG/magnifyng_glass.svg";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ModalLogin from "../../components/ModalLogin/ModalLogin";
 import ModalRegister from "../../components/ModalRegister/ModalRegister";
 import { useState } from "react";
@@ -21,24 +21,19 @@ const NavBarNoAuth = ({ search }) => {
               className="logoNav"
               src={Logo}
               alt=""
-              style={{ width: 64, height: 64 }}
             />
           </Link>
           <div className="input-group">
             {search && (
               <>
-                <span
-                  className="d-none d-md-block input-group-text"
-                  id="basic-addon1"
-                >
+                <span className="input-group-text">
                   <img src={glass} alt="" />
                 </span>
                 <input
                   type="text"
-                  className="d-none d-md-block form-control"
+                  className="form-control"
                   placeholder="Buscar"
                   aria-label="Buscar"
-                  aria-describedby="basic-addon1"
                 />
               </>
             )}
@@ -48,7 +43,7 @@ const NavBarNoAuth = ({ search }) => {
           <a className="navLinks" href="#perguntas">
             Perguntas frequentes
           </a>
-          <Link onClick={() => setModalShow(true)} className="navLinks">
+          <Link onClick={() => setModalShow(true)} className="navLinks" id="navLinksEntrar">
             Entrar
           </Link>
           <Link
@@ -57,8 +52,6 @@ const NavBarNoAuth = ({ search }) => {
           >
             Quero me preparar
           </Link>
-
-          {/* <Link className="navLinks" onClick={logOut} >Sair</Link> */}
         </div>
       </ul>
       <ModalLogin show={modalShow} onHide={() => setModalShow(false)} />
