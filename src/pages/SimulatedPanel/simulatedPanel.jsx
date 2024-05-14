@@ -4,10 +4,12 @@ import NavBar from "../../components/NavBar/NavBar";
 import profilePic from "./assets/images/psicopato_profile.svg";
 import search_icon from "./assets/images/search_icon.svg";
 import { useAuth } from "../../context/AuthContextProvider";
+import Footer from "../../components/Footer/Footer";
 
 export default function SimulatedPanel() {
   const { user } = useAuth();
   return (
+    <>
     <div className="pageWrapperSimulatedPanel">
       <NavBar />
       <div className="userInfo">
@@ -76,5 +78,7 @@ export default function SimulatedPanel() {
         </button> */}
       </div>
     </div>
+      <Footer/>
+      </>
   );
 }
