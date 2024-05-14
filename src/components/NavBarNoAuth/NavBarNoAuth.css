@@ -17,7 +17,14 @@ nav ul {
     display: flex;
     gap: 10px;
     margin-right: 20px;
-    align-items: center; 
+    align-items: center;
+    justify-content: flex-start; 
+}
+#navLinksEntrar{
+    padding-bottom: 0px;
+    font-size: 16px;
+    font-family: "Inter", sans-serif;
+
 }
 
 .navLinksNoAuth {
@@ -63,6 +70,7 @@ nav ul {
 @media (max-width: 768px) {
   .links {
     margin-right: 10px;
+    gap: 0px;
   }
   .logoNav {
     max-width: 100%; /* Para ocupar toda a largura disponível */
@@ -79,5 +87,7 @@ nav ul {
     width: 40px;
     font-size: 0.6em;
   }
-  
+  #navLinksPerguntas{
+    width: 100px;
+  }
 }
