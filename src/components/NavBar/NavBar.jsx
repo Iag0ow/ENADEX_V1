@@ -1,39 +1,87 @@
-import './NavBar.css'
-import Logo  from './images/LogoEnadex.svg'
-import glass from '../../assets/Images/SVG/magnifyng_glass.svg'
-import { Link, NavLink } from 'react-router-dom'
+import React, { useState, useEffect, useRef } from 'react';
+import './NavBar.css';
+import Logo from './images/LogoEnadex.svg';
+import { NavLink, Link, useLocation } from 'react-router-dom';
 import { useAuth } from "../../context/AuthContextProvider";
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 
-const NavBar = ({ search }) => {
-  const { logOut, authRole, user } = useAuth();
-// console.log(user)
+const NavBar = () => {
+  const { logOut } = useAuth();
+  const location = useLocation();
+  const [isMobile, setIsMobile] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 900);
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleClick = (event) => {
+      if (menuOpen && ref.current && !ref.current.contains(event.target) && !event.target.closest('.navbar-toggler')) {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleClick);
+
+    return () => {
+      document.removeEventListener('click', handleClick);
+    };
+  }, [menuOpen]);
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  const closeMenu = () => {
+    if (menuOpen) {
+      setMenuOpen(false);
+    }
+  };
+
   return (
-    <nav>
-      <ul>
-        <div className='d-flex align-items-center'>
-          <Link to={"/home"}><img className='logoNav' src={Logo} alt="" style={{ width: 64, height: 64 }} /></Link>
-          <div className="input-group">
-            {search &&
-              <>
-                <span className="d-none d-md-block input-group-text" id="basic-addon1"><img src={glass} alt="" /></span>
-                <input type="text" className="d-none d-md-block form-control" placeholder="Buscar" aria-label="Buscar" aria-describedby="basic-addon1" />
-              </>
-            }
-          </div>
-        </div>
-        <div className='links'>
-          <NavLink className="navLinks" to="/home">Home</NavLink>
-          <NavLink className="navLinks disabled" to="/teste">Faq(Interno)</NavLink>
-          <NavLink className="navLinks" to="/simulados">Simulado</NavLink>
-          <NavLink className="navLinks disabled" to="/material">Material</NavLink>
-          {(authRole === "TEACHER" || authRole === "COORDINATORS") &&
-            <NavLink className="navLinks" to={"/register-admin-teacher"} >Cadatro Admin/Professor</NavLink>
-          }
-          <Link className="navLinks" onClick={logOut} >Sair</Link>
-        </div>
-      </ul>
-    </nav>
-  )
-}
+    <Navbar collapseOnSelect expand="lg" className={`navbar ${isMobile ? 'mobile' : ''}`} ref={ref}>
+      <Navbar.Brand>
+        <Link to="/home"><img className="logoNav" src={Logo} alt="" /></Link>
+          </Navbar.Brand>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" onClick={toggleMenu} />
+             <Navbar.Collapse id="responsive-navbar-nav" className={`justify-content-end ${menuOpen ? 'show-menu' : 'hide-menu'}`}>
+              <Nav id='' className={`mr-auto ${isMobile && !menuOpen ? 'd-none' : ''}`}>
+              <NavLink className={`navLinks ${location.pathname === "/home" && "active"}`} to="/home" onClick={closeMenu}>Home</NavLink>
+               {!isMobile && (
+              <NavDropdown title="Recursos" id="collasible-nav-dropdown" className="dropdown-text-white">
+                <NavDropdown.Item href="/simulados" onClick={closeMenu}>Simulado</NavDropdown.Item>
+               <NavDropdown.Item className='disabled' href="/teste" onClick={closeMenu}>Faq (Interno)</NavDropdown.Item>
+               <NavDropdown.Item className='disabled' href="/material" onClick={closeMenu}>Material</NavDropdown.Item>
+              </NavDropdown>
+                   )}
+             {isMobile && (
+              <div className="grid-container">
+                <Nav title="Recursos" id="collasible-nav-dropdown" className="dropdown-text-white" style={{paddingLeft: '50px'}}>
+                  <NavDropdown.Item href="/simulados" onClick={closeMenu}>Simulado</NavDropdown.Item>
+                  <NavDropdown.Item className='disabled' href="/teste" onClick={closeMenu}>Faq (Interno)</NavDropdown.Item>
+                  <NavDropdown.Item className='disabled' href="/material" onClick={closeMenu}>Material</NavDropdown.Item>
+                </Nav>
+              </div>
+)}
+                <Nav className={`mr-auto ${isMobile && !menuOpen ? 'd-none' : ''}`}>
+                 <span className="navLinks" style={{ cursor: 'pointer' }} onClick={logOut}>Sair</span>
+                </Nav>
+             </Nav>
+            
+         </Navbar.Collapse>
+    </Navbar>
+  );
+};
 
 export default NavBar;
