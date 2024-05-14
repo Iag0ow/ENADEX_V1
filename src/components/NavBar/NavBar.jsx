@@ -57,10 +57,11 @@ const NavBar = () => {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" onClick={toggleMenu} />
              <Navbar.Collapse id="responsive-navbar-nav" className={`justify-content-end ${menuOpen ? 'show-menu' : 'hide-menu'}`}>
               <Nav id='' className={`mr-auto ${isMobile && !menuOpen ? 'd-none' : ''}`}>
-              <NavLink className={`navLinks ${location.pathname === "/home" && "active"}`} to="/home" onClick={closeMenu}>Home</NavLink>
+              <Link  className={`navLinks ${location.pathname === "/home" && "active"}`} to="/home" onClick={closeMenu}>Home</Link>
+              <Link className={`navLinks ${location.pathname === "/home" && "active"}`} to="/simulados" onClick={closeMenu}>Simulado</Link>
                {!isMobile && (
               <NavDropdown title="Recursos" id="collasible-nav-dropdown" className="dropdown-text-white">
-                <NavDropdown.Item href="/simulados" onClick={closeMenu}>Simulado</NavDropdown.Item>
+                <NavDropdown.Item className='disabled' href="/simulados" onClick={closeMenu}>Apostila</NavDropdown.Item>
                <NavDropdown.Item className='disabled' href="/teste" onClick={closeMenu}>Faq (Interno)</NavDropdown.Item>
                <NavDropdown.Item className='disabled' href="/material" onClick={closeMenu}>Material</NavDropdown.Item>
               </NavDropdown>
