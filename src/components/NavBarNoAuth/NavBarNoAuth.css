@@ -20,7 +20,7 @@ nav ul {
     align-items: center; 
 }
 
-.navLinks {
+.navLinksNoAuth {
     color: white;
     font-size: 1em;
     font-weight: 400;
@@ -68,7 +68,7 @@ nav ul {
     max-width: 100%; /* Para ocupar toda a largura disponível */
     height: auto;
   }
-  .navLinks,
+  .navLinksNoAuth,
   .navLinkPrepareButton {
     font-size: 0.6em;
     margin: 0.4em 0.2em;

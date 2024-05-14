@@ -40,7 +40,7 @@ const NavBarNoAuth = ({ search }) => {
           </div>
         </div>
         <div className="links">
-          <a className="navLinks" href="#perguntas">
+          <a className="navLinksNoAuth" href="#perguntas">
             Perguntas frequentes
           </a>
           <Link onClick={() => setModalShow(true)} className="navLinks" id="navLinksEntrar">
