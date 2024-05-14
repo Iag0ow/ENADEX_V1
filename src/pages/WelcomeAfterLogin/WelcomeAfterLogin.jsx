@@ -4,6 +4,7 @@ import DiamondIcon from "./assets/images/diamondIcon.svg";
 import FAQicon from "./assets/images/FAQicon.svg";
 import enfeiteLateral from "./assets/images/enfeiteLateral.svg";
 import NavBar from "../../components/NavBar/NavBar";
+import Footer from "../../components/Footer/Footer";
 
 
 export default function WelcomeAfterLogin() {
@@ -52,6 +53,7 @@ export default function WelcomeAfterLogin() {
         </button>
         <div className="enfeiteLateral"></div> {/* Adiciona o elemento enfeiteLateral */}
       </div>
+      <Footer />
     </div>
   );
 }
