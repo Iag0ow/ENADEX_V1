@@ -4,6 +4,8 @@ import DiamondIcon from "./assets/images/diamondIcon.svg";
 import FAQicon from "./assets/images/FAQicon.svg";
 import enfeiteLateral from "./assets/images/enfeiteLateral.svg";
 import NavBar from "../../components/NavBar/NavBar";
+import Footer from "../../components/Footer/Footer";
+import { Link } from "react-router-dom";
 
 
 export default function WelcomeAfterLogin() {
@@ -38,20 +40,21 @@ export default function WelcomeAfterLogin() {
           Aqui você vai
           <span>acessar</span>
         </p>
-        <button className="enadexContentButton">
+        <Link to="/simulados" className="enadexContentButton">
           <img src={SimuladoIcon} alt="Hexágono" className="buttonIcon" />
           Simulados
-        </button>
-        <button className="enadexContentButton">
+        </Link>
+        <Link to="/home" className="enadexContentButton">
           <img src={DiamondIcon} alt="Hexágono" className="buttonIcon" />
           Rank
-        </button>
-        <button className="enadexContentButton">
+        </Link>
+        <Link to="/home" className="enadexContentButton">
           <img src={FAQicon} alt="Hexágono" className="buttonIcon" />
           FAQ Interno
-        </button>
+        </Link>
         <div className="enfeiteLateral"></div> {/* Adiciona o elemento enfeiteLateral */}
       </div>
+      <Footer />
     </div>
   );
 }

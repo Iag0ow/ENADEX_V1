@@ -1,6 +1,6 @@
 import React from "react";
 import "./Guideline.css";
-
+import Footer from "../../components/Footer/Footer";
 export default function Simulated_Guideline() {
   return (
     <div>
@@ -98,6 +98,7 @@ export default function Simulated_Guideline() {
         <button className="btnStartSimulated">Iniciar Simulado</button>
         <a style={{textDecoration: "underline", marginTop: "5px"}} href="javascript:history.go(-1)">Voltar</a>
       </div>
+      <Footer />
     </div>
   );
 }
