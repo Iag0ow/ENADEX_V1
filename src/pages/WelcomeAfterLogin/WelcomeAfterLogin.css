@@ -163,3 +163,100 @@
     margin-bottom: 20px;
   }
 }
+@media (max-width: 450px) {
+
+  .buttonsHolder {
+    align-items: center;
+    justify-content: center;
+  
+  }
+  .twoButtons{
+    width: 100%;
+    height: 50px;
+
+    font-size: 15px;
+    margin: 10px;
+  }
+  .textsHolder {
+    grid-template-columns: 1fr;
+  }
+
+  .textLeft {
+    font-size: 40px;
+    text-align: center;
+    margin-top: 20px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    height: 200px; /* Altura da div para centralizar verticalmente */
+    justify-content: center; /* Centralizar verticalmente */
+  }
+
+  .textRight {
+    font-size: 20px;
+    text-align: center;
+    margin-top: 10px;
+    padding: 20px;
+  }
+  .enadexContent {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0px;
+  }
+  .enadexContentText {
+    width: 90%;
+    text-align: center;
+    margin-right: 0px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 375px) {
+
+  .buttonsHolder {
+    align-items: center;
+    justify-content: center;
+  
+  }
+  .twoButtons{
+    width: 100%;
+    height: 40px;
+
+    font-size: 10px;
+    margin: 10px;
+  }
+  .textsHolder {
+    grid-template-columns: 1fr;
+  }
+
+  .textLeft {
+    font-size: 40px;
+    text-align: center;
+    margin-top: 20px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    height: 200px; /* Altura da div para centralizar verticalmente */
+    justify-content: center; /* Centralizar verticalmente */
+  }
+
+  .textRight {
+    font-size: 20px;
+    text-align: center;
+    margin-top: 10px;
+    padding: 20px;
+  }
+  .enadexContent {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0px;
+  }
+  .enadexContentText {
+    width: 90%;
+    text-align: center;
+    margin-right: 0px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+}
