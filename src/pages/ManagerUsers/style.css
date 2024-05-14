@@ -10,6 +10,10 @@
     padding-left: 4rem;
 }
 
+.toMovePull {
+    padding-right: 4rem;
+}
+
 .button-add {
     background-color: #0FA958;
     color: white;
@@ -46,6 +50,21 @@
 
 .button-remove:hover {
     background-color: #b44f16;
+
+}
+.button-edit {
+    background-color: #0E3975;
+    color: white;
+    height: 2.5rem;
+    width: 10rem;
+    font-size: 18px;
+    border-radius: 10px;
+    padding: 5px 0px;
+    border: none;
+    font-weight: bold;
+    transition: 0.5s;
+    border: 2px solid transparent;
+    text-align: center; 
 }
 
 

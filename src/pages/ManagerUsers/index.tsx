@@ -23,6 +23,30 @@ export function ManagerUsers() {
                     <button className="rounded border-0 button-remove">Remover</button>
                 </div>
             </div>
+            <div className="toMoveAway toMovePull py-3">
+                <table className="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col"><input type="checkbox"/></th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Cargo</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Cursos</th>
+                            <th scope="col">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="checkbox"/></td>
+                            <td>Professor01</td>
+                            <td>Professor</td>
+                            <td>Professor01@gmail.com</td>
+                            <td>Matemática</td>
+                            <td><button className="border-0 button-edit">Editar</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     )
 }
