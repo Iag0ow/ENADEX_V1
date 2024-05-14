@@ -90,4 +90,12 @@ nav ul {
   #navLinksPerguntas{
     width: 100px;
   }
+  nav ul {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    background-color: #0D4688;
+    justify-content: space-between;
+    padding: 0 10px;
+}
 }
