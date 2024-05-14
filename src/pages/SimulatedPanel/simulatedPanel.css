@@ -141,7 +141,7 @@
 
 .simulatedText {
   flex-grow: 1;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .simulatedInfo {
