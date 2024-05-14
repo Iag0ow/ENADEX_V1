@@ -54,7 +54,6 @@ export default function WelcomeAfterLogin() {
         </Link>
         <div className="enfeiteLateral"></div> {/* Adiciona o elemento enfeiteLateral */}
       </div>
-      <Footer />
     </div>
   );
 }

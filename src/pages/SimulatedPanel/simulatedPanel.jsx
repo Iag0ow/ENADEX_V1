@@ -78,7 +78,6 @@ export default function SimulatedPanel() {
         </button> */}
       </div>
     </div>
-      <Footer/>
       </>
   );
 }
