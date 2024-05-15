@@ -10,6 +10,10 @@
     padding-left: 4rem;
 }
 
+.toMovePull {
+    padding-right: 4rem;
+}
+
 .font {
     font-weight: bold;
 }
@@ -50,6 +54,21 @@
 
 .buttonRemove:hover {
     background-color: #b44f16;
+
+}
+.button-edit {
+    background-color: #0E3975;
+    color: white;
+    height: 2.5rem;
+    width: 10rem;
+    font-size: 18px;
+    border-radius: 10px;
+    padding: 5px 0px;
+    border: none;
+    font-weight: bold;
+    transition: 0.5s;
+    border: 2px solid transparent;
+    text-align: center; 
 }
 
 .modal-content {
@@ -139,3 +158,38 @@
     text-align: center; 
 }
 
+.divTableStyle {
+    margin: 0;
+    margin-left: 4rem;
+    margin-right: 4rem;
+    margin-top: 1rem;
+    margin-bottom: 0rem;
+    border-radius: 12px;
+}
+
+.tableStyle {
+    border-top: 3px solid rgba(0, 0, 0, 0.25);
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    margin: 4px;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.tableFontBody td{
+    font-size: 14px;
+}
+.button-edit {
+    background-color: #0E3975;
+    color: white;
+    height: 2rem;
+    width: 10rem;
+    font-size: 14px;
+    border-radius: 5px;
+    border: none;
+    font-weight: bold;
+    transition: 0.5s;
+    border: 2px solid transparent;
+    text-align: center;
+}

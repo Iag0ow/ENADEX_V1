@@ -51,8 +51,8 @@ export function ManagerUsers() {
             email: data.email,
             password: data.password,
             role: data.selectRole,
-          };
-          console.log(adminTeacher);
+        };
+        console.log(adminTeacher);
         reset()
     }
 
@@ -77,7 +77,7 @@ export function ManagerUsers() {
             document.removeEventListener("mousedown", handleClickOutside);
             reset()
         };
-        
+
     }, []);
 
     return (
@@ -98,6 +98,41 @@ export function ManagerUsers() {
                 <div className="px-3">
                     <button className="rounded border-0 buttonRemove">Remover</button>
                 </div>
+
+
+            </div>
+
+            <div className="divTableStyle">
+                <table className="table tableStyle">
+                    <thead>
+                        <tr className="text-center">
+                            <th scope="col"><input type="checkbox" /></th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Cargo</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Cursos</th>
+                            <th scope="col">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr className="text-center tableFontBody">
+                            <td><input type="checkbox" /></td>
+                            <td>Professor01</td>
+                            <td>Professor</td>
+                            <td>Professor01@gmail.com</td>
+                            <td>Matemática</td>
+                            <td><button className="border-0 button-edit">Editar</button></td>
+                        </tr>
+                        <tr className="text-center tableFontBody">
+                            <td><input type="checkbox" /></td>
+                            <td>Professor02</td>
+                            <td>Professor</td>
+                            <td>Professor02@gmail.com</td>
+                            <td>Matemática</td>
+                            <td><button className="border-0 button-edit">Editar</button></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             {showModal && (
@@ -127,7 +162,7 @@ export function ManagerUsers() {
                                             <div className="form-group mt-2">
                                                 <label htmlFor="input2">Senha</label>
                                                 <input  {...register('password')} placeholder="Insira sua senha" type="password" className="form-control" id="input2" />
-                                                { errors.password && <span className="error-message">{ errors.password.message }</span>}
+                                                {errors.password && <span className="error-message">{errors.password.message}</span>}
                                             </div>
                                             <div className="form-group mt-2">
                                                 <label htmlFor="input3">Selecione um tipo</label>
@@ -139,19 +174,19 @@ export function ManagerUsers() {
                                                     <option value="TEACHERS">Professor</option>
                                                     <option value="COORDINATORS">Administrador</option>
                                                 </select>
-                                                { errors.selectRole && <span className="error-message">{ errors.selectRole.message }</span>}
+                                                {errors.selectRole && <span className="error-message">{errors.selectRole.message}</span>}
                                             </div>
                                         </div>
                                         <div className="col-md-6">
                                             <div className="form-group mt">
                                                 <label htmlFor="input4">E-mail</label>
                                                 <input {...register('email')} placeholder="Insira seu e-mail" type="text" className="form-control" id="input4" />
-                                                { errors.email && <span className="error-message">{ errors.email.message }</span>}
+                                                {errors.email && <span className="error-message">{errors.email.message}</span>}
                                             </div>
                                             <div className="form-group mt-2">
                                                 <label htmlFor="input5">Repita sua senha</label>
                                                 <input {...register('confirmPassword')} placeholder="Insira sua senha novamente" type="password" className="form-control" id="input5" />
-                                                { errors.confirmPassword && <span className="error-message">{ errors.confirmPassword.message }</span>}
+                                                {errors.confirmPassword && <span className="error-message">{errors.confirmPassword.message}</span>}
                                             </div>
 
                                         </div>
