@@ -193,3 +193,6 @@
     border: 2px solid transparent;
     text-align: center;
 }
+.button-edit:hover {
+    background-color: #104691;
+}
