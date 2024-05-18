@@ -1,0 +1,198 @@
+.bg {
+    background-color: #D9D9D9;
+    min-height: 100vh;
+    box-sizing: border-box;
+    position: relative; 
+    z-index: 1; 
+}
+
+.toMoveAway {
+    padding-left: 4rem;
+}
+
+.toMovePull {
+    padding-right: 4rem;
+}
+
+.font {
+    font-weight: bold;
+}
+
+.buttonAdd {
+    background-color: #0FA958;
+    color: white;
+    height: 2.5rem;
+    width: 10rem;
+    font-size: 18px;
+    border-radius: 10px;
+    padding: 5px 0px;
+    border: none;
+    font-weight: bold;
+    transition: 0.5s;
+    border: 2px solid transparent;
+    text-align: center; 
+}
+
+.buttonAdd:hover {
+    background-color: #0c8746;
+}
+
+.buttonRemove {
+    background-color: #E1631C;
+    color: white;
+    height: 2.5rem;
+    width: 10rem;
+    font-size: 18px;
+    border-radius: 10px;
+    padding: 5px 0px;
+    border: none;
+    font-weight: bold;
+    transition: 0.5s;
+    border: 2px solid transparent;
+    text-align: center; 
+}
+
+.buttonRemove:hover {
+    background-color: #b44f16;
+
+}
+.button-edit {
+    background-color: #0E3975;
+    color: white;
+    height: 2.5rem;
+    width: 10rem;
+    font-size: 18px;
+    border-radius: 10px;
+    padding: 5px 0px;
+    border: none;
+    font-weight: bold;
+    transition: 0.5s;
+    border: 2px solid transparent;
+    text-align: center; 
+}
+
+.modal-content {
+    width: 40rem;
+    height: 40rem;
+}
+
+.modal-header {
+    border-bottom: none;
+}
+
+.modal-title {
+    margin-right: 13rem;
+    font-weight: bold;
+    margin-top: 1rem;
+    font-size: 24px;
+}
+
+.modal-footer {
+    border-bottom: none;
+}
+
+.custom-close-button {
+    background-color: transparent;
+    border: none;
+    font-size: 30px;
+    color: #000;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+}
+
+.form-group > label {
+    margin-bottom: 4px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.form-group > select {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.form-control {
+    margin-top: 2px;
+    border-radius: 12px;
+    border-color:  #B0B0B0;
+    border-top: 3px solid rgba(0, 0, 0, 0.25);
+}
+
+.form-control::placeholder {
+  color: #B0B0B0;
+}
+
+.form-select {
+    height: 42px;
+    margin-top: 2px;
+    border-radius: 12px;
+    border-color:  #B0B0B0;
+    border-top: 3px solid rgba(0, 0, 0, 0.25);
+}
+
+.modal-footer {
+    border: none;
+    position: fixed;
+    bottom: 9rem;
+    right: 7rem;
+}
+
+.error-message {
+    font-size: 12px;
+    
+}
+
+.buttonRegister {
+    background-color: #0FA958;
+    color: white;
+    height: 2.5rem;
+    width: 13rem;
+    font-size: 18px;
+    border-radius: 10px;
+    padding: 5px 0px;
+    border: none;
+    font-weight: bold;
+    transition: 0.5s;
+    border: 2px solid transparent;
+    text-align: center; 
+}
+
+.divTableStyle {
+    margin: 0;
+    margin-left: 4rem;
+    margin-right: 4rem;
+    margin-top: 1rem;
+    margin-bottom: 0rem;
+    border-radius: 12px;
+}
+
+.tableStyle {
+    border-top: 3px solid rgba(0, 0, 0, 0.25);
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    margin: 4px;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.tableFontBody td{
+    font-size: 14px;
+}
+.button-edit {
+    background-color: #0E3975;
+    color: white;
+    height: 2rem;
+    width: 10rem;
+    font-size: 14px;
+    border-radius: 5px;
+    border: none;
+    font-weight: bold;
+    transition: 0.5s;
+    border: 2px solid transparent;
+    text-align: center;
+}
+.button-edit:hover {
+    background-color: #104691;
+}

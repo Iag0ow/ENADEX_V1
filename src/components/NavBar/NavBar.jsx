@@ -6,7 +6,7 @@ import { useAuth } from "../../context/AuthContextProvider";
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 
 const NavBar = () => {
-  const { logOut } = useAuth();
+  const { logOut,authRole } = useAuth();
   const location = useLocation();
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -59,6 +59,9 @@ const NavBar = () => {
               <Nav id='' className={`mr-auto ${isMobile && !menuOpen ? 'd-none' : ''}`}>
               <Link  className={`navLinks ${location.pathname === "/home" && "active"}`} to="/home" onClick={closeMenu}>Home</Link>
               <Link className={`navLinks ${location.pathname === "/home" && "active"}`} to="/simulados" onClick={closeMenu}>Simulado</Link>
+              {( authRole === "COORDINATORS" ) &&
+                <NavLink className="navLinks" to={"/register-admin-teacher"} >Cadastro </NavLink>
+                }
                {!isMobile && (
               <NavDropdown title="Recursos" id="collasible-nav-dropdown" className="dropdown-text-white">
                 <NavDropdown.Item className='disabled' href="/simulados" onClick={closeMenu}>Apostila</NavDropdown.Item>
@@ -74,7 +77,7 @@ const NavBar = () => {
                   <NavDropdown.Item className='disabled' href="/material" onClick={closeMenu}>Material</NavDropdown.Item>
                 </Nav>
               </div>
-)}
+                  )}
                 <Nav className={`mr-auto ${isMobile && !menuOpen ? 'd-none' : ''}`}>
                  <span className="navLinks" style={{ cursor: 'pointer' }} onClick={logOut}>Sair</span>
                 </Nav>
