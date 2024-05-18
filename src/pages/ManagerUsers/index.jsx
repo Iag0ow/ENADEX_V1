@@ -1,13 +1,15 @@
 import React, { useEffect, useState, useRef } from "react";
+
+import { z } from 'zod'
 import addUser from "../../assets/add-user.png";
 import NavBar from "../../components/NavBar/NavBar";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+
 import { getManagers, registerAdminTeacher } from "../../config/config";
 import Swal from 'sweetalert2';
-import { z } from 'zod'
-
 import './style.css'
+
 
 const createRegisterAdminTeacherFormSchema = z.object({
     nameComplet: z
@@ -43,6 +45,7 @@ const createRegisterAdminTeacherFormSchema = z.object({
 export function ManagerUsers() {
     const { register, handleSubmit, formState: { errors }, reset } = useForm({
         resolver: zodResolver(createRegisterAdminTeacherFormSchema)
+
     });
     const [showModal, setShowModal] = useState(false);
     const [managers, setManagers] = useState([]);
@@ -78,6 +81,12 @@ export function ManagerUsers() {
 
     }, []);
 
+
+    })
+    const [showModal, setShowModal] = useState(false)
+    const modalRef = useRef(null);
+
+
     async function createRegisterAdminTeacher(data) {
         const adminTeacher = {
             name: data.nameComplet,
@@ -86,6 +95,7 @@ export function ManagerUsers() {
             role: data.selectRole,
         };
         console.log(adminTeacher);
+
 
         try {
             const result = await registerAdminTeacher(adminTeacher);
@@ -129,7 +139,32 @@ export function ManagerUsers() {
     function renderActiveStatus(active) {
         return active ? "Ativo" : "Inativo";
     }
+        reset()
+    }
 
+    function handleAddButtonClick() {
+        setShowModal(true)
+    }
+
+    function handleCloseModal() {
+        setShowModal(false)
+        reset()
+    }
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (modalRef.current && !modalRef.current.contains(event.target)) {
+                setShowModal(false);
+            }
+        }
+        reset()
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+            reset()
+        };
+
+    }, []);
     return (
         <div className="bg">
             <NavBar search={undefined} />
@@ -160,11 +195,16 @@ export function ManagerUsers() {
                             <th scope="col">Nome</th>
                             <th scope="col">Cargo</th>
                             <th scope="col">Email</th>
+
                             <th scope="col">Status</th>
+
+                            <th scope="col">Cursos</th>
+
                             <th scope="col">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
+
                         {managers.map((manager, index) => (
                             <tr key={manager.key} className="text-center tableFontBody">
                                 <td><input type="checkbox" /></td>
@@ -175,6 +215,24 @@ export function ManagerUsers() {
                                 <td><button className="border-0 button-edit">Editar</button></td>
                             </tr>
                         ))}
+
+                        <tr className="text-center tableFontBody">
+                            <td><input type="checkbox" /></td>
+                            <td>Professor01</td>
+                            <td>Professor</td>
+                            <td>Professor01@gmail.com</td>
+                            <td>Matemática</td>
+                            <td><button className="border-0 button-edit">Editar</button></td>
+                        </tr>
+                        <tr className="text-center tableFontBody">
+                            <td><input type="checkbox" /></td>
+                            <td>Professor02</td>
+                            <td>Professor</td>
+                            <td>Professor02@gmail.com</td>
+                            <td>Matemática</td>
+                            <td><button className="border-0 button-edit">Editar</button></td>
+                        </tr>
+
                     </tbody>
                 </table>
             </div>
@@ -200,12 +258,20 @@ export function ManagerUsers() {
                                         <div className="col-md-6">
                                             <div className="form-group">
                                                 <label htmlFor="input1" className="labelText">Nome Completo</label>
+
                                                 <input {...register('nameComplet')} placeholder="Insira o nome completo" type="text" className="form-control" id="input1" />
+
+                                                <input  {...register('nameComplet')} placeholder="Insira o nome completo" type="text" className="form-control" id="input1" />
+
                                                 {errors.nameComplet && <span className="error-message">{errors.nameComplet.message}</span>}
                                             </div>
                                             <div className="form-group mt-2">
                                                 <label htmlFor="input2">Senha</label>
+
                                                 <input {...register('password')} placeholder="Insira sua senha" type="password" className="form-control" id="input2" />
+
+                                                <input  {...register('password')} placeholder="Insira sua senha" type="password" className="form-control" id="input2" />
+
                                                 {errors.password && <span className="error-message">{errors.password.message}</span>}
                                             </div>
                                             <div className="form-group mt-2">
@@ -248,6 +314,11 @@ export function ManagerUsers() {
                 </div>
             )}
         </div>
+
     );
+}
+
+
+    )
 }
 
