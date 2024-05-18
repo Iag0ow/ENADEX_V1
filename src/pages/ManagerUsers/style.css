@@ -133,9 +133,9 @@
 
 .modal-footer {
     border: none;
-    position: fixed;
-    bottom: 9rem;
-    right: 7rem;
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
 }
 
 .error-message {
