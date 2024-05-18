@@ -172,7 +172,7 @@ export function ManagerUsers() {
                                 <td>{renderRole(manager.role)}</td>
                                 <td>{manager.email}</td>
                                 <td>{renderActiveStatus(manager.active)}</td>
-                                <td><button disabled className="border-0 button-edit">Editar</button></td>
+                                <td><button className="border-0 button-edit">Editar</button></td>
                             </tr>
                         ))}
                     </tbody>
