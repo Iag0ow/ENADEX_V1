@@ -43,7 +43,7 @@ export function ManagerUsers() {
         resolver: zodResolver(createRegisterAdminTeacherFormSchema)
     })
     const [showModal, setShowModal] = useState(false)
-    const modalRef = useRef<HTMLDivElement>(null);
+    const modalRef = useRef(null);
 
     async function createRegisterAdminTeacher(data) {
         const adminTeacher = {
@@ -66,8 +66,8 @@ export function ManagerUsers() {
     }
 
     useEffect(() => {
-        function handleClickOutside(event: MouseEvent) {
-            if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        function handleClickOutside(event) {
+            if (modalRef.current && !modalRef.current.contains(event.target)) {
                 setShowModal(false);
             }
         }
