@@ -6,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { getManagers, registerAdminTeacher } from "../../config/config";
 import Swal from 'sweetalert2';
 import { z } from 'zod'
-
 import './style.css'
 
 const createRegisterAdminTeacherFormSchema = z.object({
@@ -85,7 +84,6 @@ export function ManagerUsers() {
             password: data.password,
             role: data.selectRole,
         };
-        console.log(adminTeacher);
 
         try {
             const result = await registerAdminTeacher(adminTeacher);
@@ -129,6 +127,20 @@ export function ManagerUsers() {
     function renderActiveStatus(active) {
         return active ? "Ativo" : "Inativo";
     }
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (modalRef.current && !modalRef.current.contains(event.target)) {
+                setShowModal(false);
+            }
+        }
+        reset()
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+            reset()
+        };
+
+    }, []);
 
     return (
         <div className="bg">
@@ -161,6 +173,7 @@ export function ManagerUsers() {
                             <th scope="col">Cargo</th>
                             <th scope="col">Email</th>
                             <th scope="col">Status</th>
+                            <th scope="col">Cursos</th>
                             <th scope="col">Ações</th>
                         </tr>
                     </thead>
@@ -250,4 +263,3 @@ export function ManagerUsers() {
         </div>
     );
 }
-
