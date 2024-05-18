@@ -4,10 +4,12 @@ import NavBar from "../../components/NavBar/NavBar";
 import profilePic from "./assets/images/psicopato_profile.svg";
 import search_icon from "./assets/images/search_icon.svg";
 import { useAuth } from "../../context/AuthContextProvider";
+import Footer from "../../components/Footer/Footer";
 
 export default function SimulatedPanel() {
   const { user } = useAuth();
   return (
+    <>
     <div className="pageWrapperSimulatedPanel">
       <NavBar />
       <div className="userInfo">
@@ -31,7 +33,7 @@ export default function SimulatedPanel() {
       <div className="simulatedWrapper">
         <Link to="/simulados-concluidos" className="btnRealizedSimulated">
           <div className="simulatedText">
-            IBMEC - 2022 - ENADE Simulado - Direito
+            IBMEC 2022 ENADE  - Direito
           </div>
           <div className="simulatedInfo">
             <span className="simulatedDate">Data de realização: </span>
@@ -76,5 +78,6 @@ export default function SimulatedPanel() {
         </button> */}
       </div>
     </div>
+      </>
   );
 }
