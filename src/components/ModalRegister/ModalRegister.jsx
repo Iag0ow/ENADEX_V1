@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import FormControl from "react-bootstrap/FormControl";
@@ -7,7 +7,16 @@ import google from "../../assets/icons/google.png";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContextProvider";
 import "./ModalRegister.css";
-import { studentRegister } from "../../config/config";
+import { studentRegister, getCourses } from "../../config/config";
+
+// Função utilitária para capitalizar a primeira letra de cada palavra
+const capitalizeWords = (str) => {
+  return str
+    .toLowerCase()
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};
 
 const ModalRegister = (props) => {
   const { modalShow, setModalShow } = useAuth();
@@ -21,7 +30,31 @@ const ModalRegister = (props) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false); 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await getCourses();
+        if (response.status === 200) {
+          // Capitaliza os nomes dos cursos
+          const capitalizedCourses = response.data.map((course) => ({
+            ...course,
+            name: capitalizeWords(course.name),
+          }));
+          setCourses(capitalizedCourses);
+        } else {
+          console.error("Erro ao buscar cursos:", response.status);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar cursos:", error);
+      }
+    };
+  
+    fetchCourses();
+  }, []);
+  
 
   const handleClick = () => {
     if (!modalShow) {
@@ -29,6 +62,7 @@ const ModalRegister = (props) => {
       setModalShow(true);
     }
   };
+
   const handleClose = () => {
     // Resetar os estados dos campos do formulário
     setName("");
@@ -48,40 +82,16 @@ const ModalRegister = (props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setIsSubmitting(true); 
+    setIsSubmitting(true);
 
     try {
-      if (!name) {
-        throw new Error("É necessário informar o nome do usuário.");
-      }
-
-      if (!registration) {
-        throw new Error(
-          "É necessário informar o número da matrícula do usuário."
-        );
-      }
-
-      if (!password) {
-        throw new Error("É necessário informar a senha do usuário.");
-      }
-
-      if (!selectedSemester) {
-        throw new Error("É necessário informar o semestre do usuário.");
-      }
-
-      if (!selectedCourseId) {
-        throw new Error("É necessário informar o curso do usuário.");
-      }
-
-      if (!selectedUnit) {
-        throw new Error("É necessário informar a unidade do usuário.");
-      }
-
-      if (password !== confirmPassword) {
-        throw new Error(
-          "As senhas não correspondem. Por favor, digite novamente."
-        );
-      }
+      if (!name) throw new Error("É necessário informar o nome do usuário.");
+      if (!registration) throw new Error("É necessário informar o número da matrícula do usuário.");
+      if (!password) throw new Error("É necessário informar a senha do usuário.");
+      if (!selectedSemester) throw new Error("É necessário informar o semestre do usuário.");
+      if (!selectedCourseId) throw new Error("É necessário informar o curso do usuário.");
+      if (!selectedUnit) throw new Error("É necessário informar a unidade do usuário.");
+      if (password !== confirmPassword) throw new Error("As senhas não correspondem. Por favor, digite novamente.");
 
       const registerForm = {
         name,
@@ -103,19 +113,16 @@ const ModalRegister = (props) => {
           window.location.reload();
         }, 3000);
       } else {
-        setError(
-          "Ocorreu um erro ao registrar o usuário. Por favor, tente novamente."
-        );
+        setError("Ocorreu um erro ao registrar o usuário. Por favor, tente novamente.");
         setError(response.error.message);
       }
     } catch (error) {
       setError(error.message);
       console.error("Erro ao registrar o usuário:", error);
     } finally {
-      setIsSubmitting(false); // Define isSubmitting como false no final da requisição
+      setIsSubmitting(false);
     }
   };
-
 
   return (
     <>
@@ -153,7 +160,7 @@ const ModalRegister = (props) => {
           </div>
           <form onSubmit={handleSubmit}>
             {error && (
-              <h5 className="error-message  text-danger text-center mt-3">
+              <h5 className="error-message text-danger text-center mt-3">
                 {error}
               </h5>
             )}
@@ -202,13 +209,15 @@ const ModalRegister = (props) => {
                   value={selectedCourseId}
                 >
                   <option value="">Selecione o Curso</option>
-                  <option value="6636d04c2a9c00506b72601b">
-                    Sistemas de Informação
-                  </option>
+                  {courses.map((course) => (
+                    <option key={course.id} value={course.id}>
+                      {course.name}
+                    </option>
+                  ))}
                 </FormControl>
               </div>
               <div className="col">
-                <label htmlFor="unidade" className="form-label mb-0  fs-7">
+                <label htmlFor="unidade" className="form-label mb-0 fs-7">
                   Unidade
                 </label>
                 <FormControl
@@ -221,9 +230,7 @@ const ModalRegister = (props) => {
                   <option value="">Selecione a Unidade</option>
                   <option value="ITABUNA">Itabuna</option>
                   <option value="FEIRA_DE_SANTANA">Feira de Santana</option>
-                  <option value="VITORIA_DA_CONQUISTA">
-                    Vitória da Conquista
-                  </option>
+                  <option value="VITORIA_DA_CONQUISTA">Vitória da Conquista</option>
                   <option value="JEQUIÉ">Jequié</option>
                   <option value="SALVADOR">Salvador</option>
                 </FormControl>
