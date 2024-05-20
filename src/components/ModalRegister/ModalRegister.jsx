@@ -38,7 +38,6 @@ const ModalRegister = (props) => {
       try {
         const response = await getCourses();
         if (response.status === 200) {
-          // Capitaliza os nomes dos cursos
           const capitalizedCourses = response.data.map((course) => ({
             ...course,
             name: capitalizeWords(course.name),
@@ -64,7 +63,6 @@ const ModalRegister = (props) => {
   };
 
   const handleClose = () => {
-    // Resetar os estados dos campos do formulário
     setName("");
     setEmail("");
     setSelectedCourseId("");

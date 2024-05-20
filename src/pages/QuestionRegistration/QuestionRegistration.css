@@ -1,0 +1,221 @@
+.QuestionRegistrationContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.QuestionRegistrationTitle h1 {
+  margin-top: 25px;
+  margin-bottom: 25px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  color: #0e3975;
+  text-align: center;
+}
+
+.QuestionRegistrationSelectsAndCheckboxes {
+  display: inline-block;
+  justify-content: space-between;
+  width: 96%;
+  /* margin-left: 10px; */
+}
+
+.selectCourse,
+.selectNaoSei {
+  padding: 0px;
+  margin: 10px;
+  margin-left: 3px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  border-radius: 10px;
+  background-color: #d9d9d9;
+  outline: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.selectCourse:hover,
+.selectNaoSei:hover {
+  transform: translateY(-1.5px);
+}
+
+.QuestionRegistrationSelectsAndCheckboxes select {
+  padding: 5px;
+  font-size: 16px;
+}
+
+.QuestionRegistrationImages {
+  display: inline-block;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.QuestionRegistrationInputs {
+  display: inline-block;
+  justify-content: space-between;
+  width: 100%;
+}
+.inputQuestion {
+  margin-bottom: 15px;
+  margin-top: 15px;
+  margin-left: 40px;
+  padding: 10px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  border-radius: 10px;
+  background-color: #d9d9d9;
+  outline: none;
+  width: 88.5%;
+  display: block;
+  resize: none; /* Prevent manual resizing */
+  overflow: hidden; /* Hide overflow */
+}
+
+.QuestionRegistrationImageInput {
+  border: 2px dashed #aaa;
+  border-radius: 5px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.3s ease;
+  margin-left: 40px;
+  width: 500px;
+  min-height: 168px; /* Ensure minimum height */
+}
+
+.QuestionRegistrationImageInput.dragging {
+  border-color: blue;
+}
+
+.uploadedFileContainer {
+  margin-top: 10px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.uploadedFileImage {
+  width: 100px;
+  margin-right: 10px;
+}
+
+.closeIcon {
+  width: 15px;
+  cursor: pointer;
+}
+
+.fileIcon {
+  width: 50px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.QuestionRegistrationAlternatives {
+  width: 98%;
+}
+
+.inputOption {
+  margin-left: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  border-radius: 10px;
+  background-color: #d9d9d9;
+  outline: none;
+  width: 50%;
+  display: block;
+  resize: none; /* Prevent manual resizing */
+  overflow: hidden; /* Hide overflow */
+}
+
+.optionContainer {
+  display: flex;
+  width: 50%;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.optionInputContainer {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.inputOption {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.removeOptionButton {
+  font-family: "Montserrat", sans-serif;
+  cursor: pointer;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.removeOptionButton:hover {
+  background-color: darkred;
+}
+.correctOptionCheckbox {
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  box-shadow: 0 0 0 0 rgba(0, 204, 0, 0.4); /* Começa sem sombra */
+}
+
+.correctOptionCheckbox:checked {
+  box-shadow: 0 0 5px 3px rgba(0, 204, 0, 0.4); /* Adiciona uma sombra verde quando estiver marcado */
+}
+.QuestionRegistrationButtonsHolder {
+  gap: 230px;
+  display: flex;
+  margin-bottom: 0px;
+}
+.addOptionButton {
+  margin-top: 10px;
+  /* margin-bottom: 10px; */
+  margin-left: 20px;
+  padding: 10px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  border-radius: 10px;
+  background-color: #0e3975;
+  color: white;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.addOptionButton:hover {
+  background-color: #07224b;
+}
+.registerQuestionButton {
+  background-color: #0fa958;
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  height: 3rem;
+  color: white;
+  border-radius: 10px;
+  padding: 5px 100px;
+  border: none;
+  transition: 0.5s;
+  border: 2px solid transparent;
+  margin-top: 15px;
+  margin-left: 10px;
+}
+
+.registerQuestionButton:hover {
+  background-color: #078f46;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+}
