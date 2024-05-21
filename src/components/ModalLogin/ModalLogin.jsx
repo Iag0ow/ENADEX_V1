@@ -81,7 +81,7 @@ const ModalLogin = (props) => {
             </h5>
             <div className="mb-3">
               <label htmlFor="email" className="form-label mb-0 fs-7">
-                Email
+                E-mail
               </label>
               <input
                 type="email"

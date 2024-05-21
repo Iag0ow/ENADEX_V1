@@ -197,7 +197,7 @@ const ModalRegister = (props) => {
               </div>
               <div className="col">
                 <label htmlFor="email" className="form-label mb-0 fs-7">
-                  Email *
+                  E-mail *
                 </label>
                 <input
                   type="email"
