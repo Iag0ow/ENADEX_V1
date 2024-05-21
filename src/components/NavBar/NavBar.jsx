@@ -73,7 +73,7 @@ const NavBar = () => {
               <div className="grid-container">
                 <Nav title="Recursos" id="collasible-nav-dropdown" className="dropdown-text-white" style={{paddingLeft: '50px'}}>
                   <NavDropdown.Item href="/simulados" onClick={closeMenu}>Simulado</NavDropdown.Item>
-                  <NavDropdown.Item className='disabled' href="/teste" onClick={closeMenu}>Faq (Interno)</NavDropdown.Item>
+                  <NavDropdown.Item href="/faq-interno" onClick={closeMenu}>Faq (Interno)</NavDropdown.Item>
                   <NavDropdown.Item className='disabled' href="/material" onClick={closeMenu}>Material</NavDropdown.Item>
                 </Nav>
               </div>

@@ -48,7 +48,7 @@ export default function WelcomeAfterLogin() {
           <img src={DiamondIcon} alt="Hexágono" className="buttonIcon" />
           Rank
         </Link>
-        <Link to="/home" className="enadexContentButton">
+        <Link to="/faq-interno" className="enadexContentButton">
           <img src={FAQicon} alt="Hexágono" className="buttonIcon" />
           FAQ Interno
         </Link>
