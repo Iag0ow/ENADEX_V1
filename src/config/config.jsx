@@ -121,3 +121,18 @@ export async function getCourses() {
 
   return { data, status: response.status };
 }
+
+export async function createQuestion(questionData){
+  const bodyForm = JSON.stringify(questionData);
+  const token = localStorage.getItem("token");
+  const config = {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: bodyForm,
+  };
+  const response = await fetch(`${API}/questions`, config);
+  return response;
+};

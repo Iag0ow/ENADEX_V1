@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./QuestionRegistration.css";
 import { getCourses } from "../../config/config";
 import SimulatedRegisterComponent from "./components/SimulatedRegisterComponent";
+import { createQuestion } from "../../config/config";
 
 export default function QuestionRegistration() {
   const [courses, setCourses] = useState([]);
@@ -10,6 +11,13 @@ export default function QuestionRegistration() {
   const [deletedOptions, setDeletedOptions] = useState([]);
   const [correctOption, setCorrectOption] = useState(null);
   const [isSimulated, setIsSimulated] = useState(false);
+  const [questionData, setQuestionData] = useState({
+    course: "",
+    question: "",
+    alternatives: [],
+    correctOption: null,
+  });
+  const [isLoading, setIsLoading] = useState(false); // Estado para controlar o indicador de carregamento
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -42,6 +50,7 @@ export default function QuestionRegistration() {
 
   const handleCourseChange = (event) => {
     setSelectedCourse(event.target.value);
+    setQuestionData({ ...questionData, course: event.target.value });
   };
 
   const removeOption = (idToRemove) => {
@@ -63,6 +72,7 @@ export default function QuestionRegistration() {
 
     if (correctOption === idToRemove) {
       setCorrectOption(null);
+      setQuestionData({ ...questionData, correctOption: null });
     }
   };
 
@@ -103,35 +113,87 @@ export default function QuestionRegistration() {
   const handleCheckboxChange = (id) => {
     if (correctOption === id) {
       setCorrectOption(null);
+      setQuestionData({ ...questionData, correctOption: null });
     } else {
       setCorrectOption(id);
+      setQuestionData({ ...questionData, correctOption: id });
     }
   };
 
-  const handleQuestionRegistration = () => {
-    const alternatives = options.map((option) => ({
-      label: option.label,
-      text: document.getElementById(`optionText_${option.id}`).value,
+  const handleQuestionRegistration = async () => {
+    setIsLoading(true); // Defina isLoading para true quando o processo de envio começar
+    setShowSuccessMessage(true);
+    setTimeout(() => {
+      setShowSuccessMessage(false);
+    }, 3000);
+    const statements = [
+      {
+        description: document.getElementById("questionInput").value,
+      },
+    ];
+  
+    const optionsData = options.map((option, index) => ({
+      description: document.getElementById(`optionText_${option.id}`).value,
+      correctOption: correctOption === option.id,
     }));
-
-    let correctOptionLetter = null;
-    options.forEach((option) => {
-      if (option.id === correctOption) {
-        correctOptionLetter = option.label.trim().charAt(0);
-      }
-    });
-
+  
+    // Obtenha o ID correto do curso selecionado
+    const selectedCourseObject = courses.find(
+      (course) => course.name === selectedCourse
+    );
+    const courseId = selectedCourseObject ? selectedCourseObject._id : "";
+  
+    if (!courseId) {
+      console.error("O ID do curso selecionado não é válido.");
+      setIsLoading(false); // Defina isLoading para false quando ocorrer um erro
+      return;
+    }
+  
     const questionData = {
-      course: selectedCourse,
-      question: document.getElementById("questionInput").value,
-      alternatives: alternatives,
-      correctOption: correctOptionLetter,
+      statements: statements,
+      options: optionsData,
+      isSpecific: true, // Defina conforme necessário
+      course_id: courseId, // Use o id do curso selecionado
+      active: true, // Defina conforme necessário
     };
-
-    console.log("Dados da pergunta:", questionData);
-
-    // Enviar dados para API
+  
+    try {
+      const response = await createQuestion(questionData);
+      if (response.status === 201) {
+        console.log("Pergunta cadastrada com sucesso!");
+        // Limpar os campos após o sucesso do cadastro
+        setSelectedCourse("");
+        setQuestionData(null);
+        // Limpar campos de texto das opções e da pergunta
+        options.forEach((option) => {
+          document.getElementById(`optionText_${option.id}`).value = "";
+        });
+        document.getElementById("questionInput").value = "";
+        setCorrectOption(null); // Limpar o estado correctOption
+      } else {
+        console.error("Erro ao cadastrar pergunta:", response.status);
+      }
+    } catch (error) {
+      console.error("Erro ao cadastrar pergunta:", error);
+    } finally {
+      setIsLoading(false); // Defina isLoading para false após a conclusão, seja bem-sucedida ou não
+    }
   };
+  
+  // Adicione um novo estado para controlar a exibição da mensagem de sucesso
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
+  // Crie um componente de mensagem de sucesso
+  const SuccessMessage = () => {
+    return (
+      <div className="successMessage">Pergunta cadastrada com sucesso!</div>
+    );
+  };
+
+  // Adicione lógica para mostrar ou ocultar a mensagem de sucesso
+  {
+    showSuccessMessage && <SuccessMessage />;
+  }
 
   return (
     <div className="QuestionRegistrationContainer">
@@ -157,7 +219,7 @@ export default function QuestionRegistration() {
             </option>
           ))}
         </select>
-        <label class="checkboxLabelSimulated">
+        <label className="checkboxLabelSimulated">
           <input
             className="checkboxSimulated"
             type="checkbox"
@@ -178,6 +240,7 @@ export default function QuestionRegistration() {
           onChange={(e) => {
             e.target.style.height = "auto";
             e.target.style.height = `${e.target.scrollHeight}px`;
+            setQuestionData({ ...questionData, question: e.target.value });
           }}
         />
       </div>
@@ -194,6 +257,9 @@ export default function QuestionRegistration() {
                 onChange={(e) => {
                   e.target.style.height = "auto";
                   e.target.style.height = `${e.target.scrollHeight}px`;
+                  const alternatives = [...questionData.alternatives];
+                  alternatives[index].text = e.target.value;
+                  setQuestionData({ ...questionData, alternatives });
                 }}
               />
               <input
