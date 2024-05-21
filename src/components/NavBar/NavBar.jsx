@@ -57,8 +57,9 @@ const NavBar = () => {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" onClick={toggleMenu} />
              <Navbar.Collapse id="responsive-navbar-nav" className={`justify-content-end ${menuOpen ? 'show-menu' : 'hide-menu'}`}>
               <Nav id='' className={`mr-auto ${isMobile && !menuOpen ? 'd-none' : ''}`}>
-              <Link  className={`navLinks ${location.pathname === "/home" && "active"}`} to="/home" onClick={closeMenu}>Home</Link>
-              <Link className={`navLinks ${location.pathname === "/home" && "active"}`} to="/simulados" onClick={closeMenu}>Simulado</Link>
+              <NavLink  className={`navLinks`} to="/home" onClick={closeMenu}>Home</NavLink>
+              <NavLink className={`navLinks`} to="/simulados" onClick={closeMenu}>Simulado</NavLink>
+              <NavLink className={`navLinks`} to="/banco-de-questoes" onClick={closeMenu}>Questões</NavLink>
               {( authRole === "COORDINATORS" ) &&
                 <NavLink className="navLinks" to={"/register-admin-teacher"} >Cadastro </NavLink>
                 }

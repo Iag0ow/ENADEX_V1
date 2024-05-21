@@ -1,0 +1,27 @@
+.bold-weight {
+    font-weight: 600;
+}
+.color-text{
+    color: #0e3975 !important;
+}
+.bg-questions-database {
+    background-color: #d9d9d9;
+    min-height: 100vh;
+    box-sizing: border-box;
+    position: relative; 
+    z-index: 1; 
+}
+.form-control-color {
+    color: #0e3975 !important;
+    font-weight: bold;
+    font-size: 17px !important;
+}
+.height-input {
+    height: 3rem;
+}
+.bg-questions-database-box {
+    background-color: #ffffff;
+    border-radius: 15px;
+    border: 1px solid #ffffffa4;
+    padding: 1rem;
+}

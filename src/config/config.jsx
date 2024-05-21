@@ -105,7 +105,24 @@ export async function getManagers(){
 
    const response = await fetch(`${API}/managers`, config);
    const data = await response.json()
-   console.log(data)
 
    return await data
+}
+
+
+export async function getQuestions(){
+  const token = localStorage.getItem("token");
+
+  const config = {
+   method: "GET",
+   headers: {
+     "content-type": "application/json",
+     "Authorization": `Bearer ${token}`,
+   }
+  }
+
+  const response = await fetch(`${API}/questions`, config);
+  const data = await response.json();
+
+  return {data: data, status: response.status};
 }
