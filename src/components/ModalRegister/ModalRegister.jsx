@@ -8,14 +8,15 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContextProvider";
 import "./ModalRegister.css";
 import { studentRegister, getCourses } from "../../config/config";
+import LogoEnadex from "../../assets/LogoEnadexX.png";
 
 // Função utilitária para capitalizar a primeira letra de cada palavra
 const capitalizeWords = (str) => {
   return str
     .toLowerCase()
-    .split(' ')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 };
 
 const ModalRegister = (props) => {
@@ -50,10 +51,9 @@ const ModalRegister = (props) => {
         console.error("Erro ao buscar cursos:", error);
       }
     };
-  
+
     fetchCourses();
   }, []);
-  
 
   const handleClick = () => {
     if (!modalShow) {
@@ -84,12 +84,22 @@ const ModalRegister = (props) => {
 
     try {
       if (!name) throw new Error("É necessário informar o nome do usuário.");
-      if (!registration) throw new Error("É necessário informar o número da matrícula do usuário.");
-      if (!password) throw new Error("É necessário informar a senha do usuário.");
-      if (!selectedSemester) throw new Error("É necessário informar o semestre do usuário.");
-      if (!selectedCourseId) throw new Error("É necessário informar o curso do usuário.");
-      if (!selectedUnit) throw new Error("É necessário informar a unidade do usuário.");
-      if (password !== confirmPassword) throw new Error("As senhas não correspondem. Por favor, digite novamente.");
+      if (!registration)
+        throw new Error(
+          "É necessário informar o número da matrícula do usuário."
+        );
+      if (!password)
+        throw new Error("É necessário informar a senha do usuário.");
+      if (!selectedSemester)
+        throw new Error("É necessário informar o semestre do usuário.");
+      if (!selectedCourseId)
+        throw new Error("É necessário informar o curso do usuário.");
+      if (!selectedUnit)
+        throw new Error("É necessário informar a unidade do usuário.");
+      if (password !== confirmPassword)
+        throw new Error(
+          "As senhas não correspondem. Por favor, digite novamente."
+        );
 
       const registerForm = {
         name,
@@ -111,7 +121,9 @@ const ModalRegister = (props) => {
           window.location.reload();
         }, 3000);
       } else {
-        setError("Ocorreu um erro ao registrar o usuário. Por favor, tente novamente.");
+        setError(
+          "Ocorreu um erro ao registrar o usuário. Por favor, tente novamente."
+        );
         setError(response.error.message);
       }
     } catch (error) {
@@ -132,8 +144,11 @@ const ModalRegister = (props) => {
         onHide={handleClose}
       >
         <Modal.Body className="p-5">
+          <div className="d-flex justify-content-center mb-4">
+            <img src={LogoEnadex} alt="" className="logo-enadex" />
+          </div>
           <h5 className="text-center mb-4">Para continuar, acesse sua conta</h5>
-          <div className="d-flex justify-content-evenly">
+          {/* <div className="d-flex justify-content-evenly">
             <Button variant="primary" className="me-2" onClick={props.onHide}>
               <span className="me-2">
                 <img src={facebook} alt="" />
@@ -150,7 +165,7 @@ const ModalRegister = (props) => {
               </span>
               Continuar com o Google
             </Button>
-          </div>
+          </div> */}
           <div className="container-login mb-3">
             <div className="line"></div>
             <div className="text">ou acesse com e-mail e senha</div>
@@ -206,9 +221,11 @@ const ModalRegister = (props) => {
                   onChange={(e) => setSelectedCourseId(e.target.value)}
                   value={selectedCourseId}
                 >
-                  <option value="">Selecione o Curso</option>
+                  <option key="" value="">
+                    Selecione o Curso
+                  </option>
                   {courses.map((course) => (
-                    <option key={course.id} value={course.id}>
+                    <option key={course._id} value={course._id}>
                       {course.name}
                     </option>
                   ))}
@@ -228,7 +245,9 @@ const ModalRegister = (props) => {
                   <option value="">Selecione a Unidade</option>
                   <option value="ITABUNA">Itabuna</option>
                   <option value="FEIRA_DE_SANTANA">Feira de Santana</option>
-                  <option value="VITORIA_DA_CONQUISTA">Vitória da Conquista</option>
+                  <option value="VITORIA_DA_CONQUISTA">
+                    Vitória da Conquista
+                  </option>
                   <option value="JEQUIÉ">Jequié</option>
                   <option value="SALVADOR">Salvador</option>
                 </FormControl>
