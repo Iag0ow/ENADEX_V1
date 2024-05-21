@@ -5,6 +5,7 @@ import SimulatedRegisterComponent from "./components/SimulatedRegisterComponent"
 import { createQuestion } from "../../config/config";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import NavBar from "../../components/NavBar/NavBar";
 
 export default function QuestionRegistration() {
   const [courses, setCourses] = useState([]);
@@ -51,8 +52,9 @@ export default function QuestionRegistration() {
   };
 
   const handleCourseChange = (event) => {
-    setSelectedCourse(event.target.value);
-    setQuestionData({ ...questionData, course: event.target.value });
+    const selectedCourseId = event.target.value;
+    setSelectedCourse(selectedCourseId);
+    setQuestionData({ ...questionData, course: selectedCourseId });
   };
 
   const removeOption = (idToRemove) => {
@@ -128,10 +130,7 @@ export default function QuestionRegistration() {
 
   const handleQuestionRegistration = async () => {
     setIsLoading(true);
-    setShowSuccessMessage(true);
-    setTimeout(() => {
-      setShowSuccessMessage(false);
-    }, 3000);
+
     const statements = [
       {
         description: document.getElementById("questionInput").value,
@@ -144,7 +143,7 @@ export default function QuestionRegistration() {
     }));
 
     const selectedCourseObject = courses.find(
-      (course) => course.name === selectedCourse
+      (course) => course._id === selectedCourse
     );
     const courseId = selectedCourseObject ? selectedCourseObject._id : "";
 
@@ -166,7 +165,7 @@ export default function QuestionRegistration() {
       const response = await createQuestion(questionData);
       if (response.status === 201) {
         toast.success("Pergunta cadastrada com sucesso!", {
-          position: "top-left",
+          position: "bottom-left",
           autoClose: 1000,
           hideProgressBar: false,
           closeOnClick: false,
@@ -199,103 +198,106 @@ export default function QuestionRegistration() {
   };
 
   return (
-    <div className="QuestionRegistrationContainer">
-      <div className="QuestionRegistrationTitle">
-        <h1>
-          {isSimulated ? "Cadastro de simulados" : "Cadastro de perguntas"}
-        </h1>
-      </div>
-
-      <div className="QuestionRegistrationSelectsAndCheckboxes">
-        <select
-          className="selectCourse"
-          id="courseSelect"
-          value={selectedCourse}
-          onChange={handleCourseChange}
-        >
-          <option value="" disabled>
-            Curso
-          </option>
-          {courses.map((course) => (
-            <option key={course.id} value={course.id}>
-              {course.name}
-            </option>
-          ))}
-        </select>
-        <label className="checkboxLabelSimulated">
-          <input
-            className="checkboxSimulated"
-            type="checkbox"
-            checked={isSimulated}
-            onChange={(e) => setIsSimulated(e.target.checked)}
-          />
-          Simulado
-        </label>
-      </div>
-      {isSimulated && <SimulatedRegisterComponent />}
-
-      <div className="QuestionRegistrationInputs">
-        <textarea
-          id="questionInput"
-          className="inputQuestion"
-          placeholder="Pergunta"
-          rows={1}
-          onChange={(e) => {
-            e.target.style.height = "auto";
-            e.target.style.height = `${e.target.scrollHeight}px`;
-            setQuestionData({ ...questionData, question: e.target.value });
-          }}
-        />
-      </div>
-      <div className="QuestionRegistrationAlternatives">
-        {options.map((option, index) => (
-          <div key={option.id} className="optionContainer">
-            <div className="optionInputContainer">
-              <span>{option.label}</span>
-              <textarea
-                id={`optionText_${option.id}`}
-                className="inputOption"
-                placeholder={`Questão ${option.label}`}
-                rows={1}
-                onChange={(e) => {
-                  e.target.style.height = "auto";
-                  e.target.style.height = `${e.target.scrollHeight}px`;
-                  const alternatives = questionData.alternatives
-                    ? [...questionData.alternatives]
-                    : [];
-                  alternatives[index] = { text: e.target.value };
-                  setQuestionData({ ...questionData, alternatives });
-                }}
-              />
-              <input
-                className="correctOptionCheckbox"
-                type="checkbox"
-                checked={correctOption === option.id}
-                onChange={() => handleCheckboxChange(option.id)}
-              />
-              <button
-                className="removeOptionButton"
-                onClick={() => removeOption(option.id)}
-              >
-                X
-              </button>
-            </div>
-          </div>
-        ))}
-        <div className="QuestionRegistrationButtonsHolder">
-          <button className="addOptionButton" onClick={addOption}>
-            Adicionar opção
-          </button>
-          <button
-            className="registerQuestionButton"
-            onClick={handleQuestionRegistration}
-            disabled={isLoading}
-          >
-            {isLoading ? "Carregando..." : "Cadastrar Questão"}
-          </button>
+    <>
+      <NavBar />
+      <div className="QuestionRegistrationContainer">
+        <div className="QuestionRegistrationTitle">
+          <h1>
+            {isSimulated ? "Cadastro de simulados" : "Cadastro de perguntas"}
+          </h1>
         </div>
+
+        <div className="QuestionRegistrationSelectsAndCheckboxes">
+          <select
+            className="selectCourse"
+            id="courseSelect"
+            value={selectedCourse}
+            onChange={handleCourseChange}
+          >
+            <option value="" disabled>
+              Curso
+            </option>
+            {courses.map((course) => (
+              <option key={course._id} value={course._id}>
+                {course.name}
+              </option>
+            ))}
+          </select>
+          <label className="checkboxLabelSimulated">
+            <input
+              className="checkboxSimulated"
+              type="checkbox"
+              checked={isSimulated}
+              onChange={(e) => setIsSimulated(e.target.checked)}
+            />
+            Simulado
+          </label>
+        </div>
+        {isSimulated && <SimulatedRegisterComponent />}
+
+        <div className="QuestionRegistrationInputs">
+          <textarea
+            id="questionInput"
+            className="inputQuestion"
+            placeholder="Pergunta"
+            rows={1}
+            onChange={(e) => {
+              e.target.style.height = "auto";
+              e.target.style.height = `${e.target.scrollHeight}px`;
+              setQuestionData({ ...questionData, question: e.target.value });
+            }}
+          />
+        </div>
+        <div className="QuestionRegistrationAlternatives">
+          {options.map((option, index) => (
+            <div key={option.id} className="optionContainer">
+              <div className="optionInputContainer">
+                <span>{option.label}</span>
+                <textarea
+                  id={`optionText_${option.id}`}
+                  className="inputOption"
+                  placeholder={`Questão ${option.label}`}
+                  rows={1}
+                  onChange={(e) => {
+                    e.target.style.height = "auto";
+                    e.target.style.height = `${e.target.scrollHeight}px`;
+                    const alternatives = questionData.alternatives
+                      ? [...questionData.alternatives]
+                      : [];
+                    alternatives[index] = { text: e.target.value };
+                    setQuestionData({ ...questionData, alternatives });
+                  }}
+                />
+                <input
+                  className="correctOptionCheckbox"
+                  type="checkbox"
+                  checked={correctOption === option.id}
+                  onChange={() => handleCheckboxChange(option.id)}
+                />
+                <button
+                  className="removeOptionButton"
+                  onClick={() => removeOption(option.id)}
+                >
+                  X
+                </button>
+              </div>
+            </div>
+          ))}
+          <div className="QuestionRegistrationButtonsHolder">
+            <button className="addOptionButton" onClick={addOption}>
+              Adicionar opção
+            </button>
+            <button
+              className="registerQuestionButton"
+              onClick={handleQuestionRegistration}
+              disabled={isLoading}
+            >
+              {isLoading ? "Carregando..." : "Cadastrar Questão"}
+            </button>
+          </div>
+        </div>
+        <ToastContainer />
       </div>
-      <ToastContainer />
-    </div>
+    </>
   );
 }
