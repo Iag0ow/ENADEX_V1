@@ -233,7 +233,9 @@ export default function QuestionRegistration() {
             Simulado
           </label>
         </div>
-        {isSimulated && <SimulatedRegisterComponent />}
+        {isSimulated && (
+          <SimulatedRegisterComponent selectedCourse={selectedCourse} />
+        )}
 
         <div className="QuestionRegistrationInputs">
           <textarea
