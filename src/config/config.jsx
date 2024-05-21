@@ -122,7 +122,7 @@ export async function getCourses() {
   return { data, status: response.status };
 }
 
-export async function createQuestion(questionData){
+export async function createQuestion(questionData) {
   const bodyForm = JSON.stringify(questionData);
   const token = localStorage.getItem("token");
   const config = {
@@ -135,4 +135,19 @@ export async function createQuestion(questionData){
   };
   const response = await fetch(`${API}/questions`, config);
   return response;
-};
+}
+
+export async function createSimulated(simulatedData) {
+  const bodyForm = JSON.stringify(simulatedData);
+  const token = localStorage.getItem("token");
+  const config = {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: bodyForm,
+  };
+  const response = await fetch(`${API}/mock-exams`, config);
+  return response;
+}
