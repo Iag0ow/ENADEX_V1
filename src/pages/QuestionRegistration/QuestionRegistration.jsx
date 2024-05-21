@@ -3,6 +3,8 @@ import "./QuestionRegistration.css";
 import { getCourses } from "../../config/config";
 import SimulatedRegisterComponent from "./components/SimulatedRegisterComponent";
 import { createQuestion } from "../../config/config";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function QuestionRegistration() {
   const [courses, setCourses] = useState([]);
@@ -14,10 +16,10 @@ export default function QuestionRegistration() {
   const [questionData, setQuestionData] = useState({
     course: "",
     question: "",
-    alternatives: [],
+    alternatives: [{ text: "" }],
     correctOption: null,
   });
-  const [isLoading, setIsLoading] = useState(false); // Estado para controlar o indicador de carregamento
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -98,16 +100,20 @@ export default function QuestionRegistration() {
       (option) => option.label.trim() > ` ${nextLetter})`.trim()
     );
 
-    if (indexToInsert === -1) {
-      setOptions([...options, newOption]);
-    } else {
-      const newOptions = [
-        ...options.slice(0, indexToInsert),
-        newOption,
-        ...options.slice(indexToInsert),
-      ];
-      setOptions(newOptions);
-    }
+    const newOptions =
+      indexToInsert === -1
+        ? [...options, newOption]
+        : [
+            ...options.slice(0, indexToInsert),
+            newOption,
+            ...options.slice(indexToInsert),
+          ];
+
+    setOptions(newOptions);
+    setQuestionData({
+      ...questionData,
+      alternatives: [...questionData.alternatives, { text: "" }],
+    });
   };
 
   const handleCheckboxChange = (id) => {
@@ -121,7 +127,7 @@ export default function QuestionRegistration() {
   };
 
   const handleQuestionRegistration = async () => {
-    setIsLoading(true); // Defina isLoading para true quando o processo de envio começar
+    setIsLoading(true);
     setShowSuccessMessage(true);
     setTimeout(() => {
       setShowSuccessMessage(false);
@@ -131,69 +137,66 @@ export default function QuestionRegistration() {
         description: document.getElementById("questionInput").value,
       },
     ];
-  
+
     const optionsData = options.map((option, index) => ({
       description: document.getElementById(`optionText_${option.id}`).value,
       correctOption: correctOption === option.id,
     }));
-  
-    // Obtenha o ID correto do curso selecionado
+
     const selectedCourseObject = courses.find(
       (course) => course.name === selectedCourse
     );
     const courseId = selectedCourseObject ? selectedCourseObject._id : "";
-  
+
     if (!courseId) {
       console.error("O ID do curso selecionado não é válido.");
-      setIsLoading(false); // Defina isLoading para false quando ocorrer um erro
+      setIsLoading(false);
       return;
     }
-  
+
     const questionData = {
       statements: statements,
       options: optionsData,
-      isSpecific: true, // Defina conforme necessário
-      course_id: courseId, // Use o id do curso selecionado
-      active: true, // Defina conforme necessário
+      isSpecific: true,
+      course_id: courseId,
+      active: true,
     };
-  
+
     try {
       const response = await createQuestion(questionData);
       if (response.status === 201) {
-        console.log("Pergunta cadastrada com sucesso!");
-        // Limpar os campos após o sucesso do cadastro
+        toast.success("Pergunta cadastrada com sucesso!", {
+          position: "top-left",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
         setSelectedCourse("");
         setQuestionData(null);
-        // Limpar campos de texto das opções e da pergunta
+
         options.forEach((option) => {
           document.getElementById(`optionText_${option.id}`).value = "";
         });
         document.getElementById("questionInput").value = "";
-        setCorrectOption(null); // Limpar o estado correctOption
+        setCorrectOption(null);
+        document.getElementById("questionInput").value = "";
       } else {
-        console.error("Erro ao cadastrar pergunta:", response.status);
+        toast.error("Erro ao cadastrar pergunta: " + response.status, {
+          autoClose: false,
+        });
       }
     } catch (error) {
-      console.error("Erro ao cadastrar pergunta:", error);
+      toast.error("Erro ao cadastrar pergunta: " + error.message, {
+        autoClose: false,
+      });
     } finally {
-      setIsLoading(false); // Defina isLoading para false após a conclusão, seja bem-sucedida ou não
+      setIsLoading(false);
     }
   };
-  
-  // Adicione um novo estado para controlar a exibição da mensagem de sucesso
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-
-  // Crie um componente de mensagem de sucesso
-  const SuccessMessage = () => {
-    return (
-      <div className="successMessage">Pergunta cadastrada com sucesso!</div>
-    );
-  };
-
-  // Adicione lógica para mostrar ou ocultar a mensagem de sucesso
-  {
-    showSuccessMessage && <SuccessMessage />;
-  }
 
   return (
     <div className="QuestionRegistrationContainer">
@@ -257,8 +260,10 @@ export default function QuestionRegistration() {
                 onChange={(e) => {
                   e.target.style.height = "auto";
                   e.target.style.height = `${e.target.scrollHeight}px`;
-                  const alternatives = [...questionData.alternatives];
-                  alternatives[index].text = e.target.value;
+                  const alternatives = questionData.alternatives
+                    ? [...questionData.alternatives]
+                    : [];
+                  alternatives[index] = { text: e.target.value };
                   setQuestionData({ ...questionData, alternatives });
                 }}
               />
@@ -284,11 +289,13 @@ export default function QuestionRegistration() {
           <button
             className="registerQuestionButton"
             onClick={handleQuestionRegistration}
+            disabled={isLoading}
           >
-            Cadastrar Questão
+            {isLoading ? "Carregando..." : "Cadastrar Questão"}
           </button>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }
