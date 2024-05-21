@@ -17,9 +17,9 @@
 
 .QuestionRegistrationSelectsAndCheckboxes {
   display: flex;
-  gap: 800px;
+  gap: 1000px;
   justify-content: left;
-  width: 1250px;
+  width: 1350px;
 }
 
 .selectCourse,
