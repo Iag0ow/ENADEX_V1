@@ -3,6 +3,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 
 .QuestionRegistrationTitle h1 {
@@ -15,10 +16,10 @@
 }
 
 .QuestionRegistrationSelectsAndCheckboxes {
-  display: inline-block;
-  justify-content: space-between;
-  width: 96%;
-  /* margin-left: 10px; */
+  display: flex;
+  gap: 800px;
+  justify-content: left;
+  width: 1250px;
 }
 
 .selectCourse,
@@ -29,7 +30,7 @@
   font-family: "Montserrat", sans-serif;
   font-weight: bold;
   border-radius: 10px;
-  background-color: #d9d9d9;
+  background-color: #f5f5f5;
   outline: none;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
@@ -45,107 +46,62 @@
   font-size: 16px;
 }
 
-.QuestionRegistrationImages {
-  display: inline-block;
-  justify-content: space-between;
+.QuestionRegistrationInputs {
+  display: flex;
+  justify-content: center;
   width: 100%;
+  max-width: 1389px; /* Define uma largura máxima para centralização */
 }
 
-.QuestionRegistrationInputs {
-  display: inline-block;
-  justify-content: space-between;
-  width: 100%;
-}
 .inputQuestion {
-  margin-bottom: 15px;
-  margin-top: 15px;
-  margin-left: 40px;
+  margin-bottom: 5px;
+  margin-top: 12px;
+  margin-left: 20px;
   padding: 10px;
   font-family: "Montserrat", sans-serif;
   font-weight: bold;
   border-radius: 10px;
-  background-color: #d9d9d9;
   outline: none;
-  width: 88.5%;
-  display: block;
-  resize: none; /* Prevent manual resizing */
-  overflow: hidden; /* Hide overflow */
-}
-
-.QuestionRegistrationImageInput {
-  border: 2px dashed #aaa;
-  border-radius: 5px;
-  padding: 20px;
-  text-align: center;
-  cursor: pointer;
-  position: relative;
-  transition: border-color 0.3s ease;
-  margin-left: 40px;
-  width: 500px;
-  min-height: 168px; /* Ensure minimum height */
-}
-
-.QuestionRegistrationImageInput.dragging {
-  border-color: blue;
-}
-
-.uploadedFileContainer {
-  margin-top: 10px;
-  display: flex;
-  align-items: flex-start;
-}
-
-.uploadedFileImage {
-  width: 100px;
-  margin-right: 10px;
-}
-
-.closeIcon {
-  width: 15px;
-  cursor: pointer;
-}
-
-.fileIcon {
-  width: 50px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  background-color: #f5f5f5;
+  width: 100%;
+  resize: none; 
+  overflow: hidden;
 }
 
 .QuestionRegistrationAlternatives {
-  width: 98%;
-}
-
-.inputOption {
-  margin-left: 5px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  padding: 10px;
-  font-family: "Montserrat", sans-serif;
-  font-weight: bold;
-  border-radius: 10px;
-  background-color: #d9d9d9;
-  outline: none;
-  width: 50%;
-  display: block;
-  resize: none; /* Prevent manual resizing */
-  overflow: hidden; /* Hide overflow */
+  margin-top: 20px;
+  width: 100%;
+  max-width: 1400px; /* Define uma largura máxima para centralização */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .optionContainer {
   display: flex;
-  width: 50%;
+  width: 100%;
   align-items: center;
   margin-bottom: 10px;
 }
+
 .optionInputContainer {
   display: flex;
   align-items: center;
-  flex-grow: 1;
+  width: 100%;
 }
 
 .inputOption {
   flex-grow: 1;
   margin-right: 10px;
+  margin-left: 10px;
+  background-color: #f5f5f5;
+  padding: 10px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  border-radius: 10px;
+  outline: none;
+  resize: none; 
+  overflow: hidden;
 }
 
 .removeOptionButton {
@@ -154,35 +110,42 @@
   background-color: red;
   color: white;
   border: none;
+  font-size: 16px;
   border-radius: 5px;
-  padding: 5px 10px;
+  padding: 7px;
+  padding-top: 0px;
+  padding-bottom: 0px;
 }
 
 .removeOptionButton:hover {
   background-color: darkred;
 }
+
 .correctOptionCheckbox {
   margin-left: 10px;
   margin-right: 10px;
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   cursor: pointer;
   transition: transform 0.3s ease;
-  box-shadow: 0 0 0 0 rgba(0, 204, 0, 0.4); /* Começa sem sombra */
+  box-shadow: 0 0 0 0 rgba(0, 204, 0, 0.4);
 }
 
 .correctOptionCheckbox:checked {
-  box-shadow: 0 0 5px 3px rgba(0, 204, 0, 0.4); /* Adiciona uma sombra verde quando estiver marcado */
+  box-shadow: 0 0 5px 3px rgba(0, 204, 0, 0.4);
 }
+
 .QuestionRegistrationButtonsHolder {
-  gap: 230px;
   display: flex;
-  margin-bottom: 0px;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1400px;
+  margin-top: 20px;
+  padding-left: 23px;
 }
+
 .addOptionButton {
   margin-top: 10px;
-  /* margin-bottom: 10px; */
-  margin-left: 20px;
   padding: 10px;
   font-family: "Montserrat", sans-serif;
   font-weight: bold;
@@ -191,13 +154,14 @@
   color: white;
   border: none;
   outline: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: 0.5s;
 }
 
 .addOptionButton:hover {
   background-color: #07224b;
+  transform: scale(1.05);
 }
+
 .registerQuestionButton {
   background-color: #0fa958;
   font-family: "Montserrat", sans-serif;
@@ -210,12 +174,40 @@
   transition: 0.5s;
   border: 2px solid transparent;
   margin-top: 15px;
-  margin-left: 10px;
 }
 
 .registerQuestionButton:hover {
   background-color: #078f46;
-  color: white;
-  font-weight: 500;
+  transform: scale(1.05);
+}
+
+.checkboxSimulated {
+  /* Estilo do checkbox em si */
+  appearance: none; /* Remove o estilo padrão do sistema */
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ccc;
+  border-radius: 3px;
+  outline: none; /* Remove a borda ao focar */
   cursor: pointer;
+  vertical-align: middle;
+  margin-right: 5px; /* Espaçamento entre o checkbox e o texto */
+  position: relative; /* Posição relativa para facilitar a posição do checkmark */
+  background-color: white; /* Cor de fundo do checkbox */
+}
+
+.checkboxSimulated:checked::after {
+  /* Estilo do checkmark quando o checkbox está marcado */
+  content: '\2714'; /* Conteúdo do checkmark */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centraliza o checkmark */
+  font-size: 14px; /* Tamanho da fonte do checkmark */
+  color: #000; /* Cor do checkmark */
+}
+.checkboxLabelSimulated{
+  margin-left: 5px;
+  display: flex;
+  align-items: center;
 }

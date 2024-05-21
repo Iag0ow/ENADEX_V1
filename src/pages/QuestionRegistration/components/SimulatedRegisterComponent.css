@@ -1,0 +1,139 @@
+.SimulatedRegistrationContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.title-input {
+  height: 50px;
+  padding: 10px;
+  font-size: 24px;
+  border: 2px solid #ccc;
+  background-color: #f5f5f5;
+  border-radius: 15px;
+  outline: none;
+  box-sizing: border-box;
+  width: 1350px;
+  margin-bottom: 10px;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  font-weight: medium;
+}
+
+.SimulatedRegistrationDescriptionContainer {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  width: 1350px;
+  margin-bottom: 50px;
+  border-radius: 15px;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+}
+
+.leftContainer {
+  width: 70%; /* Ajuste a largura conforme necessário */
+}
+
+.description-input {
+  padding: 10px;
+  font-size: 24px;
+  border: 2px solid #ccc;
+  background-color: #f5f5f5;
+  border-radius: 15px;
+  outline: none;
+  box-sizing: border-box;
+  width: 100%;
+  font-family: "Montserrat", sans-serif;
+  text-align: justify;
+  resize: vertical; 
+  min-height: 100px;
+}
+
+.timerContainer {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  height: 30px;
+}
+
+.simulatedTimerLabel {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  margin-right: 10px;
+}
+
+.simulatedTimer {
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 2px 8px;
+  border: 1px solid #00cc00;
+  border-radius: 10px;
+  text-align: center;
+  background-color: #ffffff;
+  width: 70px;
+  -moz-appearance: textfield;
+}
+
+.simulatedTimer::-webkit-inner-spin-button,
+.simulatedTimer::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.simulatedRegisterButton {
+  background-color: #0fa958;
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  height: 3rem;
+  color: white;
+  border-radius: 10px;
+  padding: 5px 100px;
+  border: none;
+  transition: 0.5s;
+  border: 2px solid transparent;
+  margin-top: 15px;
+}
+
+.simulatedRegisterButton:hover {
+  background-color: #078f46;
+  transform: scale(1.05);
+}
+
+@media screen and (min-width: 1366px) and (max-width: 1366px) and (min-height: 768px) and (max-height: 768px) {
+  .title-input {
+    max-width: 900px;
+  }
+}
+
+@media (max-width: 768px) {
+  .title-input, .SimulatedRegistrationDescriptionContainer {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .leftContainer {
+    width: 100%;
+  }
+
+  .description-input {
+    font-size: 18px;
+  }
+
+  .simulatedRegisterButton {
+    padding: 5px 50px;
+  }
+}
+
+@media (max-width: 1350px) {
+  .title-input, .SimulatedRegistrationDescriptionContainer {
+    width: 100%;
+  }
+}
+
