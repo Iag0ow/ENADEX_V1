@@ -109,3 +109,22 @@ export async function getManagers(){
 
    return await data
 }
+
+export async function getCourses(){
+  const token = localStorage.getItem("token");
+   const config = {
+    method: "GET",
+    headers: {
+      "content-type": "application/json",
+      "Authorization": `Bearer ${token}`,
+    }
+   }
+
+   const response = await fetch(`${API}/courses`, config);
+   const data = await response.json()
+   console.log("cursos:", data)
+
+   return await data
+}
+
+
