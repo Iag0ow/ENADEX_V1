@@ -108,19 +108,20 @@ export async function getManagers() {
   return await data;
 }
 
-export async function getCourses() {
-  const config = {
+export async function getCourses(){
+   const config = {
     method: "GET",
     headers: {
-      "content-type": "application/json",
-    },
-  };
+      "content-type": "application/json"
+    }
+   }
 
-  const response = await fetch(`${API}/courses`, config);
-  const data = await response.json();
-
-  return { data, status: response.status };
+   const response = await fetch(`${API}/courses`, config);
+   const data = await response.json()
+   
+   return { data, status: response.status };
 }
+
 
 export async function createQuestion(questionData) {
   const bodyForm = JSON.stringify(questionData);

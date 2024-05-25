@@ -37,7 +37,7 @@
     background-color: #0c8746;
 }
 
-.buttonRemove {
+.buttonDisable {
     background-color: #E1631C;
     color: white;
     height: 2.5rem;
@@ -211,6 +211,15 @@
     border: 2px solid transparent;
     text-align: center;
 }
+
 .button-edit:hover {
     background-color: #104691;
 }
+
+.form-check-label {
+    font-size: 15px;
+}
+
+
+
+   
