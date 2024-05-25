@@ -58,7 +58,7 @@ export function ManagerUsers() {
             try {
                 const data = await getManagers();
                 setManagers(data);
-                console.log(data)
+                // console.log(data)
             } catch (error) {
                 console.error("Erro ao buscar gerentes:", error);
             }
@@ -67,7 +67,7 @@ export function ManagerUsers() {
         async function fetchCourses() {
             try {
                 const data = await getCourses();
-                setCourses(data);
+                setCourses(data.data);
             } catch (error) {
                 console.error("Erro ao buscar cursos:", error);
             }
