@@ -205,9 +205,9 @@ export function ManagerUsers() {
             {showModal && (
                 <div className="modal" role="dialog" onClick={handleCloseModal}>
                     <div className="modal-dialog" role="document">
-                        <div className="modal-content mt-4 px-4" ref={modalRef} onClick={(e) => e.stopPropagation()}>
+                        <div id="modal-content-users" className="modal-content mt-4 px-4" ref={modalRef} onClick={(e) => e.stopPropagation()}>
                             <div className="modal-header d-flex justify-content-between">
-                                <div className="mt-3">
+                                 <div className="mt-3">
                                     <img src={addUser} className="" width={50} height={50} alt="" />
                                 </div>
                                 <div>

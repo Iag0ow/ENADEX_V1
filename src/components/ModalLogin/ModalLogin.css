@@ -3,6 +3,9 @@
     text-decoration: underline;
     margin: 5px 5px;
 }
+.logo-enadex{
+    width: 70px;
+}
 .links-modal-login:hover{
     color: #0693fa;
 }

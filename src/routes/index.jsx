@@ -11,7 +11,7 @@ import Courses from "../pages/Courses";
 import Home from "../pages/Home/Home";
 import WelcomeAfterLogin from "../pages/WelcomeAfterLogin/WelcomeAfterLogin";
 import { Register } from "../pages/Register";
-
+import QuestionRegistration from "../pages/QuestionRegistration/QuestionRegistration";
 import SimulatedPanel from "./../pages/SimulatedPanel/simulatedPanel";
 import { CompletedSimulations } from "../pages/CompletedSimulations";
 import Loading from "../pages/Loading/Loading";
@@ -32,6 +32,7 @@ function AppRoutes() {
                   {/* <Route path="/login" element={ signed ? <WelcomeAfterLogin /> : <Login />} /> */}
                   <Route path="/register" element={signed ? <WelcomeAfterLogin /> : <Register />} />
                   <Route path="/home" element={signed ? <WelcomeAfterLogin /> : <LadingPage />} />
+                  <Route path="/cadastrar-perguntas" element={signed ? <QuestionRegistration /> : <LadingPage />} />
                   <Route path="/simulados" element={signed ? <SimulatedPanel /> : <LadingPage />} />
                   <Route path="/orientacoes-do-simulado" element={<Simulated_Guideline />} />
                   <Route path="/simulados-concluidos" element={signed ? <CompletedSimulations /> : <LadingPage />} />
