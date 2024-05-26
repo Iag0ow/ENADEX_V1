@@ -2,7 +2,7 @@
     pointer-events: none;
 }
 .active {
-    text-decoration: underline #0fa958;
-    text-decoration-thickness: 2.2px; 
+    text-decoration: underline #0fa958 !important;
+    text-decoration-thickness: 2.2px !important; 
     text-underline-offset: 5px;
 }
