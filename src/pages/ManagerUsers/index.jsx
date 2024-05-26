@@ -3,10 +3,10 @@ import addUser from "../../assets/add-user.png";
 import NavBar from "../../components/NavBar/NavBar";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { getManagers, registerAdminTeacher } from "../../config/config";
+import { getManagers, getCourses, registerAdminTeacher } from "../../config/config";
 import Swal from 'sweetalert2';
-import { z } from 'zod'
-import './style.css'
+import { z } from 'zod';
+import './style.css';
 
 const createRegisterAdminTeacherFormSchema = z.object({
     nameComplet: z
@@ -17,9 +17,9 @@ const createRegisterAdminTeacherFormSchema = z.object({
                 .trim()
                 .split(' ')
                 .map((word) => {
-                    return word[0].toLocaleUpperCase().concat(word.substring(1))
+                    return word[0].toLocaleUpperCase().concat(word.substring(1));
                 })
-                .join(' ')
+                .join(' ');
         }),
     email: z
         .string()
@@ -34,10 +34,14 @@ const createRegisterAdminTeacherFormSchema = z.object({
     selectRole: z
         .string()
         .nonempty('Selecione um tipo'),
+    courseId: z
+        .array(z.string())
+        .nonempty('Selecione pelo menos dois cursos')
+        .min(1, 'Selecione pelo menos um curso')
 }).refine((data) => data.password === data.confirmPassword, {
     message: "As senhas precisam ser iguais",
     path: ["confirmPassword"]
-})
+});
 
 export function ManagerUsers() {
     const { register, handleSubmit, formState: { errors }, reset } = useForm({
@@ -45,23 +49,35 @@ export function ManagerUsers() {
     });
     const [showModal, setShowModal] = useState(false);
     const [managers, setManagers] = useState([]);
+    const [courses, setCourses] = useState([]);
     const modalRef = useRef(null);
+
 
     useEffect(() => {
         async function fetchManagers() {
             try {
                 const data = await getManagers();
-                console.log(data);
                 setManagers(data);
+                // console.log(data)
             } catch (error) {
                 console.error("Erro ao buscar gerentes:", error);
             }
         }
 
-        fetchManagers()
+        async function fetchCourses() {
+            try {
+                const data = await getCourses();
+                setCourses(data.data);
+            } catch (error) {
+                console.error("Erro ao buscar cursos:", error);
+            }
+        }
+
+        fetchManagers();
+        fetchCourses();
     }, []);
 
-    
+
     useEffect(() => {
         function handleClickOutside(event) {
             if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -74,8 +90,7 @@ export function ManagerUsers() {
             document.removeEventListener("mousedown", handleClickOutside);
             reset();
         };
-
-    }, []);
+    }, [reset]);
 
     async function createRegisterAdminTeacher(data) {
         const adminTeacher = {
@@ -83,11 +98,10 @@ export function ManagerUsers() {
             email: data.email,
             password: data.password,
             role: data.selectRole,
+            courses_id: data.courseId
         };
-
         try {
             const result = await registerAdminTeacher(adminTeacher);
-
             if (result.status === 201) {
                 Swal.fire({
                     icon: 'success',
@@ -127,20 +141,6 @@ export function ManagerUsers() {
     function renderActiveStatus(active) {
         return active ? "Ativo" : "Inativo";
     }
-    useEffect(() => {
-        function handleClickOutside(event) {
-            if (modalRef.current && !modalRef.current.contains(event.target)) {
-                setShowModal(false);
-            }
-        }
-        reset()
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-            reset()
-        };
-
-    }, []);
 
     return (
         <div className="bg">
@@ -149,26 +149,24 @@ export function ManagerUsers() {
                 <div>
                     <img src={addUser} className="" width={80} height={80} alt="" />
                 </div>
-                <div className="mt-4 px-4 ">
+                <div className="mt-4 px-4">
                     <h1 className="font">Gerenciamento de Usuários</h1>
                 </div>
             </div>
             <div className="d-flex justify-content-start py-1 toMoveAway">
-                <div className="">
+                <div>
                     <button className="rounded border-0 buttonAdd" onClick={handleAddButtonClick}>Adicionar</button>
                 </div>
                 <div className="px-3">
-                    <button className="rounded border-0 buttonRemove">Remover</button>
+                    <button className="rounded border-0 buttonDisable">Desativar</button>
                 </div>
-
-
             </div>
 
             <div className="divTableStyle">
                 <table className="table tableStyle">
                     <thead>
                         <tr className="text-center">
-                            <th scope="col"><input type="checkbox" /></th>
+                            <th scope="col"></th>
                             <th scope="col">Nome</th>
                             <th scope="col">Cargo</th>
                             <th scope="col">Email</th>
@@ -178,13 +176,25 @@ export function ManagerUsers() {
                         </tr>
                     </thead>
                     <tbody>
-                        {managers.map((manager, index) => (
+                        {managers.map((manager) => (
                             <tr key={manager.key} className="text-center tableFontBody">
                                 <td><input type="checkbox" /></td>
                                 <td>{manager.name}</td>
                                 <td>{renderRole(manager.role)}</td>
                                 <td>{manager.email}</td>
                                 <td>{renderActiveStatus(manager.active)}</td>
+                                <td>
+                                    {manager.courses_id.length > 0 ? (
+                                        manager.courses_id.map((course, index) => (
+                                            <span key={course._id}>
+                                                {course.name}
+                                                {index !== manager.courses_id.length - 1 ? ', ' : ''}
+                                            </span>
+                                        ))
+                                    ) : (
+                                        <span>Não tem cursos disponíveis</span>
+                                    )}
+                                </td>
                                 <td><button disabled className="border-0 button-edit">Editar</button></td>
                             </tr>
                         ))}
@@ -195,12 +205,12 @@ export function ManagerUsers() {
             {showModal && (
                 <div className="modal" role="dialog" onClick={handleCloseModal}>
                     <div className="modal-dialog" role="document">
-                        <div className="modal-content mt-4 px-4" ref={modalRef} onClick={(e) => e.stopPropagation()}>
+                        <div id="modal-content-users" className="modal-content mt-4 px-4" ref={modalRef} onClick={(e) => e.stopPropagation()}>
                             <div className="modal-header d-flex justify-content-between">
-                                <div className="mt-3">
+                                 <div className="mt-3">
                                     <img src={addUser} className="" width={50} height={50} alt="" />
                                 </div>
-                                <div className="">
+                                <div>
                                     <h5 className="modal-title">Cadastro de Usuário</h5>
                                 </div>
                                 <button type="button" className="buttonClose custom-close-button" onClick={handleCloseModal} aria-label="Close">
@@ -208,7 +218,7 @@ export function ManagerUsers() {
                                 </button>
                             </div>
                             <div className="modal-body">
-                                <form className="" onSubmit={handleSubmit(createRegisterAdminTeacher)}>
+                                <form onSubmit={handleSubmit(createRegisterAdminTeacher)}>
                                     <div className="row">
                                         <div className="col-md-6">
                                             <div className="form-group">
@@ -222,11 +232,8 @@ export function ManagerUsers() {
                                                 {errors.password && <span className="error-message">{errors.password.message}</span>}
                                             </div>
                                             <div className="form-group mt-2">
-                                                <label htmlFor="input3">Selecione um tipo</label>
-                                                <select className="form-select"
-                                                    id="selectRole"
-                                                    {...register('selectRole')}
-                                                >
+                                                <label htmlFor="selectRole">Selecione um tipo</label>
+                                                <select className="form-select" id="selectRole" {...register('selectRole')}>
                                                     <option value="">Selecione um Tipo</option>
                                                     <option value="TEACHERS">Professor</option>
                                                     <option value="COORDINATORS">Administrador</option>
@@ -245,10 +252,26 @@ export function ManagerUsers() {
                                                 <input {...register('confirmPassword')} placeholder="Insira sua senha novamente" type="password" className="form-control" id="input5" />
                                                 {errors.confirmPassword && <span className="error-message">{errors.confirmPassword.message}</span>}
                                             </div>
-
+                                            <div className="form-group mt-2">
+                                                <label htmlFor="input3">Selecione os cursos</label>
+                                                {courses.map((course) => (
+                                                    <div key={course._id} className="form-check">
+                                                        <input
+                                                            className="form-check-input"
+                                                            type="checkbox"
+                                                            id={`courseCheckbox${course._id}`}
+                                                            value={course._id}
+                                                            {...register('courseId')}
+                                                        />
+                                                        <label className="form-check-label" htmlFor={`courseCheckbox${course._id}`}>
+                                                            {course.name}
+                                                        </label>
+                                                    </div>
+                                                ))}
+                                                {errors.courseId && <span className="error-message">{errors.courseId.message}</span>}
+                                            </div>
                                         </div>
                                     </div>
-
                                     <div className="modal-footer">
                                         <div className="px-3">
                                             <button className="rounded border-0 buttonRegister">Cadastrar</button>

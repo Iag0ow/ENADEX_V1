@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import FormControl from "react-bootstrap/FormControl";
@@ -7,7 +7,17 @@ import google from "../../assets/icons/google.png";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContextProvider";
 import "./ModalRegister.css";
-import { studentRegister } from "../../config/config";
+import { studentRegister, getCourses } from "../../config/config";
+import LogoEnadex from "../../assets/LogoEnadexX.png";
+
+// Função utilitária para capitalizar a primeira letra de cada palavra
+const capitalizeWords = (str) => {
+  return str
+    .toLowerCase()
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
 
 const ModalRegister = (props) => {
   const { modalShow, setModalShow } = useAuth();
@@ -21,7 +31,29 @@ const ModalRegister = (props) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false); 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await getCourses();
+        if (response.status === 200) {
+          const capitalizedCourses = response.data.map((course) => ({
+            ...course,
+            name: capitalizeWords(course.name),
+          }));
+          setCourses(capitalizedCourses);
+        } else {
+          console.error("Erro ao buscar cursos:", response.status);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar cursos:", error);
+      }
+    };
+
+    fetchCourses();
+  }, []);
 
   const handleClick = () => {
     if (!modalShow) {
@@ -29,8 +61,8 @@ const ModalRegister = (props) => {
       setModalShow(true);
     }
   };
+
   const handleClose = () => {
-    // Resetar os estados dos campos do formulário
     setName("");
     setEmail("");
     setSelectedCourseId("");
@@ -48,40 +80,26 @@ const ModalRegister = (props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setIsSubmitting(true); 
+    setIsSubmitting(true);
 
     try {
-      if (!name) {
-        throw new Error("É necessário informar o nome do usuário.");
-      }
-
-      if (!registration) {
+      if (!name) throw new Error("É necessário informar o nome do usuário.");
+      if (!registration)
         throw new Error(
           "É necessário informar o número da matrícula do usuário."
         );
-      }
-
-      if (!password) {
+      if (!password)
         throw new Error("É necessário informar a senha do usuário.");
-      }
-
-      if (!selectedSemester) {
+      if (!selectedSemester)
         throw new Error("É necessário informar o semestre do usuário.");
-      }
-
-      if (!selectedCourseId) {
+      if (!selectedCourseId)
         throw new Error("É necessário informar o curso do usuário.");
-      }
-
-      if (!selectedUnit) {
+      if (!selectedUnit)
         throw new Error("É necessário informar a unidade do usuário.");
-      }
-
-      if (password !== confirmPassword) {
+      if (password !== confirmPassword)
         throw new Error(
           "As senhas não correspondem. Por favor, digite novamente."
         );
-      }
 
       const registerForm = {
         name,
@@ -112,10 +130,9 @@ const ModalRegister = (props) => {
       setError(error.message);
       console.error("Erro ao registrar o usuário:", error);
     } finally {
-      setIsSubmitting(false); // Define isSubmitting como false no final da requisição
+      setIsSubmitting(false);
     }
   };
-
 
   return (
     <>
@@ -127,8 +144,11 @@ const ModalRegister = (props) => {
         onHide={handleClose}
       >
         <Modal.Body className="p-5">
+          <div className="d-flex justify-content-center mb-4">
+            <img src={LogoEnadex} alt="" className="logo-enadex" />
+          </div>
           <h5 className="text-center mb-4">Para continuar, acesse sua conta</h5>
-          <div className="d-flex justify-content-evenly">
+          {/* <div className="d-flex justify-content-evenly">
             <Button variant="primary" className="me-2" onClick={props.onHide}>
               <span className="me-2">
                 <img src={facebook} alt="" />
@@ -145,7 +165,7 @@ const ModalRegister = (props) => {
               </span>
               Continuar com o Google
             </Button>
-          </div>
+          </div> */}
           <div className="container-login mb-3">
             <div className="line"></div>
             <div className="text">ou acesse com e-mail e senha</div>
@@ -153,7 +173,7 @@ const ModalRegister = (props) => {
           </div>
           <form onSubmit={handleSubmit}>
             {error && (
-              <h5 className="error-message  text-danger text-center mt-3">
+              <h5 className="error-message text-danger text-center mt-3">
                 {error}
               </h5>
             )}
@@ -177,7 +197,7 @@ const ModalRegister = (props) => {
               </div>
               <div className="col">
                 <label htmlFor="email" className="form-label mb-0 fs-7">
-                  Email *
+                  E-mail *
                 </label>
                 <input
                   type="email"
@@ -201,14 +221,18 @@ const ModalRegister = (props) => {
                   onChange={(e) => setSelectedCourseId(e.target.value)}
                   value={selectedCourseId}
                 >
-                  <option value="">Selecione o Curso</option>
-                  <option value="6636d04c2a9c00506b72601b">
-                    Sistemas de Informação
+                  <option key="" value="">
+                    Selecione o Curso
                   </option>
+                  {courses.map((course) => (
+                    <option key={course._id} value={course._id}>
+                      {course.name}
+                    </option>
+                  ))}
                 </FormControl>
               </div>
               <div className="col">
-                <label htmlFor="unidade" className="form-label mb-0  fs-7">
+                <label htmlFor="unidade" className="form-label mb-0 fs-7">
                   Unidade
                 </label>
                 <FormControl

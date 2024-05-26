@@ -37,7 +37,7 @@
     background-color: #0c8746;
 }
 
-.buttonRemove {
+.buttonDisable {
     background-color: #E1631C;
     color: white;
     height: 2.5rem;
@@ -71,10 +71,28 @@
     text-align: center; 
 }
 
-.modal-content {
+#modal-content-users {
     width: 40rem;
     height: 40rem;
+    background-color: #fff;
+    border: 1px solid #ccc; 
+    border-radius: 15px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); 
+    padding: 20px; 
 }
+
+.modal-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5); 
+}
+
 
 .modal-header {
     border-bottom: none;
@@ -193,6 +211,15 @@
     border: 2px solid transparent;
     text-align: center;
 }
+
 .button-edit:hover {
     background-color: #104691;
 }
+
+.form-check-label {
+    font-size: 15px;
+}
+
+
+
+   

@@ -66,15 +66,16 @@ const NavBar = () => {
                {!isMobile && (
               <NavDropdown title="Recursos" id="collasible-nav-dropdown" className="dropdown-text-white">
                 <NavDropdown.Item className='disabled' href="/simulados" onClick={closeMenu}>Apostila</NavDropdown.Item>
-               <NavDropdown.Item className='disabled' href="/teste" onClick={closeMenu}>Faq (Interno)</NavDropdown.Item>
+               <NavDropdown.Item as={Link} to="/faq-interno" onClick={closeMenu}>Faq (Interno)</NavDropdown.Item>
                <NavDropdown.Item className='disabled' href="/material" onClick={closeMenu}>Material</NavDropdown.Item>
+               <NavDropdown.Item as={Link} to="/cadastrar-perguntas" onClick={closeMenu}>Simulado/Perguntas</NavDropdown.Item>
               </NavDropdown>
                    )}
              {isMobile && (
               <div className="grid-container">
                 <Nav title="Recursos" id="collasible-nav-dropdown" className="dropdown-text-white" style={{paddingLeft: '50px'}}>
                   <NavDropdown.Item href="/simulados" onClick={closeMenu}>Simulado</NavDropdown.Item>
-                  <NavDropdown.Item className='disabled' href="/teste" onClick={closeMenu}>Faq (Interno)</NavDropdown.Item>
+                  <NavDropdown.Item href="/faq-interno" onClick={closeMenu}>Faq (Interno)</NavDropdown.Item>
                   <NavDropdown.Item className='disabled' href="/material" onClick={closeMenu}>Material</NavDropdown.Item>
                 </Nav>
               </div>

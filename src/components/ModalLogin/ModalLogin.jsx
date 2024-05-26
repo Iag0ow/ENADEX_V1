@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import facebook from "../../assets/icons/facebook.png";
 import google from "../../assets/icons/google.png";
+import LogoEnadex from "../../assets/LogoEnadexX.png";
 import { Link, useNavigate } from "react-router-dom";
 import "./ModalLogin.css";
 import ModalRegister from "../ModalRegister/ModalRegister";
@@ -12,7 +13,8 @@ import ModalPasswordRecover from "../ModalPasswordRecover/ModalPasswordRecover";
 const ModalLogin = (props) => {
   const { modalShow, setModalShow, login, verifySigned } = useAuth();
   const [modalRegisterShow, setModalRegisterShow] = useState(false);
-  const [modalPasswordRecoverShow, setModalPasswordRecoverShow] = useState(false);
+  const [modalPasswordRecoverShow, setModalPasswordRecoverShow] =
+    useState(false);
   const navigate = useNavigate();
   const handleClick = () => {
     if (modalShow) {
@@ -26,7 +28,7 @@ const ModalLogin = (props) => {
       setModalShow(false);
       setModalPasswordRecoverShow(true);
     }
-  }
+  };
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
@@ -45,7 +47,7 @@ const ModalLogin = (props) => {
       localStorage.setItem("token", data.access_token);
       verifySigned(true);
       setModalShow(false);
-      navigate('/home');
+      navigate("/home");
     } else {
       setError(data.status != 201 ? "Credenciais inválidas" : data.message);
       setLoad(false);
@@ -61,24 +63,12 @@ const ModalLogin = (props) => {
         centered
       >
         <Modal.Body className="p-5">
+          <div className="d-flex justify-content-center mb-4">
+            <img src={LogoEnadex} alt="" className="logo-enadex" />
+          </div>
           <h5 className="text-center mb-4">Para continuar, acesse sua conta</h5>
           <div className="d-flex justify-content-evenly">
-            <Button variant="primary" className="me-2" onClick={props.onHide}>
-              <span className="me-2">
-                <img src={facebook} alt="" />
-              </span>
-              Continuar com o facebook
-            </Button>
-            <Button
-              variant="white"
-              className="text-black border button-google"
-              onClick={props.onHide}
-            >
-              <span className="me-2">
-                <img src={google} alt="" />
-              </span>
-              Continuar com o google
-            </Button>
+            {/* Botões para login com Facebook e Google podem ser descomentados se necessário */}
           </div>
           <div className="container-login">
             <div className="line"></div>
@@ -86,10 +76,12 @@ const ModalLogin = (props) => {
             <div className="line"></div>
           </div>
           <form onSubmit={handleSubmit}>
-            <h5 className={`text-danger text-center mt-3`}>{error ? error : ""}</h5>
+            <h5 className={`text-danger text-center mt-3`}>
+              {error ? error : ""}
+            </h5>
             <div className="mb-3">
               <label htmlFor="email" className="form-label mb-0 fs-7">
-                Email
+                E-mail
               </label>
               <input
                 type="email"
@@ -124,7 +116,10 @@ const ModalLogin = (props) => {
                   MANTER CONECTADO
                 </label>
               </div>
-              <Link className="links-modal-forgot" onClick={handleClickPasswordRecover}>
+              <Link
+                className="links-modal-forgot"
+                onClick={handleClickPasswordRecover}
+              >
                 ESQUECEU A SENHA?
               </Link>
             </div>
