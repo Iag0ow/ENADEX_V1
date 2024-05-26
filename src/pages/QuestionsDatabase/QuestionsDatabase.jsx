@@ -5,10 +5,11 @@ import { getQuestions } from "../../config/config";
 import Questions from "../../components/Questions/Questions";
 
 const QuestionsDatabase = () => {
+  const [resolvedQuestions, setResolvedQuestions] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [makedQuestions, setMakedQuestions] = useState();
-  const [idQuestion, setIdQuestion] = useState();
+  const [sendSelectedQuestion, setSendSelectedQuestion] = useState();
+  const [selectedOptions, setSelectedOptions] = useState({});
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -21,10 +22,23 @@ const QuestionsDatabase = () => {
     fetchQuestions();
   }, []);
   
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(makedQuestions);
+const handleSubmit = (questionId,responseId) => (e) => {
+  e.preventDefault();
+  const submitResponse = {
+    question_id: questionId,
+    selected_option_id: responseId
   }
+  console.log(submitResponse);
+};
+
+  const handleOptionChange = (questionId, value) => {
+    setSelectedOptions(prevState => ({
+      ...prevState,
+      [questionId]: value,
+      
+    }));
+    //handleSelectQuestion(questionId, value);
+  };
 
   return (
     <div className="bg pb-3">
@@ -76,14 +90,14 @@ const QuestionsDatabase = () => {
             <div key={index} className="mb-5">
               <p className="color-text p-0 m-0 mb-2">#ENADXQ0001</p>
               <div className="bg-questions-database-box">
-                <form onSubmit={handleSubmit} >
+                <form>
                   <Questions
                     key={question._id}
                     title={question.statements.map(
                       (statement) => statement.description
                     )}
                     options={question.options}
-                    handleChange={setMakedQuestions}
+                    handleChange={(e) => handleOptionChange(question._id, e.target.id)}
                   />
                   <hr />
                   <div className="d-flex justify-content-between">
@@ -92,9 +106,8 @@ const QuestionsDatabase = () => {
                       <p className="color-text bold-weight">Ano: 2024</p>
                     </div>
                     <div className="d-flex justify-content-end me-5">
-                      <button className="btn btn-primary" type="submit">
-                        Responder
-                      </button>
+                      <button value={question._id} onClick={handleSubmit(question._id, selectedOptions[question._id])} disabled={!selectedOptions[question._id]} className="btn btn-primary me-3" type="button">Responder</button>
+                      {/* <button className="btn btn-primary" type="submit">Responder</button> */}
                     </div>
                   </div>
                 </form>

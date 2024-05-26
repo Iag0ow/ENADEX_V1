@@ -14,7 +14,7 @@ export default function Questions({ title, options, handleChange }) {
               name={title}
               id={option._id}
               className="checkbox"
-              onClick={(e) => handleChange(e.target.value)}
+              onClick={handleChange}
             />
              &nbsp;
             &nbsp;

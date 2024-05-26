@@ -37,7 +37,7 @@ function AppRoutes() {
                   <Route path="/simulados-concluidos" element={signed ? <CompletedSimulations /> : <LadingPage />} />
                   {/* <Route path="/esqueci-minha-senha" element={signed ? <WelcomeAfterLogin /> : <RecuperacaoSenha />} /> */}
                   <Route path="/register-admin-teacher" element={signed ? <ManagerUsers /> : <LadingPage />} />
-                  <Route path="/banco-de-questoes" element={<QuestionsDatabase />} />
+                  <Route path="/banco-de-questoes" element={signed ? <QuestionsDatabase /> : <LadingPage />} />
                   {/* <Route path="/" element={signed ? <WelcomeAfterLogin /> : <LadingPage />} /> */}
                   <Route path="/itens-obrigatorios" element={<Itens />} />
                   <Route path="/cursos" element={<Courses />} />

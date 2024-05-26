@@ -126,3 +126,40 @@ export async function getQuestions(){
 
   return {data: data, status: response.status};
 }
+
+
+export async function getBankQuestionsResponseByStudent(id){
+  const token = localStorage.getItem("token");
+
+  const config = {
+   method: "GET",
+   headers: {
+     "content-type": "application/json",
+     "Authorization": `Bearer ${token}`,
+   }
+  }
+
+  const response = await fetch(`${API}/me/answers-questions/questions/${id}`, config);
+  const data = await response.json();
+
+  return {data: data, status: response.status};
+}
+
+export async function postBankQuestionResponse(bodyForm){
+  const token = localStorage.getItem("token");
+
+  const config = {
+   method: "POST",
+   headers: {
+     "content-type": "application/json",
+     "Authorization": `Bearer ${token}`,
+   },
+   body: bodyForm
+  }
+
+  const response = await fetch(`${API}/me/answers-questions`, config);
+  const data = await response.json();
+
+  return {data: data, status: response.status};
+
+}
