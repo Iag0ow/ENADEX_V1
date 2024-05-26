@@ -17,9 +17,15 @@
 
 .QuestionRegistrationSelectsAndCheckboxes {
   display: flex;
-  gap: 1000px;
+  gap: 30px;
   justify-content: left;
   width: 1350px;
+  align-items: center; /* Alinha os itens verticalmente */
+}
+.labelCourse {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 20px;
 }
 
 .selectCourse,
@@ -28,12 +34,13 @@
   margin: 10px;
   margin-left: 3px;
   font-family: "Montserrat", sans-serif;
-  font-weight: bold;
+  font-weight: 600;
   border-radius: 10px;
   background-color: #f5f5f5;
   outline: none;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
+  border: 1px solid #ccc;
 }
 
 .selectCourse:hover,
@@ -45,12 +52,32 @@
   padding: 5px;
   font-size: 16px;
 }
-
 .QuestionRegistrationInputs {
   display: flex;
   justify-content: center;
   width: 100%;
-  max-width: 1389px; /* Define uma largura máxima para centralização */
+  max-width: 1389px;
+}
+.yearLabel {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+  margin-right: 5px;
+}
+.yearSelect {
+  padding: 5px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  border-radius: 10px;
+  background-color: #f5f5f5;
+  outline: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 10px 3px;
+  cursor: pointer;
+  width: 120px;
+  text-align: center;
+  border: 1px solid #ccc;
 }
 
 .inputQuestion {
@@ -64,7 +91,7 @@
   outline: none;
   background-color: #f5f5f5;
   width: 100%;
-  resize: none; 
+  resize: none;
   overflow: hidden;
 }
 
@@ -100,7 +127,7 @@
   font-weight: bold;
   border-radius: 10px;
   outline: none;
-  resize: none; 
+  resize: none;
   overflow: hidden;
 }
 
@@ -198,7 +225,7 @@
 
 .checkboxSimulated:checked::after {
   /* Estilo do checkmark quando o checkbox está marcado */
-  content: '\2714'; /* Conteúdo do checkmark */
+  content: "\2714"; /* Conteúdo do checkmark */
   position: absolute;
   top: 50%;
   left: 50%;
@@ -206,8 +233,10 @@
   font-size: 14px; /* Tamanho da fonte do checkmark */
   color: #000; /* Cor do checkmark */
 }
-.checkboxLabelSimulated{
-  margin-left: 5px;
+.checkboxLabelSimulated {
+  margin-top: 20px;
+  margin-bottom: 20px;
   display: flex;
   align-items: center;
+  font-weight: 600;
 }
