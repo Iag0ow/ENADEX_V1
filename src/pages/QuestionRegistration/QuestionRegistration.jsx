@@ -10,6 +10,7 @@ import NavBar from "../../components/NavBar/NavBar";
 export default function QuestionRegistration() {
   const [courses, setCourses] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState("");
+  const [questionYear, setQuestionYear] = useState("");
   const [options, setOptions] = useState([{ label: "A)", id: 0 }]);
   const [deletedOptions, setDeletedOptions] = useState([]);
   const [correctOption, setCorrectOption] = useState(null);
@@ -57,6 +58,12 @@ export default function QuestionRegistration() {
     setQuestionData({ ...questionData, course: selectedCourseId });
   };
 
+  const handleYearChange = (event) => {
+    const year = event.target.value;
+    if (/^\d{0,4}$/.test(year)) {
+      setQuestionYear(year);
+    }
+  };
   const removeOption = (idToRemove) => {
     if (idToRemove === 0) {
       return;
@@ -159,6 +166,7 @@ export default function QuestionRegistration() {
       isSpecific: true,
       course_id: courseId,
       active: true,
+      year: questionYear,
     };
 
     try {
@@ -175,6 +183,7 @@ export default function QuestionRegistration() {
           theme: "light",
         });
         setSelectedCourse("");
+        setQuestionYear("");
         setQuestionData(null);
 
         options.forEach((option) => {
@@ -195,6 +204,15 @@ export default function QuestionRegistration() {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const renderYearOptions = () => {
+    const currentYear = new Date().getFullYear();
+    const years = [];
+    for (let year = 2004; year < currentYear; year++) {
+      years.push(<option key={year} value={year}>{year}</option>);
+    }
+    return years;
   };
 
   return (
@@ -223,6 +241,17 @@ export default function QuestionRegistration() {
               </option>
             ))}
           </select>
+          <div>
+            <label className="yearLabel">Ano da questão:</label>
+            <select
+              value={questionYear}
+              onChange={handleYearChange}
+              className="yearSelect"
+            >
+              <option value="" disabled>Selecione</option>
+              {renderYearOptions()}
+            </select>
+          </div>
           <label className="checkboxLabelSimulated">
             <input
               className="checkboxSimulated"
@@ -303,3 +332,4 @@ export default function QuestionRegistration() {
     </>
   );
 }
+
