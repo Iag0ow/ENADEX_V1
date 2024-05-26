@@ -69,7 +69,7 @@ export async function getProfile() {
     },
   };
 
-  const response = await fetch(`${API}/profile/me`, config);
+  const response = await fetch(`${API}/me/profile`, config);
   const data = await response.json();
 
   return { ...data, status: response.status };
