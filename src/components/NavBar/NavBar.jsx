@@ -6,7 +6,7 @@ import { useAuth } from "../../context/AuthContextProvider";
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 
 const NavBar = () => {
-  const { logOut,authRole } = useAuth();
+  const { logOut, authRole } = useAuth();
   const location = useLocation();
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -60,13 +60,16 @@ const NavBar = () => {
               <NavLink  className={`navLinks`} to="/home" onClick={closeMenu}>Home</NavLink>
               <NavLink className={`navLinks`} to="/simulados" onClick={closeMenu}>Simulado</NavLink>
               <NavLink className={`navLinks`} to="/banco-de-questoes" onClick={closeMenu}>Questões</NavLink>
-              {( authRole === "COORDINATORS" ) &&
+              {( authRole === "ADMINISTRATOR" || authRole === "COORDINATORS") &&
                 <NavLink className="navLinks" to={"/register-admin-teacher"} >Cadastro </NavLink>
                 }
                {!isMobile && (
               <NavDropdown title="Recursos" id="collasible-nav-dropdown" className="dropdown-text-white">
                 <NavDropdown.Item className='disabled' href="/simulados" onClick={closeMenu}>Apostila</NavDropdown.Item>
                <NavDropdown.Item as={Link} to="/faq-interno" onClick={closeMenu}>Faq (Interno)</NavDropdown.Item>
+               {( authRole === "COORDINATORS" || authRole === "TEACHERS" || authRole === "ADMINISTRATOR") && 
+                    <NavDropdown.Item href="/register-student" onClick={closeMenu}>Aluno</NavDropdown.Item> 
+                }
                <NavDropdown.Item className='disabled' href="/material" onClick={closeMenu}>Material</NavDropdown.Item>
                <NavDropdown.Item as={Link} to="/cadastrar-perguntas" onClick={closeMenu}>Simulado/Perguntas</NavDropdown.Item>
               </NavDropdown>
@@ -75,7 +78,10 @@ const NavBar = () => {
               <div className="grid-container">
                 <Nav title="Recursos" id="collasible-nav-dropdown" className="dropdown-text-white" style={{paddingLeft: '50px'}}>
                   <NavDropdown.Item href="/simulados" onClick={closeMenu}>Simulado</NavDropdown.Item>
-                  <NavDropdown.Item href="/faq-interno" onClick={closeMenu}>Faq (Interno)</NavDropdown.Item>
+                  <NavDropdown.Item href="/register-student" onClick={closeMenu}>Faq (Interno)</NavDropdown.Item>
+                  {( authRole === "COORDINATORS" || "TEACHER" || "ADMINISTRATOR") && 
+                    <NavDropdown.Item href="/faq-interno" onClick={closeMenu}>Aluno</NavDropdown.Item> 
+                  }
                   <NavDropdown.Item className='disabled' href="/material" onClick={closeMenu}>Material</NavDropdown.Item>
                 </Nav>
               </div>

@@ -204,3 +204,19 @@ export async function createSimulated(simulatedData) {
   const response = await fetch(`${API}/mock-exams`, config);
   return response;
 }
+
+export async function getStudents(){
+  const token = localStorage.getItem("token");
+  const config = {
+   method: "GET",
+   headers: {
+     "content-type": "application/json",
+     Authorization: `Bearer ${token}`,
+   }
+  }
+
+  const response = await fetch(`${API}/students`, config);
+  const data = await response.json();
+  console.log(data)
+  return await data;
+}
