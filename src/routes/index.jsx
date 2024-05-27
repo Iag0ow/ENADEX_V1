@@ -18,6 +18,7 @@ import Loading from "../pages/Loading/Loading";
 import { ManagerUsers } from "../pages/ManagerUsers";
 import QuestionsDatabase from "../pages/QuestionsDatabase/QuestionsDatabase";
 import { FaqInterno } from "../pages/FaqInterno";
+import { ManagerStudent } from "../pages/ManagerStudent";
 function AppRoutes() {
   const { signed,loadingReaload } = useAuth();
   return (
@@ -39,6 +40,7 @@ function AppRoutes() {
                   <Route path="/simulados-concluidos" element={signed ? <CompletedSimulations /> : <LadingPage />} />
                   {/* <Route path="/esqueci-minha-senha" element={signed ? <WelcomeAfterLogin /> : <RecuperacaoSenha />} /> */}
                   <Route path="/register-admin-teacher" element={signed ? <ManagerUsers /> : <LadingPage />} />
+                  <Route path="/register-student" element={signed ? <ManagerStudent /> : <LadingPage />} />
                   <Route path="/banco-de-questoes" element={signed ? <QuestionsDatabase /> : <LadingPage />} />
                   <Route path="/faq-interno" element={signed ? <FaqInterno /> : <LadingPage />} />
                   {/* <Route path="/" element={signed ? <WelcomeAfterLogin /> : <LadingPage />} /> */}

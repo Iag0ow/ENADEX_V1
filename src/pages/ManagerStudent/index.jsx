@@ -1,14 +1,14 @@
-import React, { useEffect, useState, useRef } from "react";
-import addUser from "../../assets/add-user.png";
-import NavBar from "../../components/NavBar/NavBar";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { getManagers, getCourses, registerAdminTeacher } from "../../config/config";
+import { z } from 'zod'
+import NavBar from '../../components/NavBar/NavBar'
+import './style.css'
+import { useEffect, useRef, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { getCourses, getStudents, studentRegister } from '../../config/config'
 import Swal from 'sweetalert2';
-import { z } from 'zod';
-import './style.css';
+import { useAuth } from '../../context/AuthContextProvider'
 
-const createRegisterAdminTeacherFormSchema = z.object({
+const createRegisterStudentFormSchema = z.object({
     nameComplet: z
         .string()
         .nonempty('O nome é obrigatório')
@@ -17,9 +17,9 @@ const createRegisterAdminTeacherFormSchema = z.object({
                 .trim()
                 .split(' ')
                 .map((word) => {
-                    return word[0].toLocaleUpperCase().concat(word.substring(1));
+                    return word[0].toLocaleUpperCase().concat(word.substring(1))
                 })
-                .join(' ');
+                .join(' ')
         }),
     email: z
         .string()
@@ -31,34 +31,41 @@ const createRegisterAdminTeacherFormSchema = z.object({
         .min(6, 'A senha precisa de minimo 6 caracteres'),
     confirmPassword: z
         .string(),
-    selectRole: z
+    registration: z
         .string()
-        .nonempty('Selecione um tipo'),
-    courseId: z
-        .array(z.string())
-        .nonempty('Selecione pelo menos dois cursos')
-        .min(1, 'Selecione pelo menos um curso')
+        .nonempty('Número de matrícula é obrigatório'),
+    course: z
+        .string()
+        .nonempty('Curso é obrigatório'),
+    semester: z
+        .string()
+        .nonempty('Semestre atual é obrigatório'),
+    unity: z
+        .string()
+        .nonempty('Selecione unidade é obrigatório'),
 }).refine((data) => data.password === data.confirmPassword, {
     message: "As senhas precisam ser iguais",
     path: ["confirmPassword"]
-});
+})
 
-export function ManagerUsers() {
+export function ManagerStudent() {
+    const { authRole } = useAuth()
+    console.log(authRole)
     const { register, handleSubmit, formState: { errors }, reset } = useForm({
-        resolver: zodResolver(createRegisterAdminTeacherFormSchema)
+        resolver: zodResolver(createRegisterStudentFormSchema)
     });
     const [showModal, setShowModal] = useState(false);
-    const [managers, setManagers] = useState([]);
+    const [students, setStudents] = useState([]);
     const [courses, setCourses] = useState([]);
     const modalRef = useRef(null);
 
 
     useEffect(() => {
-        async function fetchManagers() {
+        async function fetchStudents() {
             try {
-                const data = await getManagers();
-                setManagers(data);
-                // console.log(data)
+                const data = await getStudents();
+                setStudents(data);
+                console.log(data)
             } catch (error) {
                 console.error("Erro ao buscar gerentes:", error);
             }
@@ -73,7 +80,7 @@ export function ManagerUsers() {
             }
         }
 
-        fetchManagers();
+        fetchStudents();
         fetchCourses();
     }, []);
 
@@ -92,16 +99,19 @@ export function ManagerUsers() {
         };
     }, [reset]);
 
-    async function createRegisterAdminTeacher(data) {
-        const adminTeacher = {
+    async function createRegisterStudent(data) {
+        const student = {
             name: data.nameComplet,
             email: data.email,
+            semester: data.semester,
             password: data.password,
-            role: data.selectRole,
-            courses_id: data.courseId
+            course_id: data.course,
+            registration: data.registration,
+            unity: data.unity
         };
+
         try {
-            const result = await registerAdminTeacher(adminTeacher);
+            const result = await studentRegister(student);
             if (result.status === 201) {
                 Swal.fire({
                     icon: 'success',
@@ -122,6 +132,7 @@ export function ManagerUsers() {
                 text: 'Erro na criação da conta.',
             });
         }
+
         reset();
     }
 
@@ -134,35 +145,28 @@ export function ManagerUsers() {
         reset();
     }
 
-    function renderRole(role) {
-        if (role === "COORDINATORS") {
-            return "Coordenador";
-        } else if (role === "ADMINISTRATOR") {
-            return "Administrador";
-        } else {
-            return "Professor";
-        }
-    }
-
     function renderActiveStatus(active) {
         return active ? "Ativo" : "Inativo";
     }
+
 
     return (
         <div className="bg">
             <NavBar search={undefined} />
             <div className="d-flex justify-content-start py-3 toMoveAway font">
                 <div>
-                    <img src={addUser} className="" width={80} height={80} alt="" />
+                    <img src="" className="" width={80} height={80} alt="" />
                 </div>
                 <div className="mt-4 px-4">
-                    <h1 className="font">Gerenciamento de Usuários</h1>
+                    <h1 className="font">Gerenciamento de Alunos</h1>
                 </div>
             </div>
             <div className="d-flex justify-content-start py-1 toMoveAway">
-                <div>
-                    <button className="rounded border-0 buttonAdd" onClick={handleAddButtonClick}>Adicionar</button>
-                </div>
+                {authRole === "ADMINISTRATOR" || authRole === "COORDINATORS" && (
+                    <div>
+                        <button className="rounded border-0 buttonAdd" onClick={handleAddButtonClick}>Adicionar</button>
+                    </div>
+                )}
                 <div className="px-3">
                     <button className="rounded border-0 buttonDisable">Desativar</button>
                 </div>
@@ -174,36 +178,34 @@ export function ManagerUsers() {
                         <tr className="text-center">
                             <th scope="col"></th>
                             <th scope="col">Nome</th>
-                            <th scope="col">Cargo</th>
                             <th scope="col">Email</th>
+                            <th scope="col">Registro</th>
+                            <th scope="col">Semestre</th>
+                            <th scope="col">Curso</th>
+                            <th scope="col">Unidade</th>
                             <th scope="col">Status</th>
-                            <th scope="col">Cursos</th>
                             <th scope="col">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {managers.map((manager) => (
-                            <tr key={manager.key} className="text-center tableFontBody">
+                        {students.map((student) => (
+                            <tr key={student.id} className="text-center tableFontBody">
                                 <td><input type="checkbox" /></td>
-                                <td>{manager.name}</td>
-                                <td>{renderRole(manager.role)}</td>
-                                <td>{manager.email}</td>
-                                <td>{renderActiveStatus(manager.active)}</td>
-                                <td>
-                                    {manager.courses_id.length > 0 ? (
-                                        manager.courses_id.map((course, index) => (
-                                            <span key={course._id}>
-                                                {course.name}
-                                                {index !== manager.courses_id.length - 1 ? ', ' : ''}
-                                            </span>
-                                        ))
-                                    ) : (
-                                        <span>Não tem cursos disponíveis</span>
-                                    )}
-                                </td>
+                                <td>{student.name}</td>
+                                <td>{student.email}</td>
+                                <td>{student.registration}</td>
+                                <td>{student.semester}º</td>
+                                <td> {student.course_id ? (
+                                    <span key={student.course_id}>{student.course_id.name}</span>
+                                ) : (
+                                    <span>Não tem cursos disponíveis</span>
+                                )}</td>
+                                <td>{student.unity}</td>
+                                <td>{renderActiveStatus(student.active)}</td>
                                 <td><button disabled className="border-0 button-edit">Editar</button></td>
                             </tr>
                         ))}
+
                     </tbody>
                 </table>
             </div>
@@ -213,8 +215,8 @@ export function ManagerUsers() {
                     <div className="modal-dialog" role="document">
                         <div id="modal-content-users" className="modal-content mt-4 px-4" ref={modalRef} onClick={(e) => e.stopPropagation()}>
                             <div className="modal-header d-flex justify-content-between">
-                                 <div className="mt-3">
-                                    <img src={addUser} className="" width={50} height={50} alt="" />
+                                <div className="mt-3">
+                                    <img src="" className="" width={50} height={50} alt="" />
                                 </div>
                                 <div>
                                     <h5 className="modal-title">Cadastro de Usuário</h5>
@@ -224,7 +226,7 @@ export function ManagerUsers() {
                                 </button>
                             </div>
                             <div className="modal-body">
-                                <form onSubmit={handleSubmit(createRegisterAdminTeacher)}>
+                                <form onSubmit={handleSubmit(createRegisterStudent)}>
                                     <div className="row">
                                         <div className="col-md-6">
                                             <div className="form-group">
@@ -232,21 +234,30 @@ export function ManagerUsers() {
                                                 <input {...register('nameComplet')} placeholder="Insira o nome completo" type="text" className="form-control" id="input1" />
                                                 {errors.nameComplet && <span className="error-message">{errors.nameComplet.message}</span>}
                                             </div>
+
+                                            <div className="form-group mt-2">
+                                                <label htmlFor="selectRole">Selecione um curso</label>
+                                                <select className="form-select" id="selectRole" {...register('course')}>
+                                                    <option value="">Selecione um Curso</option>
+                                                    {courses.map((course) => (
+                                                        <option key={course._id} value={course._id}>{course.name}</option>
+                                                    ))}
+                                                </select>
+                                                {errors.course && <span className="error-message">{errors.course.message}</span>}
+                                            </div>
+
+                                            <div className="form-group mt-2">
+                                                <label htmlFor="input1" className="labelText">Matrícula</label>
+                                                <input {...register('registration')} placeholder="Insira o nome completo" type="text" className="form-control" id="input1" />
+                                                {errors.registration && <span className="error-message">{errors.registration.message}</span>}
+                                            </div>
+
                                             <div className="form-group mt-2">
                                                 <label htmlFor="input2">Senha</label>
                                                 <input {...register('password')} placeholder="Insira sua senha" type="password" className="form-control" id="input2" />
                                                 {errors.password && <span className="error-message">{errors.password.message}</span>}
                                             </div>
-                                            <div className="form-group mt-2">
-                                                <label htmlFor="selectRole">Selecione um tipo</label>
-                                                <select className="form-select" id="selectRole" {...register('selectRole')}>
-                                                    <option value="">Selecione um Tipo</option>
-                                                    <option value="ADMINISTRATOR">Administrador</option>
-                                                    <option value="TEACHERS">Professor</option>
-                                                    <option value="COORDINATORS">Coordenador</option>
-                                                </select>
-                                                {errors.selectRole && <span className="error-message">{errors.selectRole.message}</span>}
-                                            </div>
+
                                         </div>
                                         <div className="col-md-6">
                                             <div className="form-group mt">
@@ -255,28 +266,44 @@ export function ManagerUsers() {
                                                 {errors.email && <span className="error-message">{errors.email.message}</span>}
                                             </div>
                                             <div className="form-group mt-2">
+                                                <label htmlFor="selectRole">Selecione sua unidade</label>
+                                                <select className="form-select" id="selectRole" {...register('unity')}>
+                                                    <option value="">Selecione a Unidade</option>
+                                                    <option value="ITABUNA">Itabuna</option>
+                                                    <option value="FEIRA_DE_SANTANA">Feira de Santana</option>
+                                                    <option value="VITORIA_DA_CONQUISTA">
+                                                        Vitória da Conquista
+                                                    </option>
+                                                    <option value="JEQUIÉ">Jequié</option>
+                                                    <option value="SALVADOR">Salvador</option>
+                                                </select>
+                                                {errors.unity && <span className="error-message">{errors.unity.message}</span>}
+                                            </div>
+
+                                            <div className="form-group mt-2">
+                                                <label htmlFor="selectRole">Selecione seu semestre</label>
+                                                <select className="form-select" id="selectRole" {...register('semester')}>
+                                                    <option value="">Selecione o Semestre</option>
+                                                    <option value="1">1º Semestre</option>
+                                                    <option value="2">2º Semestre</option>
+                                                    <option value="3">3º Semestre</option>
+                                                    <option value="4">4º Semestre</option>
+                                                    <option value="5">5º Semestre</option>
+                                                    <option value="6">6º Semestre</option>
+                                                    <option value="7">7º Semestre</option>
+                                                    <option value="8">8º Semestre</option>
+                                                    <option value="9">9º Semestre</option>
+                                                    <option value="10">10º Semestre</option>
+                                                </select>
+                                                {errors.semester && <span className="error-message">{errors.semester.message}</span>}
+                                            </div>
+
+                                            <div className="form-group mt-2">
                                                 <label htmlFor="input5">Repita sua senha</label>
                                                 <input {...register('confirmPassword')} placeholder="Insira sua senha novamente" type="password" className="form-control" id="input5" />
                                                 {errors.confirmPassword && <span className="error-message">{errors.confirmPassword.message}</span>}
                                             </div>
-                                            <div className="form-group mt-2">
-                                                <label htmlFor="input3">Selecione os cursos</label>
-                                                {courses.map((course) => (
-                                                    <div key={course._id} className="form-check">
-                                                        <input
-                                                            className="form-check-input"
-                                                            type="checkbox"
-                                                            id={`courseCheckbox${course._id}`}
-                                                            value={course._id}
-                                                            {...register('courseId')}
-                                                        />
-                                                        <label className="form-check-label" htmlFor={`courseCheckbox${course._id}`}>
-                                                            {course.name}
-                                                        </label>
-                                                    </div>
-                                                ))}
-                                                {errors.courseId && <span className="error-message">{errors.courseId.message}</span>}
-                                            </div>
+
                                         </div>
                                     </div>
                                     <div className="modal-footer">
@@ -292,4 +319,5 @@ export function ManagerUsers() {
             )}
         </div>
     );
+
 }
