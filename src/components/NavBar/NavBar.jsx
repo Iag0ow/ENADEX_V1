@@ -79,8 +79,8 @@ const NavBar = () => {
                 <Nav title="Recursos" id="collasible-nav-dropdown" className="dropdown-text-white" style={{paddingLeft: '50px'}}>
                   <NavDropdown.Item href="/simulados" onClick={closeMenu}>Simulado</NavDropdown.Item>
                   <NavDropdown.Item href="/register-student" onClick={closeMenu}>Faq (Interno)</NavDropdown.Item>
-                  {( authRole === "COORDINATORS" || "TEACHER" || "ADMINISTRATOR") && 
-                    <NavDropdown.Item href="/faq-interno" onClick={closeMenu}>Aluno</NavDropdown.Item> 
+                  {( authRole === "COORDINATORS" || authRole === "TEACHER" || authRole === "ADMINISTRATOR") && 
+                    <NavDropdown.Item href="/register-student" onClick={closeMenu}>Aluno</NavDropdown.Item> 
                   }
                   <NavDropdown.Item className='disabled' href="/material" onClick={closeMenu}>Material</NavDropdown.Item>
                 </Nav>
