@@ -39,14 +39,10 @@
   background-color: #f5f5f5;
   outline: none;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
   border: 1px solid #ccc;
+  cursor: pointer;
 }
 
-.selectCourse:hover,
-.selectNaoSei:hover {
-  transform: translateY(-1.5px);
-}
 
 .QuestionRegistrationSelectsAndCheckboxes select {
   padding: 5px;
@@ -181,12 +177,10 @@
   color: white;
   border: none;
   outline: none;
-  transition: 0.5s;
 }
 
 .addOptionButton:hover {
   background-color: #07224b;
-  transform: scale(1.05);
 }
 
 .registerQuestionButton {
@@ -198,14 +192,12 @@
   border-radius: 10px;
   padding: 5px 100px;
   border: none;
-  transition: 0.5s;
   border: 2px solid transparent;
   margin-top: 15px;
 }
 
 .registerQuestionButton:hover {
   background-color: #078f46;
-  transform: scale(1.05);
 }
 
 .checkboxSimulated {
