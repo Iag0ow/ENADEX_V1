@@ -239,7 +239,7 @@ export default function SimulatedRegisterComponent({ selectedCourse }) {
         </div>
       </div>
       <label className="SimulatedDescription">Descrição</label>
-      <div className="SimulatedRegistrationDescriptionContainer">
+      <div className="d-flex justify-content-center md-justify-content-between flex-wrap mb-5">
         <div className="leftContainer">
           <textarea
             disabled={simulatedSucess}
@@ -337,9 +337,9 @@ export default function SimulatedRegisterComponent({ selectedCourse }) {
               </div>
             </div>
           ))}
-          <div className="QuestionRegistrationButtonsHolder">
+          <div className="QuestionRegistrationButtonsHolder flex-wrap">
             <button
-              className="addOptionButton"
+              className="SimulatedQuestionButton"
               disabled={!simulatedSucess}
               onClick={addOption}
             >
@@ -347,7 +347,7 @@ export default function SimulatedRegisterComponent({ selectedCourse }) {
             </button>
             <button
               disabled={!simulatedSucess}
-              className="registerQuestionButton"
+              className="SimulatedQuestionButton"
               onClick={() => handleQuestionRegistration(simulatedId)}
             >
               {isLoadingQuestion ? "Carregando..." : "Cadastrar Questão"}

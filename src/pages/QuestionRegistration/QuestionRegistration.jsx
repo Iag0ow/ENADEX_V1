@@ -233,13 +233,13 @@ export default function QuestionRegistration() {
   return (
     <>
       <NavBar />
-      <div className="QuestionRegistrationContainer">
+      <div className="container">
         <div className="QuestionRegistrationTitle">
           <h1>{isSimulated ? "Registrar Simulado" : "Registrar Questão"}</h1>
         </div>
-        <div className="QuestionRegistrationSelectsAndCheckboxes">
+        <div className="d-flex justify-content-start align-items-center gap-5 flex-wrap">
           <select
-            className="selectCourse"
+            className="form-control w-7"
             id="courseSelect"
             value={selectedCourse}
             onChange={handleCourseChange}
@@ -253,20 +253,17 @@ export default function QuestionRegistration() {
               </option>
             ))}
           </select>
-          <div>
-            <label className="yearLabel">Ano da questão:</label>
-            <select
-              disabled={isSimulated}
-              value={questionYear}
-              onChange={handleYearChange}
-              className="yearSelect"
-            >
-              <option value="" disabled>
-                Selecionar
-              </option>
-              {renderYearOptions()}
-            </select>
-          </div>
+          <select
+            disabled={isSimulated}
+            value={questionYear}
+            onChange={handleYearChange}
+            className="form-control w-7"
+          >
+            <option value="" disabled>
+              Ano
+            </option>
+            {renderYearOptions()}
+          </select>
           <label className="checkboxLabelSimulated">
             <input
               className="checkboxSimulated"
@@ -290,7 +287,7 @@ export default function QuestionRegistration() {
             <textarea
               id="questionInput"
               className="inputQuestion"
-              placeholder="Question"
+              placeholder="Ex: Quanto é 2+2?"
               rows={1}
               onChange={(e) => {
                 e.target.style.height = "auto";
@@ -311,7 +308,7 @@ export default function QuestionRegistration() {
                   <textarea
                     id={`optionText_${option.id}`}
                     className="inputOption"
-                    placeholder={`Option ${option.label}`}
+                    placeholder={`Alternativa ${option.label}`}
                     rows={1}
                     onChange={(e) => {
                       e.target.style.height = "auto";
@@ -339,12 +336,12 @@ export default function QuestionRegistration() {
                 </div>
               </div>
             ))}
-            <div className="QuestionRegistrationButtonsHolder">
-              <button className="addOptionButton" onClick={addOption}>
+            <div className="QuestionRegistrationButtonsHolder flex-wrap">
+              <button className="QuestionButton" onClick={addOption}>
                 Adicionar
               </button>
               <button
-                className="registerQuestionButton"
+                className="QuestionButton"
                 onClick={handleQuestionRegistration}
                 disabled={
                   isLoading ||
