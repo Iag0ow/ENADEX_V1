@@ -47,6 +47,7 @@ function AppRoutes() {
                   <Route path="/itens-obrigatorios" element={<Itens />} />
                   <Route path="/cursos" element={<Courses />} />
                   <Route path="/" element={ signed ? <WelcomeAfterLogin /> : <LadingPage />} />
+                  <Route path="*" element={<LadingPage />} />
               </Routes>
             </BrowserRouter>
           </> }
