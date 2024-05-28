@@ -52,12 +52,12 @@ const NavBar = () => {
   return (
     <Navbar collapseOnSelect expand="lg" className={`navbar ${isMobile ? 'mobile' : ''}`} ref={ref}>
       <Navbar.Brand>
-        <Link to="/home"><img className="logoNav" src={Logo} alt="" /></Link>
+        <Link to="/"><img className="logoNav" src={Logo} alt="" /></Link>
           </Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" onClick={toggleMenu} />
              <Navbar.Collapse id="responsive-navbar-nav" className={`justify-content-end ${menuOpen ? 'show-menu' : 'hide-menu'}`}>
               <Nav id='' className={`mr-auto ${isMobile && !menuOpen ? 'd-none' : ''}`}>
-              <NavLink  className={`navLinks`} to="/home" onClick={closeMenu}>Home</NavLink>
+              <NavLink  className={`navLinks`} to="/" onClick={closeMenu}>Home</NavLink>
               <NavLink className={`navLinks`} to="/simulados" onClick={closeMenu}>Simulado</NavLink>
               <NavLink className={`navLinks`} to="/banco-de-questoes" onClick={closeMenu}>Questões</NavLink>
               {( authRole === "ADMINISTRATOR" || authRole === "COORDINATORS") &&
