@@ -229,7 +229,7 @@ export default function QuestionRegistration() {
     }
     return years;
   };
-
+  console.log(correctOption);
   return (
     <>
       <NavBar />
@@ -350,8 +350,8 @@ export default function QuestionRegistration() {
                   !questionData.question ||
                   !{ label: "A)", id: 0 } ||
                   !{ label: "B)", id: 1 } ||
-                  !correctOption
-                }
+                  correctOption === null
+                } 
               >
                 {isLoading ? "Carregando..." : "Registrar Questão"}
               </button>

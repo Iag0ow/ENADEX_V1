@@ -5,7 +5,7 @@ export default function Questions({ title, options, handleChange, disabled, sele
   return (
     <div className="question-container">
       <h5 className="question-title color-text"
-      dangerouslySetInnerHTML={{ __html: title }}
+        dangerouslySetInnerHTML={{ __html: title }}
       ></h5>
       {options &&
         options.map((option, index) => (
@@ -24,10 +24,9 @@ export default function Questions({ title, options, handleChange, disabled, sele
             &nbsp;
             {QuestionsLetters[index].letter})
             &nbsp;
-            <label htmlFor={option._id} className="option-label">{option.description}</label>
+            <label htmlFor={option._id} className="option-label" dangerouslySetInnerHTML={{ __html: option.description }}></label>
           </div>
         ))}
     </div>
   );
 }
-
