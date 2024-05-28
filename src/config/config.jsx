@@ -175,6 +175,7 @@ export async function postBankQuestionResponse(bodyForm){
   return {data: data, status: response.status};
 
 }
+
 export async function createQuestion(questionData) {
   const bodyForm = JSON.stringify(questionData);
   const token = localStorage.getItem("token");
@@ -220,3 +221,59 @@ export async function getStudents(){
   console.log(data)
   return await data;
 }
+
+export async function activateStudents(idStudent) {
+  const token = localStorage.getItem("token");
+  const config = {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+ 
+  };
+  const response = await fetch(`${API}/students/${idStudent}/activate`, config);
+  return response;
+}
+
+export async function deactivateStudents(idStudent) {
+  console.log(idStudent)
+  const token = localStorage.getItem("token");
+  const config = {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await fetch(`${API}/students/${idStudent}/deactivate`, config);
+  return response;
+}
+
+export async function activateManagers(idManager) {
+  const token = localStorage.getItem("token");
+  const config = {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+ 
+  };
+  const response = await fetch(`${API}/managers/${idManager}/activate`, config);
+  return response;
+}
+
+export async function deactivateManagers(idManager) {
+  const token = localStorage.getItem("token");
+  const config = {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await fetch(`${API}/managers/${idManager}/deactivate`, config);
+  return response;
+}
+
