@@ -1,43 +1,159 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../../components/NavBar/NavBar";
 import "./QuestionsDatabase.css";
-import { getQuestions } from "../../config/config";
+import { getQuestions, getBankQuestionsResponseByStudent, postBankQuestionResponse } from "../../config/config";
 import Questions from "../../components/Questions/Questions";
+import { useAuth } from "../../context/AuthContextProvider";
 
 const QuestionsDatabase = () => {
-  const [resolvedQuestions, setResolvedQuestions] = useState(false);
+  const { filtersLoad } = useAuth();
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [sendSelectedQuestion, setSendSelectedQuestion] = useState();
   const [selectedOptions, setSelectedOptions] = useState({});
+  const [studentResponses, setStudentResponses] = useState([]);
+  const [showReponseQuestions, setShowReponseQuestions] = useState(false);
+  const [searchText, setSearchText] = useState("");
+  const [selectedFilter, setSelectedFilter] = useState({
+    course_id: '',
+    searchText: '',
+    year: '',
+    isSpecific: ''
+  });
 
   useEffect(() => {
     const fetchQuestions = async () => {
+      setQuestions([]);
       setLoading(true);
-      const response = await getQuestions();
+      const response = await getQuestions(selectedFilter);
+      const responseStudent = await getBankQuestionsResponseByStudent();
+      const questionsForResponse = response['data'].filter(question => !responseStudent['data'].some(studentsQuestions => studentsQuestions.question._id === question._id));
+      setQuestions(questionsForResponse);
+      setStudentResponses(responseStudent['data']);
       setLoading(false);
-      setQuestions(response.data);
     };
+    if (!showReponseQuestions){
+      fetchQuestions();
+    }
+  }, [selectedFilter]);
 
-    fetchQuestions();
-  }, []);
+
+  const handleSubmit = async (questionId, selectedOptionId) => {
+    if (showReponseQuestions !== true){
+      const submitResponse = {
+        question_id: questionId,
+        selected_option_id: selectedOptionId
+      };
   
-const handleSubmit = (questionId,responseId) => (e) => {
-  e.preventDefault();
-  const submitResponse = {
-    question_id: questionId,
-    selected_option_id: responseId
-  }
-  console.log(submitResponse);
-};
+      try {
+        const response = await postBankQuestionResponse(submitResponse);
+  
+        if (response.status === 201) {
+          const rightAnswer = response.data.question.options.find((option) => option.correctOption === true);
+          const question = questions.find(q => q._id === questionId);
+          const correctOptionIndex = question.options.findIndex(option => option._id === rightAnswer._id);
+          const letterMapping = ['A', 'B', 'C', 'D', 'E'];
+          const correctOptionValue = letterMapping[correctOptionIndex];
+          // Atualizar as opções selecionadas
+          setSelectedOptions(prevState => ({
+            ...prevState,
+            [questionId]: selectedOptionId
+          }));
+          //const correct_option_id = response.data.question.options.find((option) => option._id === correctOptionId);
+          // Atualizar as questões com a resposta correta ou incorreta
+          setQuestions(prevQuestions => prevQuestions.map(question => {
+            if (question._id === questionId) {
+              return {
+                ...question,
+                
+                isCorrect: rightAnswer._id === selectedOptionId,
+                correctOptionValue 
+              };
+            }
+            return question;
+          }));
+        }
+      } catch (error) {
+        console.error("Erro ao enviar resposta:", error);
+      }
+    }
+  };
 
   const handleOptionChange = (questionId, value) => {
     setSelectedOptions(prevState => ({
       ...prevState,
-      [questionId]: value,
-      
+      [questionId]: value
     }));
-    //handleSelectQuestion(questionId, value);
+  };
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  }
+
+  useEffect(() => {
+    if (showReponseQuestions){
+      handleChange(true);
+    }
+  }, [selectedFilter]);
+
+  const handleChange = async (value) => {
+    setShowReponseQuestions(value);
+    if (value == true) {
+      setLoading(true);
+      setQuestions([]);
+    
+      try {
+        const response = await getQuestions(selectedFilter);
+        const responseStudent = await getBankQuestionsResponseByStudent();
+    
+        const questionsForResponse = response.data.filter(question =>
+          responseStudent.data.some(studentsQuestions => studentsQuestions.question._id === question._id)
+        );
+    
+        const letterMapping = ['A', 'B', 'C', 'D', 'E'];
+    
+        const result = responseStudent.data.map(studentResponse => {
+          const question = questionsForResponse.find(q => q._id === studentResponse.question._id);
+    
+          if (!question) {
+            return {
+              ...studentResponse,
+              isCorrect: false,
+              correctOptionValue: null
+            };
+          }
+    
+          const selectedOption = question.options.find(option => option._id === studentResponse.selected_option_id);
+          const correctOption = question.options.find(option => option.correctOption === true);
+          const correctOptionIndex = question.options.findIndex(option => option._id === correctOption._id);
+          const correctOptionValue = letterMapping[correctOptionIndex];
+
+          return {
+            ...studentResponse,
+            isCorrect: selectedOption ? selectedOption.correctOption : false,
+            correctOptionValue: correctOptionValue
+          };
+        }).filter(studentResponse => studentResponse.correctOptionValue !== null); // Filtra questões com correctOptionValue null
+    
+        setQuestions(result);
+      } catch (error) {
+        console.error("Error fetching questions or responses:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+     else {
+      setLoading(true);
+      setQuestions([]);
+      const response = await getQuestions(selectedFilter);
+      const responseStudent = await getBankQuestionsResponseByStudent();
+      const questionsForResponse = response['data'].filter(question => !responseStudent['data'].some(studentsQuestions => studentsQuestions.question._id === question._id));
+      setQuestions(questionsForResponse);
+      setLoading(false);
+    }
+  };
+
+  const handleSubmitSearch = (e) => {
+    e.preventDefault();
+    setSelectedFilter({ ...selectedFilter, searchText });
   };
 
   return (
@@ -45,75 +161,135 @@ const handleSubmit = (questionId,responseId) => (e) => {
       <NavBar />
       <div className="container QuestionsDatabase">
         <h1 className="bold-weight p-3 mt-3">Banco de Questões</h1>
-        <div className="mt-2 mb-5 d-flex justify-content-center align-items-center gap-3 flex-wrap">
-          <input
-            type="text"
-            placeholder="Pesquisar"
-            className="height-input form-control form-control-color w-25"
-          />
+        <div className="mt-2 mb-5 d-flex justify-content-center gap-3 flex-wrap">
+          <div>
+          <form onSubmit={handleSubmitSearch}>
+            <input
+              type="text"
+              placeholder="Pesquisar"
+              className="height-input form-control form-control-color w-100 cursor-auto"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+          </form>
+            <div className="form-check mt-3">
+              <input onChange={(e) => handleChange(e.target.checked)} type="checkbox" name="" className="form-check-input" id="" />
+              <label className="text-center">Exibir questões já feitas</label>
+            </div>
+          </div>
           <select
-            name="lastTenYears"
+            name="course"
             className="form-control form-control-color QuestionsDatabase w-25"
-            id=""
+            defaultValue={''}
+            onChange={(e) => setSelectedFilter({ ...selectedFilter, course_id: e.target.value })}
           >
-            <option value="2024">Programação Web</option>
-            <option value="2023">Algoritmos</option>
-            <option value="2022">Matemática</option>
-            <option value="2021">Dark Web</option>
+            <option value={''}>Todos os Cursos</option>
+            {
+              filtersLoad.length > 0 && filtersLoad[0]['values'].map((value, index) => (
+                <option key={index} value={value._id}>{capitalizeFirstLetter(value.name)}</option>
+              )) 
+            }
+          </select>
+          <select
+            name="especificOrGeneral"
+            className="form-control form-control-color QuestionsDatabase w-25"
+            defaultValue={true}
+            onChange={(e) => setSelectedFilter({ ...selectedFilter, isSpecific: e.target.value })}
+          >
+             <option value={true}>Curso específico</option>
+             <option value={false}>Não específico</option>
           </select>
           <select
             name="lastTenYears"
-            className="form-control form-control-color QuestionsDatabase w-25"
-            id=""
+            className="form-control form-control-color QuestionsDatabase w-7"
+            onChange={(e) => setSelectedFilter({ ...selectedFilter, year: e.target.value })}
           >
-            <option value="2024">2024</option>
-            <option value="2023">2023</option>
-            <option value="2022">2022</option>
-            <option value="2021">2021</option>
-            <option value="2020">2020</option>
-            <option value="2019">2019</option>
-            <option value="2018">2018</option>
-            <option value="2017">2017</option>
-            <option value="2016">2016</option>
-            <option value="2015">2015</option>
-            <option value="2014">2014</option>
+            <option disabled value={''}>Anos</option>
+            <option value={''}>Geral</option>
+          {
+  
+              filtersLoad.length > 0 && filtersLoad[1]['values'].map((value, index) => (
+                <option key={index} value={value}>{value}</option>
+              ))
+          }
           </select>
-          <button className="btn btn-primary">Cadastrar Questão</button>
         </div>
         {loading && (
           <h1 className="text-center mt-5 color-text bold-weight">
             Carregando...
           </h1>
         )}
-        {questions &&
-          questions.map((question, index) => (
-            <div key={index} className="mb-5">
-              <p className="color-text p-0 m-0 mb-2">#ENADXQ0001</p>
-              <div className="bg-questions-database-box">
-                <form>
-                  <Questions
-                    key={question._id}
-                    title={question.statements.map(
-                      (statement) => statement.description
-                    )}
-                    options={question.options}
-                    handleChange={(e) => handleOptionChange(question._id, e.target.id)}
-                  />
-                  <hr />
-                  <div className="d-flex justify-content-between">
-                    <div className="d-flex">
-                      <p className="me-3 color-text bold-weight">Fonte: UNEX</p>
-                      <p className="color-text bold-weight">Ano: 2024</p>
-                    </div>
-                    <div className="d-flex justify-content-end me-5">
-                      <button value={question._id} onClick={handleSubmit(question._id, selectedOptions[question._id])} disabled={!selectedOptions[question._id]} className="btn btn-primary me-3" type="button">Responder</button>
-                      {/* <button className="btn btn-primary" type="submit">Responder</button> */}
-                    </div>
+        {!loading && questions.length === 0 && (
+          <h1 className="text-center mt-5 color-text bold-weight">
+            Nenhuma questão encontrada
+          </h1>
+        )}
+        { !showReponseQuestions && questions.map((question, index) => (
+          <div key={index} className="mb-5">
+            <div className="bg-questions-database-box">
+              <form>
+                <Questions
+                  key={question._id}
+                  title={question.statements.map(
+                    (statement) => statement.description
+                  )}
+                  options={question.options}
+                  handleChange={(e) => handleOptionChange(question._id, e.target.id)}
+                  disabled={question.isCorrect !== undefined || showReponseQuestions}
+                  selectedOptionId={null}
+                />
+                <hr />
+                <div className="d-flex justify-content-between align-items-center">
+                  <div className="d-flex flex-wrap">
+                    <p className="me-3 color-text bold-weight mb-0 height-min-content">Fonte: UNEX</p>
+                    <p className="color-text bold-weight mb-0 height-min-content">Ano: 2024</p>
                   </div>
-                </form>
-              </div>
+                  <div className="d-flex justify-content-end me-5 align-items-baseline flex-wrap">
+                  {question.isCorrect !== undefined && (
+                      <p className={question.isCorrect ? "color-text-correct-answer-bank me-5" : "color-text-incorrect-answer-bank me-5"}>
+                        {question.isCorrect ? "Parabéns! você acertou!" : `Infelizmente, você errou! A resposta correta é: ${question.correctOptionValue}`}
+                      </p>
+                    )}
+                    <button onClick={() => handleSubmit(question._id, selectedOptions[question._id])} className={`btn btn-primary me-3`} disabled={question.isCorrect !== undefined || showReponseQuestions} type="button">Responder</button>
+                  </div>
+                </div>
+              </form>
             </div>
-          ))}
+          </div>
+        ))}
+        {showReponseQuestions && questions.map((question, index) => (
+          <div key={index} className="mb-5">
+            <div className="bg-questions-database-box">
+              <form>
+                <Questions
+                  key={question.question._id}
+                  title={question.question.statements.map(
+                    (statement) => statement.description
+                  )}
+                  options={question.question.options}
+                  selectedOptionId={question.selected_option_id} // passando a opção selecionada
+                  handleChange={(e) => handleOptionChange(question.question._id, e.target.id)}
+                  disabled={question.isCorrect !== undefined || showReponseQuestions}
+                />
+                <hr />
+                <div className="d-flex justify-content-between align-items-center">
+                  <div className="d-flex flex-wrap">
+                    <p className="me-3 color-text bold-weight mb-0 height-min-content">Fonte: UNEX</p>
+                    <p className="color-text bold-weight mb-0 height-min-content">Ano: 2024</p>
+                  </div>
+                  <div className="d-flex justify-content-end me-5 align-items-baseline flex-wrap">
+                  {question.isCorrect !== undefined && (
+                      <p className={question.isCorrect ? "color-text-correct-answer-bank me-5" : "color-text-incorrect-answer-bank me-5"}>
+                        {question.isCorrect ? "Parabéns! você acertou!" : `Infelizmente, você errou! A resposta correta é: ${question.correctOptionValue}`}
+                      </p>
+                    )}
+                    <button onClick={() => handleSubmit(question._id, selectedOptions[question._id])} className={`btn btn-primary me-3`} disabled={question.isCorrect !== undefined || showReponseQuestions} type="button">Responder</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
