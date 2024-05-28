@@ -4,7 +4,10 @@ import QuestionsLetters from "../../assets/mock/QuestionsLetters.json";
 export default function Questions({ title, options, handleChange }) {
   return (
     <div className="question-container">
-      <h5 className="question-title color-text">{title}</h5>
+      <h5
+        className="question-title color-text"
+        dangerouslySetInnerHTML={{ __html: title }}
+      />
       {options &&
         options.map((option, index) => (
           <div key={index} className="option d-flex align-items-center justify-content-start flex-wrap">

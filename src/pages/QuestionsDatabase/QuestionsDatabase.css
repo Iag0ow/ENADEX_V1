@@ -25,3 +25,28 @@
     border: 1px solid #ffffffa4;
     padding: 1rem;
 }
+.color-text-correct-answer-bank{
+    background-color: #ecf9f5;
+    color: #0e4c36;
+    padding: 5px 12px;
+    font-size: 15px;
+    min-height: 34px;
+    border-left: 2px solid #a7e5cf;
+}
+.color-text-incorrect-answer-bank{
+    background-color: #fff2f2;
+    color: #910e23;
+    padding: 5px 12px;
+    font-size: 15px;
+    min-height: 34px;
+    border-left: 2px solid #f9a2b0;
+}
+.height-min-content{
+    height: min-content;
+}
+.w-7 {
+    width: 12% !important;
+}
+.cursor-auto{
+    cursor: auto  !important;
+}

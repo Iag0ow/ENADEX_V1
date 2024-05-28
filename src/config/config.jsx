@@ -103,7 +103,6 @@ export async function getManagers() {
 
   const response = await fetch(`${API}/managers`, config);
   const data = await response.json();
-  console.log(data);
 
   return await data;
 }
@@ -122,7 +121,25 @@ export async function getCourses(){
    return { data, status: response.status };
 }
 
-export async function getQuestions(){
+export async function getQuestions(filters){
+  const token = localStorage.getItem("token");
+
+  const config = {
+   method: "GET",
+   headers: {
+     "content-type": "application/json",
+     "Authorization": `Bearer ${token}`,
+   }
+  }
+  const queryParams = [filters.searchText && `searchText=${filters.searchText}`, filters.year && `year=${filters.year}`, filters.isSpecific && `isSpecific=${filters.isSpecific}`, filters.course_id && `course_id=${filters.course_id}`].filter(Boolean).join('&');
+  const response = await fetch(`${API}/questions?${queryParams}`, config);
+  const data = await response.json();
+
+  return {data: data, status: response.status};
+}
+
+
+export async function getBankQuestionsResponseByStudent(){
   const token = localStorage.getItem("token");
 
   const config = {
@@ -133,33 +150,15 @@ export async function getQuestions(){
    }
   }
 
-  const response = await fetch(`${API}/questions`, config);
+  const response = await fetch(`${API}/me/answers-questions`, config);
   const data = await response.json();
 
   return {data: data, status: response.status};
 }
 
-
-export async function getBankQuestionsResponseByStudent(id){
+export async function postBankQuestionResponse(questionObjectResponse){
+  const bodyForm = JSON.stringify(questionObjectResponse);
   const token = localStorage.getItem("token");
-
-  const config = {
-   method: "GET",
-   headers: {
-     "content-type": "application/json",
-     "Authorization": `Bearer ${token}`,
-   }
-  }
-
-  const response = await fetch(`${API}/me/answers-questions/questions/${id}`, config);
-  const data = await response.json();
-
-  return {data: data, status: response.status};
-}
-
-export async function postBankQuestionResponse(bodyForm){
-  const token = localStorage.getItem("token");
-
   const config = {
    method: "POST",
    headers: {
@@ -218,4 +217,19 @@ export async function createSimulatedQuestion(simulatedId, questionData) {
   };
   const response = await fetch(`${API}/mock-exams/${simulatedId}/questions`, config);
   return response;
+  
+export async function getStudents(){
+  const token = localStorage.getItem("token");
+  const config = {
+   method: "GET",
+   headers: {
+     "content-type": "application/json",
+     Authorization: `Bearer ${token}`,
+   }
+  }
+
+  const response = await fetch(`${API}/students`, config);
+  const data = await response.json();
+  console.log(data)
+  return await data;
 }

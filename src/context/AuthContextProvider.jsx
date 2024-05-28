@@ -12,6 +12,7 @@ export const AuthContextProvider = ({children}) => {
   const [authRole, setAuthRole] = useState('');
   const [loading, setLoading] = useState(false);
   const [loadingReaload, setLoadingReload] = useState(false);
+  const [filters , setFilters] = useState([]);
 
   const [modalShow, setModalShow] = useState(false);
   
@@ -76,10 +77,32 @@ export const AuthContextProvider = ({children}) => {
   useEffect(() => {
     verifySigned();
   }, []);
-  
+
+
+
+  useEffect(() => {
+    async function  getFilters(){
+      const token = localStorage.getItem("token");
+    
+      const config = {
+       method: "GET",
+       headers: {
+         "content-type": "application/json",
+         "Authorization": `Bearer ${token}`,
+       }
+      }
+    
+      const response = await fetch(`${API}/questions/filters`, config);
+      const data = await response.json();
+      setFilters(data);
+    }
+
+
+    getFilters(); 
+  },[])
 
   return (
-    <AuthContext.Provider value={{signed:signed,user:user,email:email, token:token, login,logOut, loading, verifySigned, authRole, modalShow, setModalShow, loadingReaload}}>
+    <AuthContext.Provider value={{signed:signed,user:user,email:email, token:token, login,logOut, loading, verifySigned, authRole, modalShow, setModalShow, loadingReaload, filtersLoad:filters}}>
     {children}
    </AuthContext.Provider>
   )

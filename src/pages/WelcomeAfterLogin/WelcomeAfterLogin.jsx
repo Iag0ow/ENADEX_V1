@@ -44,7 +44,7 @@ export default function WelcomeAfterLogin() {
           <img src={SimuladoIcon} alt="Hexágono" className="buttonIcon" />
           Simulados
         </Link>
-        <Link to="/home" className="enadexContentButton">
+        <Link to="/" className="enadexContentButton">
           <img src={DiamondIcon} alt="Hexágono" className="buttonIcon" />
           Rank
         </Link>
