@@ -75,7 +75,7 @@ export function ManagerUsers() {
 
         fetchManagers();
         fetchCourses();
-    }, []);
+    }, [showModal]);
 
 
     useEffect(() => {
