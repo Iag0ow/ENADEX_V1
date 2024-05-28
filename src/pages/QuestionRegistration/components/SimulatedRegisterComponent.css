@@ -21,7 +21,12 @@
   font-family: "Montserrat", sans-serif;
   font-weight: medium;
 }
-
+.title-input:disabled {
+  cursor: not-allowed;
+  background-color: #f5f5f5;
+  color: #ccc;
+  opacity: 85%;
+}
 .SimulatedRegistrationDescriptionContainer {
   display: flex;
   gap: 20px;
@@ -34,7 +39,7 @@
 }
 
 .leftContainer {
-  width: 70%; /* Ajuste a largura conforme necessário */
+  width: 70%; 
 }
 
 .description-input {
@@ -48,10 +53,15 @@
   width: 100%;
   font-family: "Montserrat", sans-serif;
   text-align: justify;
-  resize: vertical; 
+  resize: vertical;
   min-height: 100px;
 }
-
+.description-input:disabled {
+  cursor: not-allowed;
+  background-color: #f5f5f5;
+  color: #ccc;
+  opacity: 85%;
+}
 .timerContainer {
   display: flex;
   align-items: center;
@@ -86,7 +96,12 @@
   -webkit-appearance: none;
   margin: 0;
 }
-
+.simulatedTimer:disabled {
+  cursor: not-allowed;
+  background-color: #f5f5f5;
+  color: #ccc;
+  opacity: 85%;
+}
 .simulatedRegisterButton {
   background-color: #0fa958;
   font-family: "Montserrat", sans-serif;
@@ -99,13 +114,66 @@
   transition: 0.5s;
   border: 2px solid transparent;
   margin-top: 15px;
+  width: 381px;
 }
 
 .simulatedRegisterButton:hover {
   background-color: #078f46;
-  transform: scale(1.05);
 }
-
+.simulatedRegisterButton:disabled {
+  cursor: not-allowed;
+  opacity: 50%;
+}
+.simulatedRegisterButton:hover:disabled {
+  background-color: #0fa958;
+}
+.createAnotherSimulatedButton {
+  background-color: #053072;
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  height: 3rem;
+  color: white;
+  border-radius: 10px;
+  padding: 5px 100px;
+  border: none;
+  transition: 0.5s;
+  border: 2px solid transparent;
+  margin-top: 15px;
+}
+.createAnotherSimulatedButton:hover {
+  background-color: #07224b;
+}
+.QuestionRegistrationInputsSimulated {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
+  width: 92%;
+  max-width: 1389px;
+}
+.questionLabelSimulated {
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  font-size: 23px;
+  margin-bottom: 20px;
+}
+.alternativesLabelSimulated {
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  font-size: 23px;
+  margin-bottom: 20px; 
+}
+.SimulatedTitle {
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  font-size: 23px;
+  margin-bottom: 5px;
+}
+.SimulatedDescription {
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  font-size: 23px;
+  margin-bottom: 5px;
+}
 @media screen and (min-width: 1366px) and (max-width: 1366px) and (min-height: 768px) and (max-height: 768px) {
   .title-input {
     max-width: 900px;
@@ -113,7 +181,8 @@
 }
 
 @media (max-width: 768px) {
-  .title-input, .SimulatedRegistrationDescriptionContainer {
+  .title-input,
+  .SimulatedRegistrationDescriptionContainer {
     width: 100%;
     max-width: 100%;
   }
@@ -132,8 +201,8 @@
 }
 
 @media (max-width: 1350px) {
-  .title-input, .SimulatedRegistrationDescriptionContainer {
+  .title-input,
+  .SimulatedRegistrationDescriptionContainer {
     width: 100%;
   }
 }
-

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./SimulatedRegisterComponent.css";
-import { createSimulated } from "../../../config/config";
+import { createSimulated, createSimulatedQuestion } from "../../../config/config";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -8,25 +8,99 @@ export default function SimulatedRegisterComponent({ selectedCourse }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [timerSeconds, setTimerSeconds] = useState(0);
+  const [deletedOptions, setDeletedOptions] = useState([]);
+  const [correctOption, setCorrectOption] = useState(null);
+  const [isSimulated, setIsSimulated] = useState(false);
+  const [isLoadingSimulated, setIsLoadingSimulated] = useState(false);
+  const [isLoadingQuestion, setIsLoadingQuestion] = useState(false);
+  const [simulatedId, setSimulatedId] = useState("");
+  const questionDataInitialValues = {
+    statements: "",
+    question: "",
+    alternatives: [{ text: "" }],
+    correctOption: null,
+  };
+  const optionsInitialValues = [{ label: "A)", id: 0 }];
+  const [options, setOptions] = useState(optionsInitialValues);
+  const [questionData, setQuestionData] = useState(questionDataInitialValues);
+  const [simulatedSucess, setSimulatedSucess] = useState(false);
 
-  const handleTitleChange = (event) => {
-    setTitle(event.target.value);
+  const handleCheckboxChange = (id) => {
+    if (correctOption === id) {
+      setCorrectOption(null);
+      setQuestionData({ ...questionData, correctOption: null });
+    } else {
+      setCorrectOption(id);
+      setQuestionData({ ...questionData, correctOption: id });
+    }
+  };
+  const removeOption = (idToRemove) => {
+    if (idToRemove === 0) {
+      return;
+    }
+
+    const deletedOption = options.find((option) => option.id === idToRemove);
+    setDeletedOptions([...deletedOptions, deletedOption.label.trim()]);
+
+    const updatedOptions = options.filter((option) => option.id !== idToRemove);
+
+    const reorderedOptions = updatedOptions.map((option, index) => ({
+      ...option,
+      id: index,
+    }));
+
+    setOptions(reorderedOptions);
+
+    if (correctOption === idToRemove) {
+      setCorrectOption(null);
+      setQuestionData({ ...questionData, correctOption: null });
+    }
   };
 
-  const handleDescriptionChange = (event) => {
-    setDescription(event.target.value);
-  };
+  const addOption = () => {
+    if (options.length >= 5) {
+      return;
+    }
 
-  const handleTimerChange = (event) => {
-    let value = parseInt(event.target.value);
-    value = Math.min(value, 14400);
-    setTimerSeconds(value);
+    let nextLetter;
+    if (deletedOptions.length > 0) {
+      const lastDeletedOption = deletedOptions.pop();
+      nextLetter = lastDeletedOption.replace(/[()]/g, "");
+    } else {
+      const lastOptionLetter = options[options.length - 1].label
+        .trim()
+        .charAt(0);
+      nextLetter = String.fromCharCode(lastOptionLetter.charCodeAt(0) + 1);
+    }
+
+    const newOption = { label: ` ${nextLetter})`, id: options.length };
+
+    const indexToInsert = options.findIndex(
+      (option) => option.label.trim() > ` ${nextLetter})`.trim()
+    );
+
+    const newOptions =
+      indexToInsert === -1
+        ? [...options, newOption]
+        : [
+            ...options.slice(0, indexToInsert),
+            newOption,
+            ...options.slice(indexToInsert),
+          ];
+
+    setOptions(newOptions);
+    setQuestionData({
+      ...questionData,
+      alternatives: [...questionData.alternatives, { text: "" }],
+    });
   };
 
   const registerSimulated = async () => {
+    setIsLoadingSimulated(true);
+
     const simulatedData = {
       name: title,
-      course_id: selectedCourse, // Corrigido para usar selectedCourse
+      course_id: selectedCourse,
       duration: timerSeconds,
     };
 
@@ -43,29 +117,119 @@ export default function SimulatedRegisterComponent({ selectedCourse }) {
           progress: undefined,
           theme: "light",
         });
-        // Limpar os campos de input
-        setTitle("");
-        setDescription("");
-        setTimerSeconds(0);
+        setIsLoadingSimulated(false);
+
+        const responseData = await response.json();
+        setSimulatedId(responseData._id);
+        setSimulatedSucess(true);
       } else {
-        console.error("Failed to register simulated");
-        toast.error("Erro ao cadastrar simulado", {
-          autoClose: false,
+        setIsLoadingSimulated(false);
+        const errorData = await response.json();
+        console.error("Failed to create simulated:", errorData);
+        toast.error("Erro: " + (errorData.error.message[0] || response.statusText), {
+          autoClose: 2000,
         });
       }
     } catch (error) {
-      console.error("Error occurred while registering simulated:", error);
-      toast.error("Erro ao cadastrar simulado: " + error.message, {
-        autoClose: false,
+      setIsLoadingSimulated(false);
+      console.error("Error occurred while creating simulated:", error);
+      toast.error("Erro: " + error.message, {
+        autoClose: 2000,
       });
     }
+  };
+
+  const handleQuestionRegistration = async (simulatedId) => {
+    setIsLoadingQuestion(true);
+
+    const statements = [
+      {
+        description: document.getElementById("questionInput").value,
+      },
+    ];
+
+    const optionsData = options.map((option, index) => ({
+      description: document.getElementById(`optionText_${option.id}`).value,
+      correctOption: correctOption === option.id,
+    }));
+
+    const questionData = {
+      statements: statements,
+      options: optionsData,
+    };
+
+    try {
+      const response = await createSimulatedQuestion(simulatedId, questionData);
+      if (response.ok) {
+        toast.success("Questão criada com sucesso!", {
+          position: "bottom-left",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+
+        clearFieldsQuestions();
+      } else {
+        const errorData = await response.json();
+        toast.error("Erro ao criar questão: ", {
+          autoClose: 1000,
+        });
+      }
+    } catch (error) {
+      toast.error("Erro ao criar questão:", {
+        autoClose: 1000,
+      });
+    } finally {
+      setIsLoadingQuestion(false);
+    }
+  };
+
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value);
+  };
+
+  const handleDescriptionChange = (event) => {
+    setDescription(event.target.value);
+  };
+
+  const handleTimerChange = (event) => {
+    let value = parseInt(event.target.value);
+    value = Math.min(value, 14400);
+    setTimerSeconds(value);
+  };
+
+  const clearFieldsQuestions = () => {
+    setCorrectOption(null);
+    setOptions(optionsInitialValues);
+    const optionText0 = document.getElementById("optionText_0");
+    const questionInput = document.getElementById("questionInput");
+    if (optionText0 || questionInput) {
+      optionText0.value = "";
+      questionInput.value = "";
+    }
+  };
+  const clearFields = () => {
+    setTitle("");
+    setDescription("");
+    setTimerSeconds(0);
+    setSimulatedId(null);
+    clearFieldsQuestions();
+    setSimulatedSucess(false);
+    setIsLoadingSimulated(false);
+    setIsLoadingQuestion(false);
   };
 
   return (
     <>
       <div className="SimulatedRegistrationContainer">
+        <label className="SimulatedTitle">Titulo</label>
         <div className="SimulatedRegistrationTitle">
           <input
+            disabled={simulatedSucess}
             type="text"
             className="title-input"
             placeholder="Digite o título do simulado aqui"
@@ -74,10 +238,11 @@ export default function SimulatedRegisterComponent({ selectedCourse }) {
           />
         </div>
       </div>
-
+      <label className="SimulatedDescription">Descrição</label>
       <div className="SimulatedRegistrationDescriptionContainer">
         <div className="leftContainer">
           <textarea
+            disabled={simulatedSucess}
             className="description-input"
             placeholder="Digite a descrição do simulado aqui"
             rows={4}
@@ -91,6 +256,7 @@ export default function SimulatedRegisterComponent({ selectedCourse }) {
               Tempo do Simulado (em segundos)
             </label>
             <input
+              disabled={simulatedSucess}
               type="number"
               className="simulatedTimer"
               value={timerSeconds}
@@ -100,14 +266,96 @@ export default function SimulatedRegisterComponent({ selectedCourse }) {
           </div>
           <div className="simulatedRegisterButtonContainer">
             <button
+              disabled={simulatedSucess || isLoadingSimulated}
               className="simulatedRegisterButton"
               onClick={registerSimulated}
             >
-              Registrar Simulado
+              {isLoadingSimulated ? "Carregando..." : "Registrar Simulado"}
+            </button>
+          </div>
+          <div className="simulatedRegisterButtonContainer">
+            <button
+              className="createAnotherSimulatedButton"
+              onClick={clearFields}
+            >
+              Criar Outro Simulado
             </button>
           </div>
         </div>
       </div>
+
+      {!isSimulated && (
+        <div className="QuestionRegistrationInputsSimulated">
+          <label className="questionLabelSimulated">Enunciado</label>
+          <textarea
+            disabled={!simulatedSucess}
+            id="questionInput"
+            className="inputQuestion"
+            placeholder="Pergunta"
+            rows={1}
+            onChange={(e) => {
+              e.target.style.height = "auto";
+              e.target.style.height = `${e.target.scrollHeight}px`;
+            }}
+          />
+        </div>
+      )}
+
+      {!isSimulated && (
+        <div className="QuestionRegistrationAlternatives">
+          <label className="alternativesLabelSimulated">Alternativas</label>
+
+          {options.map((option, index) => (
+            <div key={option.id} className="optionContainer">
+              <div className="optionInputContainer">
+                <span>{option.label}</span>
+                <textarea
+                  disabled={!simulatedSucess}
+                  id={`optionText_${option.id}`}
+                  className="inputOption"
+                  placeholder={`Questão ${option.label}`}
+                  rows={1}
+                  onChange={(e) => {
+                    e.target.style.height = "auto";
+                    e.target.style.height = `${e.target.scrollHeight}px`;
+                  }}
+                />
+                <input
+                  disabled={!simulatedSucess}
+                  className="correctOptionCheckbox"
+                  type="checkbox"
+                  checked={correctOption === option.id}
+                  onChange={() => handleCheckboxChange(option.id)}
+                />
+                <button
+                  disabled={!simulatedSucess}
+                  className="removeOptionButton"
+                  onClick={() => removeOption(option.id)}
+                >
+                  X
+                </button>
+              </div>
+            </div>
+          ))}
+          <div className="QuestionRegistrationButtonsHolder">
+            <button
+              className="addOptionButton"
+              disabled={!simulatedSucess}
+              onClick={addOption}
+            >
+              Adicionar opção
+            </button>
+            <button
+              disabled={!simulatedSucess}
+              className="registerQuestionButton"
+              onClick={() => handleQuestionRegistration(simulatedId)}
+            >
+              {isLoadingQuestion ? "Carregando..." : "Cadastrar Questão"}
+            </button>
+          </div>
+        </div>
+      )}
+
       <ToastContainer />
     </>
   );

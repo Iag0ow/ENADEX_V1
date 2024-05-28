@@ -204,6 +204,20 @@ export async function createSimulated(simulatedData) {
   return response;
 }
 
+export async function createSimulatedQuestion(simulatedId, questionData) {
+  const bodyForm = JSON.stringify(questionData);
+  const token = localStorage.getItem("token");
+  const config = {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: bodyForm,
+  };
+  const response = await fetch(`${API}/mock-exams/${simulatedId}/questions`, config);
+  return response;
+  
 export async function getStudents(){
   const token = localStorage.getItem("token");
   const config = {
