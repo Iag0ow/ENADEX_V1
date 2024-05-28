@@ -217,6 +217,7 @@ export async function createSimulatedQuestion(simulatedId, questionData) {
   };
   const response = await fetch(`${API}/mock-exams/${simulatedId}/questions`, config);
   return response;
+}
   
 export async function getStudents(){
   const token = localStorage.getItem("token");
