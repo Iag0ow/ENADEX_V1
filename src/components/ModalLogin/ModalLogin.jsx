@@ -47,7 +47,7 @@ const ModalLogin = (props) => {
       localStorage.setItem("token", data.access_token);
       verifySigned(true);
       setModalShow(false);
-      navigate("/home");
+      navigate("/");
     } else {
       setError(data.status != 201 ? "Credenciais inválidas" : data.message);
       setLoad(false);

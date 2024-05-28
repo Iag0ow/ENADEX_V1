@@ -33,7 +33,7 @@ function AppRoutes() {
               <Routes>
                   {/* <Route path="/login" element={ signed ? <WelcomeAfterLogin /> : <Login />} /> */}
                   <Route path="/register" element={signed ? <WelcomeAfterLogin /> : <Register />} />
-                  <Route path="/home" element={signed ? <WelcomeAfterLogin /> : <LadingPage />} />
+                  <Route path="/" element={signed ? <WelcomeAfterLogin /> : <LadingPage />} />
                   <Route path="/cadastrar-perguntas" element={signed ? <QuestionRegistration /> : <LadingPage />} />
                   <Route path="/simulados" element={signed ? <SimulatedPanel /> : <LadingPage />} />
                   <Route path="/orientacoes-do-simulado" element={<Simulated_Guideline />} />
@@ -44,10 +44,9 @@ function AppRoutes() {
                   <Route path="/banco-de-questoes" element={signed ? <QuestionsDatabase /> : <LadingPage />} />
                   <Route path="/faq-interno" element={signed ? <FaqInterno /> : <LadingPage />} />
                   {/* <Route path="/" element={signed ? <WelcomeAfterLogin /> : <LadingPage />} /> */}
-                  <Route path="/itens-obrigatorios" element={<Itens />} />
-                  <Route path="/cursos" element={<Courses />} />
-                  <Route path="/" element={ signed ? <WelcomeAfterLogin /> : <LadingPage />} />
-                  <Route path="*" element={<LadingPage />} />
+                  {/* <Route path="/itens-obrigatorios" element={<Itens />} /> */}
+                  {/* <Route path="/cursos" element={<Courses />} /> */}
+                  <Route path="*" element={ signed ? <WelcomeAfterLogin /> : <LadingPage />} />
               </Routes>
             </BrowserRouter>
           </> }

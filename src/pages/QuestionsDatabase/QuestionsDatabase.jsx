@@ -13,6 +13,8 @@ const QuestionsDatabase = () => {
   const [studentResponses, setStudentResponses] = useState([]);
   const [showReponseQuestions, setShowReponseQuestions] = useState(false);
   const [searchText, setSearchText] = useState("");
+  const [submiting, setSubmitting] = useState(false);
+  const [submitingQuestionId, setSubmitingQuestionId] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState({
     course_id: '',
     searchText: '',
@@ -43,8 +45,10 @@ const QuestionsDatabase = () => {
         question_id: questionId,
         selected_option_id: selectedOptionId
       };
-  
+      
       try {
+        setSubmitting(true);
+        setSubmitingQuestionId(questionId);
         const response = await postBankQuestionResponse(submitResponse);
   
         if (response.status === 201) {
@@ -74,6 +78,9 @@ const QuestionsDatabase = () => {
         }
       } catch (error) {
         console.error("Erro ao enviar resposta:", error);
+      } finally {
+        setSubmitting(false);
+        setSubmitingQuestionId(null);
       }
     }
   };
@@ -250,7 +257,7 @@ const QuestionsDatabase = () => {
                         {question.isCorrect ? "Parabéns! você acertou!" : `Infelizmente, você errou! A resposta correta é: ${question.correctOptionValue}`}
                       </p>
                     )}
-                    <button onClick={() => handleSubmit(question._id, selectedOptions[question._id])} className={`btn btn-primary me-3`} disabled={question.isCorrect !== undefined || showReponseQuestions} type="button">Responder</button>
+                    <button onClick={() => handleSubmit(question._id, selectedOptions[question._id])} className={`btn btn-primary me-3`} disabled={question.isCorrect !== undefined || showReponseQuestions || submiting && submitingQuestionId === question._id } type="button">{ submiting && submitingQuestionId === question._id ? 'Enviando...' : 'Responder'}</button>
                   </div>
                 </div>
               </form>
