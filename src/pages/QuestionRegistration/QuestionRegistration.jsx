@@ -11,19 +11,22 @@ export default function QuestionRegistration() {
   const [courses, setCourses] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState("");
   const [questionYear, setQuestionYear] = useState("");
-  const [options, setOptions] = useState([{ label: "A)", id: 0 }]);
   const [deletedOptions, setDeletedOptions] = useState([]);
   const [correctOption, setCorrectOption] = useState(null);
   const [isSimulated, setIsSimulated] = useState(false);
-  const [questionData, setQuestionData] = useState({
-    course: "",
+  const [isLoading, setIsLoading] = useState(false);
+  const [simulatedId, setSimulatedId] = useState("");
+  const optionsInitialValues = [{ label: "A)", id: 0 }];
+
+  const [options, setOptions] = useState(optionsInitialValues);
+  const questionDataInitialValues = {
+    statements: "",
     question: "",
     alternatives: [{ text: "" }],
     correctOption: null,
-  });
-  const [isLoading, setIsLoading] = useState(false);
-  const [simulatedId, setSimulatedId] = useState("");
+  };
 
+  const [questionData, setQuestionData] = useState(questionDataInitialValues);
   useEffect(() => {
     const fetchCourses = async () => {
       try {
@@ -139,24 +142,18 @@ export default function QuestionRegistration() {
 
   const handleQuestionRegistration = async () => {
     setIsLoading(true);
-
-    const renderTextWithNewlines = (text) => {
-      const formattedText = text.replace(/\\n/g, "<br />");
-      return { __html: formattedText };
-    };
-
     const statements = [
       {
         description: document
           .getElementById("questionInput")
-          .value.replace(/\n/g, "\\n"),
+          .value.replace(/\n/g, "<br />"),
       },
     ];
 
     const optionsData = options.map((option, index) => ({
       description: document
         .getElementById(`optionText_${option.id}`)
-        .value.replace(/\n/g, "\\n"),
+        .value.replace(/\n/g, "<br />"),
       correctOption: correctOption === option.id,
     }));
 
@@ -180,56 +177,41 @@ export default function QuestionRegistration() {
       year: questionYear,
     };
 
+    setCorrectOption(null);
+    setOptions(optionsInitialValues);
+    const optionText0 = document.getElementById("optionText_0");
+    const questionInput = document.getElementById("questionInput");
+    if (optionText0 || questionInput) {
+      optionText0.value = "";
+      questionInput.value = "";
+    }
+    setQuestionYear("");
+    setSelectedCourse("");
     try {
-      if (isSimulated) {
-        const response = await createSimulated(questionData);
-        if (response.ok) {
-          const responseData = await response.json();
-          setSimulatedId(responseData._id);
-          toast.success("Simulated created successfully!", {
-            position: "bottom-left",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          setIsLoading(false);
-        } else {
-          console.error("Failed to create simulated");
-          toast.error("Error creating simulated", {
-            autoClose: 1000,
-          });
-          setIsLoading(false);
-        }
+      const response = await createQuestion(questionData);
+      if (response.ok) {
+        toast.success("Question created successfully!", {
+          position: "bottom-left",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        setIsLoading(false);
       } else {
-        const response = await createQuestion(questionData);
-        if (response.ok) {
-          toast.success("Question created successfully!", {
-            position: "bottom-left",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          setIsLoading(false);
-        } else {
-          console.error("Failed to create question");
-          toast.error("Error creating question", {
-            autoClose: 1000,
-          });
-          setIsLoading(false);
-        }
+        console.error("Failed to create question");
+        toast.error("Error creating question", {
+          autoClose: 1000,
+        });
+        setIsLoading(false);
       }
     } catch (error) {
-      console.error("Error occurred while creating question:", error);
-      toast.error("Error creating question: " + error.message, {
-        autoClose: false,
+      console.error(error);
+      toast.error("Error creating question", {
+        autoClose: 1000,
       });
       setIsLoading(false);
     }
@@ -253,9 +235,7 @@ export default function QuestionRegistration() {
       <NavBar />
       <div className="QuestionRegistrationContainer">
         <div className="QuestionRegistrationTitle">
-          <h1>
-            {isSimulated ? "Simulated Registration" : "Question Registration"}
-          </h1>
+          <h1>{isSimulated ? "Registrar Simulado" : "Registrar Questão"}</h1>
         </div>
         <div className="QuestionRegistrationSelectsAndCheckboxes">
           <select
@@ -274,8 +254,9 @@ export default function QuestionRegistration() {
             ))}
           </select>
           <div>
-            <label className="yearLabel">Year of the question:</label>
+            <label className="yearLabel">Ano da questão:</label>
             <select
+              disabled={isSimulated}
               value={questionYear}
               onChange={handleYearChange}
               className="yearSelect"
@@ -293,7 +274,7 @@ export default function QuestionRegistration() {
               checked={isSimulated}
               onChange={(e) => setIsSimulated(e.target.checked)}
             />
-            Simulated
+            Simulado
           </label>
         </div>
         {isSimulated && (
@@ -305,6 +286,7 @@ export default function QuestionRegistration() {
 
         {!isSimulated && (
           <div className="QuestionRegistrationInputs">
+            <label className="questionLabel">Enunciado</label>
             <textarea
               id="questionInput"
               className="inputQuestion"
@@ -321,6 +303,7 @@ export default function QuestionRegistration() {
 
         {!isSimulated && (
           <div className="QuestionRegistrationAlternatives">
+            <label className="alternativesLabel">Alternativas</label>
             {options.map((option, index) => (
               <div key={option.id} className="optionContainer">
                 <div className="optionInputContainer">
@@ -342,6 +325,7 @@ export default function QuestionRegistration() {
                   />
                   <input
                     className="correctOptionCheckbox"
+                    required
                     type="checkbox"
                     checked={correctOption === option.id}
                     onChange={() => handleCheckboxChange(option.id)}
@@ -357,19 +341,26 @@ export default function QuestionRegistration() {
             ))}
             <div className="QuestionRegistrationButtonsHolder">
               <button className="addOptionButton" onClick={addOption}>
-                Add option
+                Adicionar
               </button>
               <button
                 className="registerQuestionButton"
                 onClick={handleQuestionRegistration}
-                disabled={isLoading}
+                disabled={
+                  isLoading ||
+                  !selectedCourse ||
+                  !questionYear ||
+                  !questionData.question ||
+                  !{ label: "A)", id: 0 } ||
+                  !{ label: "B)", id: 1 } ||
+                  !correctOption
+                }
               >
-                {isLoading ? "Loading..." : "Register Question"}
+                {isLoading ? "Carregando..." : "Registrar Questão"}
               </button>
             </div>
           </div>
         )}
-
         <ToastContainer />
       </div>
     </>

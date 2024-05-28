@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./SimulatedRegisterComponent.css";
-import { createSimulated } from "../../../config/config";
-import { createSimulatedQuestion } from "../../../config/config";
+import { createSimulated, createSimulatedQuestion } from "../../../config/config";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -10,18 +9,23 @@ export default function SimulatedRegisterComponent({ selectedCourse }) {
   const [description, setDescription] = useState("");
   const [timerSeconds, setTimerSeconds] = useState(0);
   const [courses, setCourses] = useState([]);
-  const [options, setOptions] = useState([{ label: "A)", id: 0 }]);
   const [deletedOptions, setDeletedOptions] = useState([]);
   const [correctOption, setCorrectOption] = useState(null);
   const [isSimulated, setIsSimulated] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingSimulated, setIsLoadingSimulated] = useState(false);
+  const [isLoadingQuestion, setIsLoadingQuestion] = useState(false);
   const [simulatedId, setSimulatedId] = useState("");
-  const [questionData, setQuestionData] = useState({
+  const questionDataInitialValues = {
     statements: "",
     question: "",
     alternatives: [{ text: "" }],
     correctOption: null,
-  });
+  };
+  const optionsInitialValues = [{ label: "A)", id: 0 }];
+  const [options, setOptions] = useState(optionsInitialValues);
+  const [questionData, setQuestionData] = useState(questionDataInitialValues);
+  const [simulatedSucess, setSimulatedSucess] = useState(false);
+
   const handleCheckboxChange = (id) => {
     if (correctOption === id) {
       setCorrectOption(null);
@@ -93,6 +97,8 @@ export default function SimulatedRegisterComponent({ selectedCourse }) {
   };
 
   const registerSimulated = async () => {
+    setIsLoadingSimulated(true);
+
     const simulatedData = {
       name: title,
       course_id: selectedCourse,
@@ -112,30 +118,30 @@ export default function SimulatedRegisterComponent({ selectedCourse }) {
           progress: undefined,
           theme: "light",
         });
+        setIsLoadingSimulated(false);
+
         const responseData = await response.json();
         setSimulatedId(responseData._id);
-        // setTitle("");
-        // setDescription("");
-        // setTimerSeconds(0);
-
-        // Chama handleQuestionRegistration com o ID simulado
-        // handleQuestionRegistration(responseData._id);
+        setSimulatedSucess(true);
       } else {
-        console.error("Failed to create simulated");
-        toast.error("Erro ao criar simulado", {
-          autoClose: 1000,
+        setIsLoadingSimulated(false);
+        const errorData = await response.json();
+        console.error("Failed to create simulated:", errorData);
+        toast.error("Erro: " + (errorData.error.message[0] || response.statusText), {
+          autoClose: 2000,
         });
       }
     } catch (error) {
+      setIsLoadingSimulated(false);
       console.error("Error occurred while creating simulated:", error);
-      toast.error("Erro ao criar simulado: " + error.message, {
-        autoClose: 1000,
+      toast.error("Erro: " + error.message, {
+        autoClose: 2000,
       });
     }
   };
 
   const handleQuestionRegistration = async (simulatedId) => {
-    setIsLoading(true);
+    setIsLoadingQuestion(true);
 
     const statements = [
       {
@@ -166,19 +172,20 @@ export default function SimulatedRegisterComponent({ selectedCourse }) {
           progress: undefined,
           theme: "light",
         });
+
+        clearFieldsQuestions();
       } else {
-        console.error("Failed to create question");
-        toast.error("Erro ao criar questão", {
+        const errorData = await response.json();
+        toast.error("Erro ao criar questão: ", {
           autoClose: 1000,
         });
       }
     } catch (error) {
-      console.error("Error occurred while creating question:", error);
-      toast.error("Erro ao criar questão: " + error.message, {
+      toast.error("Erro ao criar questão:", {
         autoClose: 1000,
       });
     } finally {
-      setIsLoading(false);
+      setIsLoadingQuestion(false);
     }
   };
 
@@ -195,14 +202,35 @@ export default function SimulatedRegisterComponent({ selectedCourse }) {
     value = Math.min(value, 14400);
     setTimerSeconds(value);
   };
-  const clearFields = () => {
-    window.location.reload();
+
+  const clearFieldsQuestions = () => {
+    setCorrectOption(null);
+    setOptions(optionsInitialValues);
+    const optionText0 = document.getElementById("optionText_0");
+    const questionInput = document.getElementById("questionInput");
+    if (optionText0 || questionInput) {
+      optionText0.value = "";
+      questionInput.value = "";
+    }
   };
+  const clearFields = () => {
+    setTitle("");
+    setDescription("");
+    setTimerSeconds(0);
+    setSimulatedId(null);
+    clearFieldsQuestions();
+    setSimulatedSucess(false);
+    setIsLoadingSimulated(false);
+    setIsLoadingQuestion(false);
+  };
+
   return (
     <>
       <div className="SimulatedRegistrationContainer">
+        <label className="SimulatedTitle">Titulo</label>
         <div className="SimulatedRegistrationTitle">
           <input
+            disabled={simulatedSucess}
             type="text"
             className="title-input"
             placeholder="Digite o título do simulado aqui"
@@ -211,16 +239,16 @@ export default function SimulatedRegisterComponent({ selectedCourse }) {
           />
         </div>
       </div>
-
+      <label className="SimulatedDescription">Descrição</label>
       <div className="SimulatedRegistrationDescriptionContainer">
         <div className="leftContainer">
           <textarea
+            disabled={simulatedSucess}
             className="description-input"
             placeholder="Digite a descrição do simulado aqui"
             rows={4}
             value={description}
             onChange={handleDescriptionChange}
-            disabled={isSimulated} // Desabilitar quando simulado está ativo
           />
         </div>
         <div>
@@ -229,6 +257,7 @@ export default function SimulatedRegisterComponent({ selectedCourse }) {
               Tempo do Simulado (em segundos)
             </label>
             <input
+              disabled={simulatedSucess}
               type="number"
               className="simulatedTimer"
               value={timerSeconds}
@@ -238,10 +267,11 @@ export default function SimulatedRegisterComponent({ selectedCourse }) {
           </div>
           <div className="simulatedRegisterButtonContainer">
             <button
+              disabled={simulatedSucess || isLoadingSimulated}
               className="simulatedRegisterButton"
               onClick={registerSimulated}
             >
-              Registrar Simulado
+              {isLoadingSimulated ? "Carregando..." : "Registrar Simulado"}
             </button>
           </div>
           <div className="simulatedRegisterButtonContainer">
@@ -256,9 +286,10 @@ export default function SimulatedRegisterComponent({ selectedCourse }) {
       </div>
 
       {!isSimulated && (
-        <div className="QuestionRegistrationInputs">
+        <div className="QuestionRegistrationInputsSimulated">
+          <label className="questionLabelSimulated">Enunciado</label>
           <textarea
-            // disabled={!isSimulated}
+            disabled={!simulatedSucess}
             id="questionInput"
             className="inputQuestion"
             placeholder="Pergunta"
@@ -273,12 +304,14 @@ export default function SimulatedRegisterComponent({ selectedCourse }) {
 
       {!isSimulated && (
         <div className="QuestionRegistrationAlternatives">
+          <label className="alternativesLabelSimulated">Alternativas</label>
+
           {options.map((option, index) => (
             <div key={option.id} className="optionContainer">
               <div className="optionInputContainer">
                 <span>{option.label}</span>
                 <textarea
-                  // disabled={!isSimulated}
+                  disabled={!simulatedSucess}
                   id={`optionText_${option.id}`}
                   className="inputOption"
                   placeholder={`Questão ${option.label}`}
@@ -289,14 +322,14 @@ export default function SimulatedRegisterComponent({ selectedCourse }) {
                   }}
                 />
                 <input
-                  // disabled={!isSimulated}
+                  disabled={!simulatedSucess}
                   className="correctOptionCheckbox"
                   type="checkbox"
                   checked={correctOption === option.id}
                   onChange={() => handleCheckboxChange(option.id)}
                 />
                 <button
-                  // disabled={!isSimulated}
+                  disabled={!simulatedSucess}
                   className="removeOptionButton"
                   onClick={() => removeOption(option.id)}
                 >
@@ -306,14 +339,19 @@ export default function SimulatedRegisterComponent({ selectedCourse }) {
             </div>
           ))}
           <div className="QuestionRegistrationButtonsHolder">
-            <button className="addOptionButton" onClick={addOption}>
+            <button
+              className="addOptionButton"
+              disabled={!simulatedSucess}
+              onClick={addOption}
+            >
               Adicionar opção
             </button>
             <button
+              disabled={!simulatedSucess}
               className="registerQuestionButton"
               onClick={() => handleQuestionRegistration(simulatedId)}
             >
-              {isLoading ? "Carregando..." : "Cadastrar Questão"}
+              {isLoadingQuestion ? "Carregando..." : "Cadastrar Questão"}
             </button>
           </div>
         </div>

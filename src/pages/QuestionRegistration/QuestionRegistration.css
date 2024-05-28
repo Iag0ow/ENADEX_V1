@@ -43,16 +43,30 @@
   cursor: pointer;
 }
 
-
 .QuestionRegistrationSelectsAndCheckboxes select {
   padding: 5px;
   font-size: 16px;
 }
+.questionLabel {
+  
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  font-size: 23px;
+  margin-bottom: 20px; /* Adiciona margem abaixo do rótulo para separá-lo do campo de entrada */
+}
+.alternativesLabel {
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  font-size: 23px;
+  margin-bottom: 20px; /* Adiciona margem abaixo do rótulo para separá-lo do campo de entrada */
+}
 .QuestionRegistrationInputs {
   display: flex;
-  justify-content: center;
-  width: 100%;
+  flex-direction: column; /* Altera para uma direção de coluna para alinhar o rótulo acima do campo de entrada */
+  align-items: flex-start; /* Alinha os itens à esquerda */
+  width: 92%;
   max-width: 1389px;
+  margin-top: 40px;
 }
 .yearLabel {
   font-family: "Montserrat", sans-serif;
@@ -60,6 +74,13 @@
   font-size: 16px;
   text-align: center;
   margin-right: 5px;
+}
+
+.yearLabel:disabled {
+  cursor: not-allowed;
+  background-color: #f5f5f5;
+  color: #ccc;
+  opacity: 50%;
 }
 .yearSelect {
   padding: 5px;
@@ -75,11 +96,13 @@
   text-align: center;
   border: 1px solid #ccc;
 }
-
+.yearSelect:disabled {
+  cursor: not-allowed;
+  background-color: #f5f5f5;
+  color: #ccc;
+  opacity: 50%;
+}
 .inputQuestion {
-  margin-bottom: 5px;
-  margin-top: 12px;
-  margin-left: 20px;
   padding: 10px;
   font-family: "Montserrat", sans-serif;
   font-weight: bold;
@@ -89,15 +112,22 @@
   width: 100%;
   resize: none;
   overflow: hidden;
+  box-sizing: border-box; /* Garante que o padding não aumente a largura total */
 }
-
+.inputQuestion:disabled {
+  cursor: not-allowed;
+  background-color: #f5f5f5;
+  color: #ccc;
+  opacity: 50%;
+}
 .QuestionRegistrationAlternatives {
   margin-top: 20px;
   width: 100%;
   max-width: 1400px; /* Define uma largura máxima para centralização */
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  margin-top: 40px;
 }
 
 .optionContainer {
@@ -126,6 +156,12 @@
   resize: none;
   overflow: hidden;
 }
+.inputOption:disabled {
+  cursor: not-allowed;
+  background-color: #f5f5f5;
+  color: #ccc;
+  opacity: 50%;
+}
 
 .removeOptionButton {
   font-family: "Montserrat", sans-serif;
@@ -143,7 +179,13 @@
 .removeOptionButton:hover {
   background-color: darkred;
 }
-
+.removeOptionButton:disabled {
+  cursor: not-allowed;
+  opacity: 50%;
+}
+.removeOptionButton:disabled:hover {
+  background-color: red;
+}
 .correctOptionCheckbox {
   margin-left: 10px;
   margin-right: 10px;
@@ -153,7 +195,10 @@
   transition: transform 0.3s ease;
   box-shadow: 0 0 0 0 rgba(0, 204, 0, 0.4);
 }
-
+correctOptionCheckbox:disabled {
+  cursor: not-allowed;
+  opacity: 50%;
+}
 .correctOptionCheckbox:checked {
   box-shadow: 0 0 5px 3px rgba(0, 204, 0, 0.4);
 }
@@ -165,6 +210,7 @@
   max-width: 1400px;
   margin-top: 20px;
   padding-left: 23px;
+  margin-bottom: 50px;
 }
 
 .addOptionButton {
@@ -182,7 +228,13 @@
 .addOptionButton:hover {
   background-color: #07224b;
 }
-
+.addOptionButton:hover:disabled {
+  background-color: #0e3975;
+}
+.addOptionButton:disabled {
+  cursor: not-allowed;
+  opacity: 50%;
+}
 .registerQuestionButton {
   background-color: #0fa958;
   font-family: "Montserrat", sans-serif;
@@ -198,6 +250,13 @@
 
 .registerQuestionButton:hover {
   background-color: #078f46;
+}
+.registerQuestionButton:hover:disabled {
+  background-color: #0fa958;
+}
+.registerQuestionButton:disabled {
+  cursor: not-allowed;
+  opacity: 50%;
 }
 
 .checkboxSimulated {
