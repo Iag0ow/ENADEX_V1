@@ -20,7 +20,7 @@
   gap: 30px;
   justify-content: left;
   width: 1350px;
-  align-items: center; /* Alinha os itens verticalmente */
+  align-items: center; 
 }
 .labelCourse {
   font-family: "Montserrat", sans-serif;
@@ -52,18 +52,18 @@
   font-family: "Montserrat", sans-serif;
   font-weight: bold;
   font-size: 23px;
-  margin-bottom: 20px; /* Adiciona margem abaixo do rótulo para separá-lo do campo de entrada */
+  margin-bottom: 20px; 
 }
 .alternativesLabel {
   font-family: "Montserrat", sans-serif;
   font-weight: bold;
   font-size: 23px;
-  margin-bottom: 20px; /* Adiciona margem abaixo do rótulo para separá-lo do campo de entrada */
+  margin-bottom: 20px; 
 }
 .QuestionRegistrationInputs {
   display: flex;
-  flex-direction: column; /* Altera para uma direção de coluna para alinhar o rótulo acima do campo de entrada */
-  align-items: flex-start; /* Alinha os itens à esquerda */
+  flex-direction: column; 
+  align-items: flex-start; 
   width: 92%;
   max-width: 1389px;
   margin-top: 40px;
@@ -112,7 +112,7 @@
   width: 100%;
   resize: none;
   overflow: hidden;
-  box-sizing: border-box; /* Garante que o padding não aumente a largura total */
+  box-sizing: border-box;
 }
 .inputQuestion:disabled {
   cursor: not-allowed;
@@ -123,7 +123,7 @@
 .QuestionRegistrationAlternatives {
   margin-top: 20px;
   width: 100%;
-  max-width: 1400px; /* Define uma largura máxima para centralização */
+  max-width: 1400px; 
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -260,29 +260,27 @@ correctOptionCheckbox:disabled {
 }
 
 .checkboxSimulated {
-  /* Estilo do checkbox em si */
-  appearance: none; /* Remove o estilo padrão do sistema */
+  appearance: none; 
   width: 20px;
   height: 20px;
   border: 2px solid #ccc;
   border-radius: 3px;
-  outline: none; /* Remove a borda ao focar */
+  outline: none; 
   cursor: pointer;
   vertical-align: middle;
-  margin-right: 5px; /* Espaçamento entre o checkbox e o texto */
-  position: relative; /* Posição relativa para facilitar a posição do checkmark */
-  background-color: white; /* Cor de fundo do checkbox */
+  margin-right: 5px; 
+  position: relative; 
+  background-color: white; 
 }
 
 .checkboxSimulated:checked::after {
-  /* Estilo do checkmark quando o checkbox está marcado */
-  content: "\2714"; /* Conteúdo do checkmark */
+  content: "\2714"; 
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); /* Centraliza o checkmark */
-  font-size: 14px; /* Tamanho da fonte do checkmark */
-  color: #000; /* Cor do checkmark */
+  transform: translate(-50%, -50%); 
+  font-size: 14px; 
+  color: #000;
 }
 .checkboxLabelSimulated {
   margin-top: 20px;

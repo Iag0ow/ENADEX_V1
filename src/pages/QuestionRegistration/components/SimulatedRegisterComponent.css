@@ -39,7 +39,7 @@
 }
 
 .leftContainer {
-  width: 70%; /* Ajuste a largura conforme necessário */
+  width: 70%; 
 }
 
 .description-input {
@@ -145,8 +145,8 @@
 }
 .QuestionRegistrationInputsSimulated {
   display: flex;
-  flex-direction: column; /* Altera para uma direção de coluna para alinhar o rótulo acima do campo de entrada */
-  align-items: flex-start; /* Alinha os itens à esquerda */
+  flex-direction: column;
+  align-items: flex-start; 
   width: 92%;
   max-width: 1389px;
 }
@@ -154,13 +154,13 @@
   font-family: "Montserrat", sans-serif;
   font-weight: bold;
   font-size: 23px;
-  margin-bottom: 20px; /* Adiciona margem abaixo do rótulo para separá-lo do campo de entrada */
+  margin-bottom: 20px;
 }
 .alternativesLabelSimulated {
   font-family: "Montserrat", sans-serif;
   font-weight: bold;
   font-size: 23px;
-  margin-bottom: 20px; /* Adiciona margem abaixo do rótulo para separá-lo do campo de entrada */
+  margin-bottom: 20px; 
 }
 .SimulatedTitle {
   font-family: "Montserrat", sans-serif;

@@ -8,7 +8,6 @@ export default function SimulatedRegisterComponent({ selectedCourse }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [timerSeconds, setTimerSeconds] = useState(0);
-  const [courses, setCourses] = useState([]);
   const [deletedOptions, setDeletedOptions] = useState([]);
   const [correctOption, setCorrectOption] = useState(null);
   const [isSimulated, setIsSimulated] = useState(false);

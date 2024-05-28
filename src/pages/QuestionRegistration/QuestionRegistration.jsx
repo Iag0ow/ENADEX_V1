@@ -245,7 +245,7 @@ export default function QuestionRegistration() {
             onChange={handleCourseChange}
           >
             <option value="" disabled>
-              Course
+              Curso
             </option>
             {courses.map((course) => (
               <option key={course._id} value={course._id}>
@@ -262,7 +262,7 @@ export default function QuestionRegistration() {
               className="yearSelect"
             >
               <option value="" disabled>
-                Select
+                Selecionar
               </option>
               {renderYearOptions()}
             </select>
