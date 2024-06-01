@@ -68,7 +68,7 @@ const NavBar = () => {
                 <NavDropdown.Item className='disabled' href="/simulados" onClick={closeMenu}>Apostila</NavDropdown.Item>
                <NavDropdown.Item as={Link} to="/faq-interno" onClick={closeMenu}>Faq (Interno)</NavDropdown.Item>
                {( authRole === "COORDINATORS" || authRole === "TEACHERS" || authRole === "ADMINISTRATOR") && 
-                    <NavDropdown.Item href="/register-student" onClick={closeMenu}>Aluno</NavDropdown.Item> 
+                    <NavDropdown.Item as={Link} to="/register-student" onClick={closeMenu}>Aluno</NavDropdown.Item> 
                 }
                <NavDropdown.Item className='disabled' href="/material" onClick={closeMenu}>Material</NavDropdown.Item>
                <NavDropdown.Item as={Link} to="/cadastrar-perguntas" onClick={closeMenu}>Simulado/Perguntas</NavDropdown.Item>
@@ -80,7 +80,7 @@ const NavBar = () => {
                   <NavDropdown.Item href="/simulados" onClick={closeMenu}>Simulado</NavDropdown.Item>
                   <NavDropdown.Item href="/register-student" onClick={closeMenu}>Faq (Interno)</NavDropdown.Item>
                   {( authRole === "COORDINATORS" || authRole === "TEACHER" || authRole === "ADMINISTRATOR") && 
-                    <NavDropdown.Item href="/register-student" onClick={closeMenu}>Aluno</NavDropdown.Item> 
+                    <NavDropdown.Item as={Link} to="/register-student" onClick={closeMenu}>Aluno</NavDropdown.Item> 
                   }
                   <NavDropdown.Item className='disabled' href="/material" onClick={closeMenu}>Material</NavDropdown.Item>
                 </Nav>

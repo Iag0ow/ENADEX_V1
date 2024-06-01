@@ -37,19 +37,20 @@
     background-color: #0c8746;
 }
 
-.buttonDisable {
+.button-ActiveDeactivate {
     background-color: #E1631C;
     color: white;
-    height: 2.5rem;
+    height: 2rem;
     width: 10rem;
-    font-size: 18px;
-    border-radius: 10px;
-    padding: 5px 0px;
+    font-size: 14px;
+    border-radius: 5px;
     border: none;
     font-weight: bold;
     transition: 0.5s;
     border: 2px solid transparent;
     text-align: center; 
+    margin-left: 3px;
+    margin-top:2px;
 }
 
 .buttonRemove:hover {

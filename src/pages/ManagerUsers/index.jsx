@@ -3,7 +3,7 @@ import addUser from "../../assets/add-user.png";
 import NavBar from "../../components/NavBar/NavBar";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { getManagers, getCourses, registerAdminTeacher } from "../../config/config";
+import { getManagers, getCourses, registerAdminTeacher, deactivateManagers, activateManagers } from "../../config/config";
 import Swal from 'sweetalert2';
 import { z } from 'zod';
 import './style.css';
@@ -75,7 +75,7 @@ export function ManagerUsers() {
 
         fetchManagers();
         fetchCourses();
-    }, []);
+    }, [showModal]);
 
 
     useEffect(() => {
@@ -125,6 +125,47 @@ export function ManagerUsers() {
         reset();
     }
 
+    async function handleToggleActivationButtonClick(managerId, isActive, role) {
+        const newRole = renderRole(role)
+        try {
+            let response;
+            if (isActive) {
+                response = await deactivateManagers(managerId);
+            } else {
+                response = await activateManagers(managerId);
+            }
+    
+            if (response.status === 204) {
+                const updatedManagers = managers.map(manager => {
+                    if (manager._id === managerId) {
+                        return { ...manager, active: !isActive }; 
+                    }
+                    return manager;
+                });
+                setManagers(updatedManagers);
+    
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Sucesso!',
+                    text: isActive ? `${newRole} desativado com sucesso!` : `${newRole} ativado com sucesso!`,
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erro',
+                    text: `Erro ao ${isActive ? 'desativar' : 'ativar'} aluno: ${response.status}`,
+                });
+            }
+        } catch (error) {
+            console.error(`Erro ao alternar ativação do aluno ${managerId}:`, error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro',
+                text: `Erro ao alternar ativação do aluno ${managerId}.`,
+            });
+        }
+    }
+
     function handleAddButtonClick() {
         setShowModal(true);
     }
@@ -163,9 +204,6 @@ export function ManagerUsers() {
                 <div>
                     <button className="rounded border-0 buttonAdd" onClick={handleAddButtonClick}>Adicionar</button>
                 </div>
-                <div className="px-3">
-                    <button className="rounded border-0 buttonDisable">Desativar</button>
-                </div>
             </div>
 
             <div className="divTableStyle">
@@ -176,8 +214,8 @@ export function ManagerUsers() {
                             <th scope="col">Nome</th>
                             <th scope="col">Cargo</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Status</th>
                             <th scope="col">Cursos</th>
+                            <th scope="col">Status</th>
                             <th scope="col">Ações</th>
                         </tr>
                     </thead>
@@ -188,7 +226,6 @@ export function ManagerUsers() {
                                 <td>{manager.name}</td>
                                 <td>{renderRole(manager.role)}</td>
                                 <td>{manager.email}</td>
-                                <td>{renderActiveStatus(manager.active)}</td>
                                 <td>
                                     {manager.courses_id.length > 0 ? (
                                         manager.courses_id.map((course, index) => (
@@ -201,7 +238,13 @@ export function ManagerUsers() {
                                         <span>Não tem cursos disponíveis</span>
                                     )}
                                 </td>
-                                <td><button disabled className="border-0 button-edit">Editar</button></td>
+                                <td>{renderActiveStatus(manager.active)}</td>
+                                <td>
+                                    <button className="border-0 button-edit">Editar</button>
+                                    <button className="border-0 button-ActiveDeactivate" onClick={() => handleToggleActivationButtonClick(manager._id, manager.active, manager.role)}>
+                                        {manager.active ? 'Desativar' : 'Ativar'}
+                                    </button>
+                                </td>
                             </tr>
                         ))}
                     </tbody>

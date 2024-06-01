@@ -4,9 +4,11 @@ import './style.css'
 import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { getCourses, getStudents, studentRegister } from '../../config/config'
+import { activateStudents, deactivateStudents, getCourses, getStudents, studentRegister } from '../../config/config'
 import Swal from 'sweetalert2';
 import { useAuth } from '../../context/AuthContextProvider'
+
+import addUser from "../../assets/add-user.png";
 
 const createRegisterStudentFormSchema = z.object({
     nameComplet: z
@@ -82,8 +84,7 @@ export function ManagerStudent() {
 
         fetchStudents();
         fetchCourses();
-    }, []);
-
+    }, [showModal]);
 
     useEffect(() => {
         function handleClickOutside(event) {
@@ -136,6 +137,47 @@ export function ManagerStudent() {
         reset();
     }
 
+    async function handleToggleActivationButtonClick(studentId, isActive) {
+        try {
+            let response;
+            if (isActive) {
+                response = await deactivateStudents(studentId);
+            } else {
+                response = await activateStudents(studentId);
+            }
+    
+            if (response.status === 204) {
+                const updatedStudents = students.map(student => {
+                    if (student._id === studentId) {
+                        return { ...student, active: !isActive }; 
+                    }
+                    return student;
+                });
+                setStudents(updatedStudents);
+    
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Sucesso!',
+                    text: isActive ? 'Aluno desativado com sucesso!' : 'Aluno ativado com sucesso!',
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erro',
+                    text: `Erro ao ${isActive ? 'desativar' : 'ativar'} aluno: ${response.status}`,
+                });
+            }
+        } catch (error) {
+            console.error(`Erro ao alternar ativação do aluno ${studentId}:`, error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro',
+                text: `Erro ao alternar ativação do aluno ${studentId}.`,
+            });
+        }
+    }
+    
+
     function handleAddButtonClick() {
         setShowModal(true);
     }
@@ -155,7 +197,7 @@ export function ManagerStudent() {
             <NavBar search={undefined} />
             <div className="d-flex justify-content-start py-3 toMoveAway font">
                 <div>
-                    <img src="" className="" width={80} height={80} alt="" />
+                    <img src={addUser} className="" width={80} height={80} alt="" />
                 </div>
                 <div className="mt-4 px-4">
                     <h1 className="font">Gerenciamento de Alunos</h1>
@@ -167,9 +209,6 @@ export function ManagerStudent() {
                         <button className="rounded border-0 buttonAdd" onClick={handleAddButtonClick}>Adicionar</button>
                     </div>
                 )}
-                <div className="px-3">
-                    <button className="rounded border-0 buttonDisable">Desativar</button>
-                </div>
             </div>
 
             <div className="divTableStyle">
@@ -189,8 +228,8 @@ export function ManagerStudent() {
                     </thead>
                     <tbody>
                         {students.map((student) => (
-                            <tr key={student.id} className="text-center tableFontBody">
-                                <td><input type="checkbox" /></td>
+                            <tr key={student._id} className="text-center tableFontBody">
+                                <td></td>
                                 <td>{student.name}</td>
                                 <td>{student.email}</td>
                                 <td>{student.registration}</td>
@@ -202,7 +241,12 @@ export function ManagerStudent() {
                                 )}</td>
                                 <td>{student.unity}</td>
                                 <td>{renderActiveStatus(student.active)}</td>
-                                <td><button disabled className="border-0 button-edit">Editar</button></td>
+                                <td>
+                                    <button className="border-0 button-edit">Editar</button>
+                                    <button className="border-0 button-ActiveDeactivate" onClick={() => handleToggleActivationButtonClick(student._id, student.active)}>
+                                        {student.active ? 'Desativar' : 'Ativar'}
+                                    </button>
+                                </td>
                             </tr>
                         ))}
 
@@ -216,10 +260,10 @@ export function ManagerStudent() {
                         <div id="modal-content-users" className="modal-content mt-4 px-4" ref={modalRef} onClick={(e) => e.stopPropagation()}>
                             <div className="modal-header d-flex justify-content-between">
                                 <div className="mt-3">
-                                    <img src="" className="" width={50} height={50} alt="" />
+                                    <img src={addUser} className="" width={50} height={50} alt="" />
                                 </div>
                                 <div>
-                                    <h5 className="modal-title">Cadastro de Usuário</h5>
+                                    <h5 className="modal-title">Cadastro de Aluno</h5>
                                 </div>
                                 <button type="button" className="buttonClose custom-close-button" onClick={handleCloseModal} aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
