@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 export default function SimulatedRegisterComponent({ selectedCourse }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [timer, setTimer] = useState("00:00");
   const [timerSeconds, setTimerSeconds] = useState(0);
   const [deletedOptions, setDeletedOptions] = useState([]);
   const [correctOption, setCorrectOption] = useState(null);
@@ -34,6 +35,7 @@ export default function SimulatedRegisterComponent({ selectedCourse }) {
       setQuestionData({ ...questionData, correctOption: id });
     }
   };
+
   const removeOption = (idToRemove) => {
     if (idToRemove === 0) {
       return;
@@ -96,6 +98,13 @@ export default function SimulatedRegisterComponent({ selectedCourse }) {
   };
 
   const registerSimulated = async () => {
+    if (timer === "00:00" || timerSeconds === 0) {
+      toast.error("O tempo do simulado não pode ser 00:00.", {
+        autoClose: 2000,
+      });
+      return;
+    }
+
     setIsLoadingSimulated(true);
 
     const simulatedData = {
@@ -197,9 +206,12 @@ export default function SimulatedRegisterComponent({ selectedCourse }) {
   };
 
   const handleTimerChange = (event) => {
-    let value = parseInt(event.target.value);
-    value = Math.min(value, 14400);
-    setTimerSeconds(value);
+    const value = event.target.value;
+    setTimer(value);
+
+    const [hours, minutes] = value.split(":").map(Number);
+    const totalSeconds = hours * 3600 + minutes * 60;
+    setTimerSeconds(totalSeconds);
   };
 
   const clearFieldsQuestions = () => {
@@ -212,9 +224,11 @@ export default function SimulatedRegisterComponent({ selectedCourse }) {
       questionInput.value = "";
     }
   };
+  
   const clearFields = () => {
     setTitle("");
     setDescription("");
+    setTimer("00:00");
     setTimerSeconds(0);
     setSimulatedId(null);
     clearFieldsQuestions();
@@ -253,15 +267,15 @@ export default function SimulatedRegisterComponent({ selectedCourse }) {
         <div>
           <div className="timerContainer">
             <label className="simulatedTimerLabel">
-              Tempo do Simulado (em segundos)
+              Tempo do Simulado (hh:mm)
             </label>
             <input
               disabled={simulatedSucess}
-              type="number"
+              type="time"
               className="simulatedTimer"
-              value={timerSeconds}
+              value={timer}
               onChange={handleTimerChange}
-              max={14400}
+              step="60"
             />
           </div>
           <div className="simulatedRegisterButtonContainer">
