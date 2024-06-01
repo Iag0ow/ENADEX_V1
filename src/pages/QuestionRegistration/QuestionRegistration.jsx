@@ -229,7 +229,6 @@ export default function QuestionRegistration() {
     }
     return years;
   };
-  console.log(correctOption);
   return (
     <>
       <NavBar />
