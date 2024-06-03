@@ -7,14 +7,13 @@
 
 .userInfo {
   margin: 0 auto;
-  width: calc(100% - 30px);
   max-width: 96%;
-  min-height: 110px; /* Alterei para min-height para garantir que o conteúdo não se sobreponha em telas menores */
+  min-height: 110px; 
   background-color: #d9d9d9;
   border-radius: 10px;
   display: flex;
-  flex-wrap: wrap; /* Permite que os elementos dentro da .userInfo quebrem linha conforme necessário */
-  justify-content: space-between; /* Distribui os elementos ao longo do eixo principal */
+  flex-wrap: wrap; 
+  justify-content: space-between;
   align-items: center;
   margin-top: 20px;
   padding: 5px;
@@ -24,44 +23,44 @@
   display: flex;
   flex-direction: column;
   margin-left: 10px;
-  flex-grow: 1; /* Permite que o perfil ocupe o espaço restante */
+  flex-grow: 1; 
 }
 
 .profilePic {
-  width: 90px; /* Reduzi um pouco o tamanho da imagem */
-  height: 90px; /* Mantive a altura */
+  width: 90px;
+  height: 90px; 
   margin: 10px;
 }
 
 .userName {
   color: #161616;
   font-weight: bold;
-  font-size: 18px; /* Reduzi um pouco o tamanho do nome de usuário */
+  font-size: 18px; 
 }
 
 .userLabels {
   display: flex;
+  flex-wrap: wrap;
 }
 .mediaAcertos,
-.simulatedsRealized {
-  width: calc(
-    20% - 10px
-  ); /* Ajustei a largura para ocupar metade do espaço disponível */
+.simulatedsRealized { 
+  min-width: 120px; 
+  max-width: 300px;
   height: 30px;
   color: white;
   background-color: #0693fa;
   border-radius: 10px;
   font-weight: bold;
-  font-size: 14px; /* Reduzi um pouco o tamanho da fonte */
-  margin-top: 10px; /* Adicionei margem superior para separar os elementos */
+  font-size: 14px;
+  margin-top: 10px; 
   padding: 5px;
   text-align: center;
 }
 
 .generateSimulated {
   display: flex;
-  justify-content: flex-end; /* Alinha o botão à direita */
-  margin-right: 10px; /* Ajustei a margem para alinhar com os outros elementos */
+  justify-content: flex-end; 
+  margin-right: 10px; 
   margin-bottom: 18px;
 }
 
@@ -193,14 +192,14 @@
   .simulatedsRealized {
     width: calc(
       80% - 10px
-    ); /* Ajustei a largura para ocupar metade do espaço disponível */
+    );
     height: 30px;
     color: white;
     background-color: #0693fa;
     border-radius: 10px;
     font-weight: bold;
-    font-size: 14px; /* Reduzi um pouco o tamanho da fonte */
-    margin-top: 10px; /* Adicionei margem superior para separar os elementos */
+    font-size: 14px;
+    margin-top: 10px; 
     padding: 5px;
     text-align: center;
   }
@@ -210,12 +209,12 @@
     margin-bottom: 18px;
     width: 100%;
     margin-right: 0px;
-    text-align: center; /* Adicionado para centralizar o conteúdo */
+    text-align: center;
   }
   .userName {
     color: #161616;
     font-weight: bold;
-    font-size: 18px; /* Reduzi um pouco o tamanho do nome de usuário */
+    font-size: 18px; 
     margin-bottom: 0px;
   }
   .searchBar {
@@ -254,14 +253,14 @@
   .simulatedsRealized {
     width: calc(
       90% - 10px
-    ); /* Ajustei a largura para ocupar metade do espaço disponível */
+    );
     height: 30px;
     color: white;
     background-color: #0693fa;
     border-radius: 10px;
     font-weight: bold;
-    font-size: 14px; /* Reduzi um pouco o tamanho da fonte */
-    margin-top: 10px; /* Adicionei margem superior para separar os elementos */
+    font-size: 14px; 
+    margin-top: 10px; 
     padding: 5px;
     text-align: center;
   }
@@ -271,12 +270,12 @@
     margin-bottom: 18px;
     width: 100%;
     margin-right: 0px;
-    text-align: center; /* Adicionado para centralizar o conteúdo */
+    text-align: center; 
   }
   .userName {
     color: #161616;
     font-weight: bold;
-    font-size: 18px; /* Reduzi um pouco o tamanho do nome de usuário */
+    font-size: 18px; 
     margin-bottom: 0px;
   }
   .searchBar {
@@ -315,8 +314,8 @@
     display: inline-flex;
     flex-direction: column;
     align-items: center;
-    height: 200px; /* Altura da div para centralizar verticalmente */
-    justify-content: center; /* Centralizar verticalmente */
+    height: 200px; 
+    justify-content: center; 
   }
 
   .textRight {
