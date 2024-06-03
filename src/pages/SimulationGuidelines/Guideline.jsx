@@ -1,7 +1,27 @@
 import React from "react";
 import "./Guideline.css";
 import Footer from "../../components/Footer/Footer";
+import { useLocation } from "react-router-dom";
+import { startSimulated } from "../../config/config";
+
 export default function Simulated_Guideline() {
+  const location = useLocation();
+  const { simulatedId } = location.state || {};
+
+  const handleStartSimulated = async () => {
+    try {
+      if (!simulatedId) {
+        console.error("Simulated ID not found!");
+        return;
+      }
+      const result = await startSimulated(simulatedId);
+      console.log("Generated mock_id:", result.mock_id); 
+    } catch (error) {
+      console.error("Failed to start simulated:", error);
+    }
+  };
+
+
   return (
     <div>
       <header className="headerGuideline">
@@ -95,8 +115,10 @@ export default function Simulated_Guideline() {
             </ul>
           </div>
         </div>
-        <button className="btnStartSimulated">Iniciar Simulado</button>
-        <a style={{textDecoration: "underline", marginTop: "5px"}} href="javascript:history.go(-1)">Voltar</a>
+        <button className="btnStartSimulated" onClick={handleStartSimulated}>
+          Iniciar Simulado
+        </button>
+        <a style={{ textDecoration: "underline", marginTop: "5px" }} href="javascript:history.go(-1)">Voltar</a>
       </div>
       <Footer />
     </div>

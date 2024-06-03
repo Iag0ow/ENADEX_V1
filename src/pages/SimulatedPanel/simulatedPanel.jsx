@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./simulatedPanel.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../../components/NavBar/NavBar";
 import profilePic from "./assets/images/psicopato_profile.svg";
 import search_icon from "./assets/images/search_icon.svg";
@@ -25,6 +25,7 @@ export default function SimulatedPanel() {
   const { user } = useAuth();
   const [simulateds, setSimulateds] = useState([]);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchSimulateds() {
@@ -38,6 +39,7 @@ export default function SimulatedPanel() {
 
   const handleSimulatedClick = (id) => {
     console.log("Selected simulated ID:", id);
+    navigate('/orientacoes-do-simulado', { state: { simulatedId: id } });
   };
 
   return (
@@ -65,8 +67,7 @@ export default function SimulatedPanel() {
             <h1 className="text-center mt-5 color-text bold-weight">Carregando...</h1>
           ) : (
             simulateds.map((simulated) => (
-              <Link
-                to="/orientacoes-do-simulado"
+              <div
                 className="btnRealizedSimulated"
                 key={simulated._id}
                 onClick={() => handleSimulatedClick(simulated._id)}
@@ -78,7 +79,7 @@ export default function SimulatedPanel() {
                   <span className="simulatedQuestions">Duração:</span>
                   <label className="labelDateAndQuestions">{formatDuration(simulated.duration)}</label>
                 </div>
-              </Link>
+              </div>
             ))
           )}
         </div>
