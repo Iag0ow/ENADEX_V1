@@ -59,7 +59,10 @@ const NavBar = () => {
               <Nav id='' className={`mr-auto ${isMobile && !menuOpen ? 'd-none' : ''}`}>
               <NavLink  className={`navLinks`} to="/" onClick={closeMenu}>Home</NavLink>
               <NavLink className={`navLinks`} to="/simulados" onClick={closeMenu}>Simulado</NavLink>
-              <NavLink className={`navLinks`} to="/banco-de-questoes" onClick={closeMenu}>Questões</NavLink>
+              
+              {( authRole === "undefined") && 
+                  <NavLink className={`navLinks`} to="/banco-de-questoes" onClick={closeMenu}>Questões</NavLink>
+                }
               {( authRole === "ADMINISTRATOR" || authRole === "COORDINATORS") &&
                 <NavLink className="navLinks" to={"/register-admin-teacher"} >Cadastro </NavLink>
                 }
@@ -71,7 +74,9 @@ const NavBar = () => {
                     <NavDropdown.Item as={Link} to="/register-student" onClick={closeMenu}>Aluno</NavDropdown.Item> 
                 }
                <NavDropdown.Item className='disabled' href="/material" onClick={closeMenu}>Material</NavDropdown.Item>
-               <NavDropdown.Item as={Link} to="/cadastrar-perguntas" onClick={closeMenu}>Simulado/Perguntas</NavDropdown.Item>
+               {( authRole === "COORDINATORS" || authRole === "TEACHERS" || authRole === "ADMINISTRATOR") && 
+                  <NavDropdown.Item as={Link} to="/cadastrar-perguntas" onClick={closeMenu}>Simulado/Perguntas</NavDropdown.Item>
+                }
               </NavDropdown>
                    )}
              {isMobile && (
