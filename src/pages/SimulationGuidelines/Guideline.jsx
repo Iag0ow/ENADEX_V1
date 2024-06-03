@@ -1,7 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Guideline.css";
 import Footer from "../../components/Footer/Footer";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { startSimulated } from "../../config/config";
+
 export default function Simulated_Guideline() {
+  const location = useLocation();
+  const { simulatedId } = location.state || {};
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null); 
+
+  const handleStartSimulated = async () => {
+    try {
+      setError(null);
+      if (!simulatedId) {
+        throw new Error("Simulated ID not found!"); 
+      }
+      setIsLoading(true);
+      const result = await startSimulated(simulatedId);
+      console.log("Generated mock_id:", result.mock_id);
+    } catch (error) {
+      console.error("Failed to start simulated:", error);
+      setError(error.message); 
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+
+  const navigate = useNavigate();
+
+  const handleBackClick = () => {
+    navigate(-1);
+  };
   return (
     <div>
       <header className="headerGuideline">
@@ -95,8 +126,15 @@ export default function Simulated_Guideline() {
             </ul>
           </div>
         </div>
-        <button className="btnStartSimulated">Iniciar Simulado</button>
-        <a style={{textDecoration: "underline", marginTop: "5px"}} href="javascript:history.go(-1)">Voltar</a>
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        <button
+          className="btnStartSimulated"
+          onClick={handleStartSimulated}
+          disabled={isLoading}
+        >
+          {isLoading ? "Iniciando Simulado..." : "Iniciar Simulado"}
+        </button>
+        <Link style={{ textDecoration: "underline", marginTop: "5px" }} onClick={handleBackClick}>Voltar</Link>
       </div>
       <Footer />
     </div>

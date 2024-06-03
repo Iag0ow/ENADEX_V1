@@ -141,6 +141,7 @@
   text-align: left;
   font-size: 25px;
   margin-bottom: 0px;
+  margin-bottom: 20px;
 }
 
 .simulatedText {
@@ -155,17 +156,25 @@
 .simulatedDate,
 .simulatedQuestions {
   font-size: 18px;
+  font-weight: bold;
+
 }
 
 .labelDateAndQuestions {
-  font-size: 12px;
+  font-size: 14px;
   margin-right: 10px;
   margin-left: 5px;
   background-color: white;
   border-radius: 10px;
-  width: auto;
-  padding: 5px;
+  /* padding: 5px; */
   color: black;
+  width: 90px;
+  height: 25px;
+  text-align: center;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @media screen and (max-width: 900px) {

@@ -372,4 +372,31 @@ export async function getExamAnswers(examId){
   return {data: data, status: response.status};
 }
 
+export async function getSimulated() {
+  const token = localStorage.getItem("token");
+  const config = {
+    method: "GET",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await fetch(`${API}/me/exams/available`, config);
+  const data = await response.json();
+  return await data;
+}
 
+export async function startSimulated(mock_exam_id) {
+  const token = localStorage.getItem("token");
+  const config = {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ mock_exam_id })
+  };
+  const response = await fetch(`${API}/me/exams`, config);
+  const data = await response.json();
+  return data;
+}  
