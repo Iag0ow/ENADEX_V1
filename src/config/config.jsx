@@ -1,4 +1,5 @@
 import { customFetch, customFetchNoAuth } from "./custom-fetch";
+import { calculateRemainingTime } from "../Hooks/formatTime";
 
 const API = "https://enadex-api-v2.vercel.app";
 
@@ -172,7 +173,6 @@ export async function postBankQuestionResponse(questionObjectResponse){
   const data = await response.json();
 
   return {data: data, status: response.status};
-
 }
 
 export async function createQuestion(questionData) {
@@ -232,7 +232,6 @@ export async function getStudents(){
 
   const response = await fetch(`${API}/students`, config);
   const data = await response.json();
-  console.log(data)
   return await data;
 }
 
@@ -251,7 +250,6 @@ export async function activateStudents(idStudent) {
 }
 
 export async function deactivateStudents(idStudent) {
-  console.log(idStudent)
   const token = localStorage.getItem("token");
   const config = {
     method: "POST",
@@ -290,4 +288,88 @@ export async function deactivateManagers(idManager) {
   const response = await fetch(`${API}/managers/${idManager}/deactivate`, config);
   return response;
 }
+export async function getQuestionsAndMockById(idMock) {
+  try {
+    const token = localStorage.getItem("token");
+    const config = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      }
+    };
+
+    const [responseQuestions, responseMockInProgress] = await Promise.all([
+      fetch(`${API}/me/exams/${idMock}/questions`, config),
+      fetch(`${API}/me/exams/progress`, config)
+    ]);
+
+    if (responseMockInProgress.status !== 200) return { data: [], status: 500 };
+
+    const examInProgress = await responseMockInProgress.json();
+    const responseDataMock = await fetch(`${API}/me/exams/${idMock}`, config);
+
+    if (responseQuestions.status !== 200 || responseDataMock.status !== 200) return { data: [], status: 500 };
+
+    const dataQuestion = await responseQuestions.json();
+    let dataMock = await responseDataMock.json();
+
+    const createdDate = new Date(examInProgress[0].createdAt).toISOString().split('T')[0];
+    const remainingTimeInSeconds = calculateRemainingTime(examInProgress[0].createdAt, examInProgress[0].mock_exam_id.duration);
+    dataMock = {...dataMock, inicializeExamDate: createdDate, duration: remainingTimeInSeconds,mockName: examInProgress[0].mock_exam_id.name};
+
+    return { data: dataQuestion, status: 200, dataMock};
+    
+  } catch (error) {
+    return { data: [], status: 500 };
+  }
+}
+export async function getExamInProgress(){
+  const token = localStorage.getItem("token");
+  const config = {
+   method: "GET",
+   headers: {
+     "content-type": "application/json",
+     "Authorization": `Bearer ${token}`,
+   },
+  }
+
+  const response = await fetch(`${API}/me/exams/progress`, config);
+  const data = await response.json();
+  return {data: data, status: response.status};
+}
+export async function putExamAnswers(sendAnswers,examId){
+  const bodyForm = JSON.stringify(sendAnswers);
+  const token = localStorage.getItem("token");
+  const config = {
+   method: "PUT",
+   headers: {
+     "content-type": "application/json",
+     "Authorization": `Bearer ${token}`,
+   },
+   body: bodyForm
+  }
+
+  const response = await fetch(`${API}/me/exams/${examId}/answers`, config);
+  const data = await response.json();
+
+  return {data: data, status: response.status};
+}
+
+export async function getExamAnswers(examId){
+  const token = localStorage.getItem("token");
+  const config = {
+   method: "GET",
+   headers: {
+     "content-type": "application/json",
+     "Authorization": `Bearer ${token}`,
+   },
+  }
+
+  const response = await fetch(`${API}/me/exams/${examId}/answers`, config);
+  const data = await response.json();
+
+  return {data: data, status: response.status};
+}
+
 

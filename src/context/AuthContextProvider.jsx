@@ -1,8 +1,8 @@
 import { createContext, useState,useContext, useEffect } from 'react';
-import { getProfile } from '../config/config';
+import { getProfile,getExamInProgress } from '../config/config';
 const API = "https://enadex-api-v2.vercel.app";
 
-export const AuthContext = createContext({})
+export const AuthContext = createContext({});
 
 export const AuthContextProvider = ({children}) => {
   const [signed, setSigned] = useState(false);
@@ -15,7 +15,6 @@ export const AuthContextProvider = ({children}) => {
   const [filters , setFilters] = useState([]);
 
   const [modalShow, setModalShow] = useState(false);
-  
 
   async function login(loginForm){
     setLoading(true);
@@ -63,11 +62,25 @@ export const AuthContextProvider = ({children}) => {
     const authRole = localStorage.getItem("authRole");
     const userName = localStorage.getItem("userName");
     setLoadingReload(true);
+  
     const response = await getProfile();
-    if (token && response.status == 200) {
+    if (token && response.status === 200) {
       setSigned(true);
-      setAuthRole(authRole)
-      setUser(userName)
+      setAuthRole(authRole);
+      setUser(userName);
+  
+      const { data, status } = await getExamInProgress();
+      const url = window.location.pathname;
+  
+      if (status === 200 && data && Object.keys(data).length > 0) {
+        const examId = data[0]._id;
+        if (examId && url !== `/simulado/${examId}`) {
+          window.location.href = `/simulado/${examId}`;
+        }
+      } else if (url === "/simulado") {
+        window.location.href = "/simulados";
+      }
+  
     } else {
       setSigned(false);
     }
@@ -77,8 +90,6 @@ export const AuthContextProvider = ({children}) => {
   useEffect(() => {
     verifySigned();
   }, []);
-
-
 
   useEffect(() => {
     async function  getFilters(){
