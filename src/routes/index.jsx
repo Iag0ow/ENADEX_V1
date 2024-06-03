@@ -21,7 +21,7 @@ import { FaqInterno } from "../pages/FaqInterno";
 import { ManagerStudent } from "../pages/ManagerStudent";
 import Simulate from "../pages/Simulate/Simulate";
 function AppRoutes() {
-  const { signed,loadingReaload } = useAuth();
+  const { signed,loadingReaload,authRole } = useAuth();
   return (
     <>
           { loadingReaload ? 
@@ -35,14 +35,21 @@ function AppRoutes() {
                   {/* <Route path="/login" element={ signed ? <WelcomeAfterLogin /> : <Login />} /> */}
                   <Route path="/register" element={signed ? <WelcomeAfterLogin /> : <Register />} />
                   <Route path="/" element={signed ? <WelcomeAfterLogin /> : <LadingPage />} />
-                  <Route path="/cadastrar-perguntas" element={signed ? <QuestionRegistration /> : <LadingPage />} />
+                  <Route 
+                    path="/cadastrar-perguntas" 
+                    element={signed ? (authRole === "undefined" ? <WelcomeAfterLogin /> : <QuestionRegistration />) : <LadingPage />} 
+                  />
+                  {/* <Route path="/cadastrar-perguntas" element={signed ? <QuestionRegistration /> : <LadingPage />} /> */}
                   <Route path="/simulados" element={signed ? <SimulatedPanel /> : <LadingPage />} />
                   <Route path="/orientacoes-do-simulado" element={<Simulated_Guideline />} />
                   <Route path="/simulados-concluidos" element={signed ? <CompletedSimulations /> : <LadingPage />} />
                   {/* <Route path="/esqueci-minha-senha" element={signed ? <WelcomeAfterLogin /> : <RecuperacaoSenha />} /> */}
                   <Route path="/register-admin-teacher" element={signed ? <ManagerUsers /> : <LadingPage />} />
                   <Route path="/register-student" element={signed ? <ManagerStudent /> : <LadingPage />} />
-                  <Route path="/banco-de-questoes" element={signed ? <QuestionsDatabase /> : <LadingPage />} />
+                  <Route 
+                    path="/banco-de-questoes" 
+                    element={signed ? (authRole === "undefined" ? <QuestionsDatabase /> : <WelcomeAfterLogin />) : <LadingPage />} 
+                  />
                   <Route path="/faq-interno" element={signed ? <FaqInterno /> : <LadingPage />} />
                   <Route path="/simulado/:id" element={signed ? <Simulate /> : <LadingPage />} />
                   {/* <Route path="/" element={signed ? <WelcomeAfterLogin /> : <LadingPage />} /> */}
