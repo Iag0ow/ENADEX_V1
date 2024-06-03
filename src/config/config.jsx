@@ -291,3 +291,16 @@ export async function deactivateManagers(idManager) {
   return response;
 }
 
+export async function getSimulated() {
+  const token = localStorage.getItem("token");
+  const config = {
+    method: "GET",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await fetch(`${API}/me/exams/available`, config);
+  const data = await response.json();
+  return await data;
+}
