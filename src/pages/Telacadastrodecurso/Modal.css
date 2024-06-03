@@ -1,0 +1,110 @@
+.modalCo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-contentCo {
+    background-color: #ECECEC;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 60%;
+    max-width: 600px;
+    height: 60%;
+    max-height: 360px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.closeCo {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.closeCo:hover,
+.closeCo:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.form-groupCo {
+    margin-bottom: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+.input-groupCo {
+    display: inline-block;
+    width: 39%;
+    margin-right: 55px;
+    margin-left: 10px;
+    border-radius: 15px;
+}
+
+.input-groupCo label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-groupCo input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-buttonsCo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.add-btnmodalCo,
+.remove-btnmodalCo {
+    padding: 10px 20px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.form-buttonsCo button {
+    width: 30%;
+    margin-top: 50px;
+    margin-bottom: -30px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.add-btnmodalCo {
+    background-color: #0FA958;
+    color: #f0f0f0;
+    }
+
+.remove-btnmodalCo {
+    background-color: #E1631C;
+    color: #f0f0f0;
+}
+
+.add-btnmodalCo,
+.remove-btnmodalCo {
+    padding: 5px 5px;
+    font-size: 13px;
+    height: 30px;
+    border: none;
+}

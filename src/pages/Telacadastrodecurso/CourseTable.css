@@ -1,0 +1,32 @@
+.courses-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.courses-table th,
+.courses-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.courses-table th {
+    background-color: #f8f8f8;
+}
+
+.courses-table td input[type="checkbox"] {
+    margin: 0;
+}
+
+.edit-btn {
+    padding: 5px 30px;
+    border: none;
+    color: white;
+    background-color: #0E3975;
+    cursor: pointer;
+    border-radius: 5px;
+}

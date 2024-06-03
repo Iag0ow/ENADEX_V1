@@ -20,6 +20,7 @@ import QuestionsDatabase from "../pages/QuestionsDatabase/QuestionsDatabase";
 import { FaqInterno } from "../pages/FaqInterno";
 import { ManagerStudent } from "../pages/ManagerStudent";
 import Simulate from "../pages/Simulate/Simulate";
+import CourseManagement from "../pages/Telacadastrodecurso/CourseManagement";
 function AppRoutes() {
   const { signed,loadingReaload,authRole } = useAuth();
   return (
@@ -49,6 +50,10 @@ function AppRoutes() {
                   <Route 
                     path="/banco-de-questoes" 
                     element={signed ? (authRole === "undefined" ? <QuestionsDatabase /> : <WelcomeAfterLogin />) : <LadingPage />} 
+                  />
+                  <Route 
+                    path="/cadastrar-curso" 
+                    element={signed ? (authRole !== "undefined" ? <CourseManagement />: <WelcomeAfterLogin />) : <LadingPage />} 
                   />
                   <Route path="/faq-interno" element={signed ? <FaqInterno /> : <LadingPage />} />
                   <Route path="/simulado/:id" element={signed ? <Simulate /> : <LadingPage />} />
