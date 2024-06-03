@@ -37,9 +37,9 @@ export default function SimulatedPanel() {
     fetchSimulateds();
   }, []);
 
-  const handleSimulatedClick = (id) => {
+  const handleSimulatedClick = (id, name) => {
     console.log("Selected simulated ID:", id);
-    navigate('/orientacoes-do-simulado', { state: { simulatedId: id } });
+    navigate('/orientacoes-do-simulado', { state: { simulatedId: id, simulatedName: name } });
   };
 
   return (
