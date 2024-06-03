@@ -73,6 +73,9 @@ const NavBar = () => {
                {( authRole === "COORDINATORS" || authRole === "TEACHERS" || authRole === "ADMINISTRATOR") && 
                     <NavDropdown.Item as={Link} to="/register-student" onClick={closeMenu}>Aluno</NavDropdown.Item> 
                 }
+                {( authRole === "COORDINATORS" || authRole === "TEACHERS" || authRole === "ADMINISTRATOR") && 
+                    <NavDropdown.Item as={Link} to="/cadastrar-curso" onClick={closeMenu}>Cadastro/Curso</NavDropdown.Item> 
+                }
                <NavDropdown.Item className='disabled' href="/material" onClick={closeMenu}>Material</NavDropdown.Item>
                {( authRole === "COORDINATORS" || authRole === "TEACHERS" || authRole === "ADMINISTRATOR") && 
                   <NavDropdown.Item as={Link} to="/cadastrar-perguntas" onClick={closeMenu}>Simulado/Perguntas</NavDropdown.Item>
