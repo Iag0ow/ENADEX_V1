@@ -6,7 +6,7 @@ import { startSimulated } from "../../config/config";
 
 export default function Simulated_Guideline() {
   const location = useLocation();
-  const { simulatedId } = location.state || {};
+  const { simulatedId, simulatedName, simulatedDuration } = location.state || {};
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null); 
 
@@ -17,27 +17,34 @@ export default function Simulated_Guideline() {
         throw new Error("Simulated ID not found!"); 
       }
       setIsLoading(true);
-      const result = await startSimulated(simulatedId);
-      console.log("Generated mock_id:", result.mock_id);
+      const result = await startSimulated(simulatedId); 
+      // console.log("Generated mock_id:", result.mock_id);
+      window.location.reload();
     } catch (error) {
-      console.error("Failed to start simulated:", error);
+      // console.error("Failed to start simulated:", error);
       setError(error.message); 
     } finally {
       setIsLoading(false);
     }
   };
 
-
   const navigate = useNavigate();
 
   const handleBackClick = () => {
     navigate(-1);
   };
+
+  const formatDuration = (seconds) => {
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+  };
+
   return (
     <div>
       <header className="headerGuideline">
         <h1 className="simulatedName">
-          IBMEC - 2022 - ENADE Simulado - Direito
+         {simulatedName}
         </h1>
       </header>
 
@@ -47,13 +54,13 @@ export default function Simulated_Guideline() {
             <p className="guidelineTitle">Orientações para o Simulado</p>
             <div className="conclusionTime">
               Tempo de conclusão do simulado:{" "}
-              <span className="timerSimulated"> 04:00:00</span>
+              <span className="timerSimulated">{formatDuration(simulatedDuration)}</span>
             </div>
             <p className="largerText">Duração do simulado</p>
             <ul className="bulletList">
               <li>
                 O tempo de realização do simulado pelo discente deverá ocorrer
-                no prazo de 04:00 horas;
+                no prazo de {formatDuration(simulatedDuration)} horas;
               </li>
             </ul>
 
@@ -132,7 +139,7 @@ export default function Simulated_Guideline() {
           onClick={handleStartSimulated}
           disabled={isLoading}
         >
-          {isLoading ? "Iniciando Simulado..." : "Iniciar Simulado"}
+          {isLoading ? <div className="spinner"></div> : "Iniciar Simulado"}
         </button>
         <Link style={{ textDecoration: "underline", marginTop: "5px" }} onClick={handleBackClick}>Voltar</Link>
       </div>
