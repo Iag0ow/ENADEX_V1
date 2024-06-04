@@ -4,7 +4,7 @@ import './style.css'
 import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { activateStudents, deactivateStudents, getCourses, getStudents, studentRegister } from '../../config/config'
+import { activateStudents, deactivateStudents, editStudent, getCourses, getStudents, studentRegister } from '../../config/config'
 import Swal from 'sweetalert2';
 import { useAuth } from '../../context/AuthContextProvider'
 
@@ -59,6 +59,9 @@ export function ManagerStudent() {
     const [showModal, setShowModal] = useState(false);
     const [students, setStudents] = useState([]);
     const [courses, setCourses] = useState([]);
+    const [showModalEdit, setShowModalEdit] = useState(false)
+    const [editStudentData, setEditStudentData] = useState(null)
+    const [selectedStudentId, setSelectedStudentId] = useState(null);
     const modalRef = useRef(null);
 
 
@@ -84,7 +87,7 @@ export function ManagerStudent() {
 
         fetchStudents();
         fetchCourses();
-    }, [showModal]);
+    }, [showModal, showModalEdit]);
 
     useEffect(() => {
         function handleClickOutside(event) {
@@ -145,16 +148,16 @@ export function ManagerStudent() {
             } else {
                 response = await activateStudents(studentId);
             }
-    
+
             if (response.status === 204) {
                 const updatedStudents = students.map(student => {
                     if (student._id === studentId) {
-                        return { ...student, active: !isActive }; 
+                        return { ...student, active: !isActive };
                     }
                     return student;
                 });
                 setStudents(updatedStudents);
-    
+
                 Swal.fire({
                     icon: 'success',
                     title: 'Sucesso!',
@@ -176,7 +179,46 @@ export function ManagerStudent() {
             });
         }
     }
+
+    async function handleEditStudent(data){
+        console.log(selectedStudentId)
+        console.log(data)
+
+        const studentEdit = {
+            name: data.nameComplet,
+            email: data.email,
+            semester: data.semester,
+            password: data.password,
+            course_id: data.course,
+            registration: data.registration,
+            unity: data.unity
+        };
     
+        try {
+            const result = await editStudent(studentEdit, selectedStudentId);
+            if (result.status === 200) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Sucesso!',
+                    text: 'Conta de usuário editada com sucesso!',
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erro',
+                    text: `Erro ao criar conta: ${result.status}`,
+                });
+            }
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro',
+                text: 'Erro na edição da conta.',
+            });
+        }
+
+    }
+
 
     function handleAddButtonClick() {
         setShowModal(true);
@@ -184,6 +226,19 @@ export function ManagerStudent() {
 
     function handleCloseModal() {
         setShowModal(false);
+        reset();
+    }
+
+    function handleAddButtonClickEdit(studentId) {
+        console.log(studentId)
+        setSelectedStudentId(studentId)
+        const student = students.find(student => student._id === studentId);
+        setEditStudentData(student)
+        setShowModalEdit(true);
+    }
+
+    function handleCloseModalEdit() {
+        setShowModalEdit(false);
         reset();
     }
 
@@ -242,7 +297,7 @@ export function ManagerStudent() {
                                 <td>{student.unity}</td>
                                 <td>{renderActiveStatus(student.active)}</td>
                                 <td>
-                                    <button className="border-0 button-edit">Editar</button>
+                                    <button className="border-0 button-edit" data-student-id={student._id} onClick={() => handleAddButtonClickEdit(student._id)}>Editar</button>
                                     <button className="border-0 button-ActiveDeactivate" onClick={() => handleToggleActivationButtonClick(student._id, student.active)}>
                                         {student.active ? 'Desativar' : 'Ativar'}
                                     </button>
@@ -253,6 +308,115 @@ export function ManagerStudent() {
                     </tbody>
                 </table>
             </div>
+
+            {showModalEdit && (
+                <div className="modal" role="dialog" onClick={handleCloseModalEdit}>
+                    <div className="modal-dialog" role="document">
+                        <div id="modal-content-users" className="modal-content mt-4 px-4" ref={modalRef} onClick={(e) => e.stopPropagation()}>
+                            <div className="modal-header d-flex justify-content-between">
+                                <div className="mt-3">
+                                    <img src={addUser} className="" width={50} height={50} alt="" />
+                                </div>
+                                <div>
+                                    <h5 className="modal-title">Editar Aluno</h5>
+                                </div>
+                                <button type="button" className="buttonClose custom-close-button" onClick={handleCloseModalEdit} aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <form onSubmit={handleSubmit(handleEditStudent)}>
+                                    <div className="row">
+                                        <div className="col-md-6">
+                                            <div className="form-group">
+                                                <label htmlFor="input1" className="labelText">Nome Completo</label>
+                                                <input {...register('nameComplet', { value: editStudentData ? editStudentData.name : '' })} placeholder="Insira o nome completo" type="text" className="form-control" id="input1" />
+                                                {errors.nameComplet && <span className="error-message">{errors.nameComplet.message}</span>}
+                                            </div>
+
+                                            <div className="form-group mt-2">
+                                                <label htmlFor="selectRole">Selecione um curso</label>
+                                                <select className="form-select" id="selectRole" {...register('course')} defaultValue={editStudentData ? editStudentData.course_id._id : ''}>
+                                                    <option value="">Selecione um Curso</option>
+                                                    {courses.map((course) => (
+                                                        <option key={course._id} value={course._id}>{course.name}</option>
+                                                    ))}
+                                                </select>
+                                                {errors.course && <span className="error-message">{errors.course.message}</span>}
+                                            </div>
+
+
+                                            <div className="form-group mt-2">
+                                                <label htmlFor="input1" className="labelText">Matrícula</label>
+                                                <input {...register('registration', { value: editStudentData ? editStudentData.registration : '' })} placeholder="Insira o nome completo" type="text" className="form-control" id="input1" />
+                                                {errors.registration && <span className="error-message">{errors.registration.message}</span>}
+                                            </div>
+
+                                            <div className="form-group mt-2">
+                                                <label htmlFor="input2">Senha</label>
+                                                <input {...register('password', { value: editStudentData ? editStudentData.password : '' })} placeholder="Insira sua senha" type="password" className="form-control" id="input2" />
+                                                {errors.password && <span className="error-message">{errors.password.message}</span>}
+                                            </div>
+
+                                        </div>
+                                        <div className="col-md-6">
+                                            <div className="form-group mt">
+                                                <label htmlFor="input4">E-mail</label>
+                                                <input {...register('email', { value: editStudentData ? editStudentData.email : '' })} placeholder="Insira seu e-mail" type="text" className="form-control" id="input4" />
+                                                {errors.email && <span className="error-message">{errors.email.message}</span>}
+                                            </div>
+                                            <div className="form-group mt-2">
+                                                <label htmlFor="selectRole">Selecione sua unidade</label>
+                                                <select className="form-select" id="selectRole" {...register('unity')} defaultValue={editStudentData ? editStudentData.unity : ''}>
+                                                    <option value="">Selecione a Unidade</option>
+                                                    <option value="ITABUNA">Itabuna</option>
+                                                    <option value="FEIRA_DE_SANTANA">Feira de Santana</option>
+                                                    <option value="VITORIA_DA_CONQUISTA">
+                                                        Vitória da Conquista
+                                                    </option>
+                                                    <option value="JEQUIÉ">Jequié</option>
+                                                    <option value="SALVADOR">Salvador</option>
+                                                </select>
+                                                {errors.unity && <span className="error-message">{errors.unity.message}</span>}
+                                            </div>
+
+                                            <div className="form-group mt-2">
+                                                <label htmlFor="selectRole">Selecione seu semestre</label>
+                                                <select className="form-select" id="selectRole" {...register('semester')} defaultValue={editStudentData ? editStudentData.semester : ''}>
+                                                    <option value="">Selecione o Semestre</option>
+                                                    <option value="1">1º Semestre</option>
+                                                    <option value="2">2º Semestre</option>
+                                                    <option value="3">3º Semestre</option>
+                                                    <option value="4">4º Semestre</option>
+                                                    <option value="5">5º Semestre</option>
+                                                    <option value="6">6º Semestre</option>
+                                                    <option value="7">7º Semestre</option>
+                                                    <option value="8">8º Semestre</option>
+                                                    <option value="9">9º Semestre</option>
+                                                    <option value="10">10º Semestre</option>
+                                                </select>
+                                                {errors.semester && <span className="error-message">{errors.semester.message}</span>}
+                                            </div>
+
+                                            <div className="form-group mt-2">
+                                                <label htmlFor="input5">Repita sua senha</label>
+                                                <input {...register('confirmPassword', { value: editStudentData ? editStudentData.password : '' })} placeholder="Insira sua senha novamente" type="password" className="form-control" id="input5" />
+                                                {errors.confirmPassword && <span className="error-message">{errors.confirmPassword.message}</span>}
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div className="modal-footer">
+                                        <div className="px-3">
+                                            <button className="rounded border-0 buttonRegister">Salvar</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {showModal && (
                 <div className="modal" role="dialog" onClick={handleCloseModal}>
