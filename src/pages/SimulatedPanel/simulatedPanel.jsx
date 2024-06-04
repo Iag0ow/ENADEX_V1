@@ -37,9 +37,10 @@ export default function SimulatedPanel() {
     fetchSimulateds();
   }, []);
 
-  const handleSimulatedClick = (id, name) => {
-    console.log("Selected simulated ID:", id);
-    navigate('/orientacoes-do-simulado', { state: { simulatedId: id, simulatedName: name } });
+  const handleSimulatedClick = (id, name, duration) => {
+    // console.log("Selected simulated ID:", id);
+    // console.log(name)
+    navigate('/orientacoes-do-simulado', { state: { simulatedId: id, simulatedName: name, simulatedDuration: duration } });
   };
 
   return (
@@ -55,12 +56,12 @@ export default function SimulatedPanel() {
           </div>
         </div>
 
-        <div className="searchBarWrapper">
+        {/* <div className="searchBarWrapper">
           <div className="searchBar">
             <img className="searchIcon" src={search_icon} alt="" />
             <input type="text" className="searchInput" placeholder="Buscar" />
           </div>
-        </div>
+        </div> */}
 
         <div className="simulatedWrapper">
           {loading ? (
@@ -70,7 +71,7 @@ export default function SimulatedPanel() {
               <div
                 className="btnRealizedSimulated"
                 key={simulated._id}
-                onClick={() => handleSimulatedClick(simulated._id)}
+                onClick={() => handleSimulatedClick(simulated._id, simulated.name, simulated.duration)}
               >
                 <div className="simulatedText">{simulated.name}</div>
                 <div className="simulatedInfo">

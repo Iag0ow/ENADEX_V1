@@ -60,11 +60,12 @@ const NavBar = () => {
           <NavLink className={`navLinks`} to="/" onClick={closeMenu}>Home</NavLink>
 
           {authRole === "undefined" && (
-            <NavLink className={`navLinks`} to="/simulados" onClick={closeMenu}>Simulado</NavLink>
+            <>
+              <NavLink className={`navLinks`} to="/simulados" onClick={closeMenu}>Simulado</NavLink>
+              <NavLink className={`navLinks`} to="/banco-de-questoes" onClick={closeMenu}>Questões</NavLink>
+            </>
           )}
           
-          <NavLink className={`navLinks`} to="/banco-de-questoes" onClick={closeMenu}>Questões</NavLink>
-
           {(authRole === "ADMINISTRATOR" || authRole === "COORDINATORS") &&
             <NavLink className="navLinks" to={"/register-admin-teacher"}>Cadastro</NavLink>
           }
