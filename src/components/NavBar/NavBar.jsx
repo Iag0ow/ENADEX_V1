@@ -53,53 +53,54 @@ const NavBar = () => {
     <Navbar collapseOnSelect expand="lg" className={`navbar ${isMobile ? 'mobile' : ''}`} ref={ref}>
       <Navbar.Brand>
         <Link to="/"><img className="logoNav" src={Logo} alt="" /></Link>
-          </Navbar.Brand>
-            <Navbar.Toggle aria-controls="responsive-navbar-nav" onClick={toggleMenu} />
-             <Navbar.Collapse id="responsive-navbar-nav" className={`justify-content-end ${menuOpen ? 'show-menu' : 'hide-menu'}`}>
-              <Nav id='' className={`mr-auto ${isMobile && !menuOpen ? 'd-none' : ''}`}>
-              <NavLink  className={`navLinks`} to="/" onClick={closeMenu}>Home</NavLink>
-              <NavLink className={`navLinks`} to="/simulados" onClick={closeMenu}>Simulado</NavLink>
-              
-              {( authRole === "undefined") && 
-                  <NavLink className={`navLinks`} to="/banco-de-questoes" onClick={closeMenu}>Questões</NavLink>
+      </Navbar.Brand>
+      <Navbar.Toggle aria-controls="responsive-navbar-nav" onClick={toggleMenu} />
+      <Navbar.Collapse id="responsive-navbar-nav" className={`justify-content-end ${menuOpen ? 'show-menu' : 'hide-menu'}`}>
+        <Nav id='' className={`mr-auto ${isMobile && !menuOpen ? 'd-none' : ''}`}>
+          <NavLink className={`navLinks`} to="/" onClick={closeMenu}>Home</NavLink>
+
+          {authRole === "undefined" && (
+            <NavLink className={`navLinks`} to="/simulados" onClick={closeMenu}>Simulado</NavLink>
+          )}
+          
+          <NavLink className={`navLinks`} to="/banco-de-questoes" onClick={closeMenu}>Questões</NavLink>
+
+          {(authRole === "ADMINISTRATOR" || authRole === "COORDINATORS") &&
+            <NavLink className="navLinks" to={"/register-admin-teacher"}>Cadastro</NavLink>
+          }
+          {!isMobile && (
+            <NavDropdown title="Recursos" id="collasible-nav-dropdown" className="dropdown-text-white">
+              <NavDropdown.Item className='disabled' href="/simulados" onClick={closeMenu}>Apostila</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/faq-interno" onClick={closeMenu}>Faq (Interno)</NavDropdown.Item>
+              {(authRole === "COORDINATORS" || authRole === "TEACHERS" || authRole === "ADMINISTRATOR") &&
+                <NavDropdown.Item as={Link} to="/register-student" onClick={closeMenu}>Aluno</NavDropdown.Item>
+              }
+              {(authRole === "COORDINATORS" || authRole === "TEACHERS" || authRole === "ADMINISTRATOR") &&
+                <NavDropdown.Item as={Link} to="/cadastrar-curso" onClick={closeMenu}>Cadastro/Curso</NavDropdown.Item>
+              }
+              <NavDropdown.Item className='disabled' href="/material" onClick={closeMenu}>Material</NavDropdown.Item>
+              {(authRole === "COORDINATORS" || authRole === "TEACHERS" || authRole === "ADMINISTRATOR") &&
+                <NavDropdown.Item as={Link} to="/cadastrar-perguntas" onClick={closeMenu}>Simulado/Perguntas</NavDropdown.Item>
+              }
+            </NavDropdown>
+          )}
+          {isMobile && (
+            <div className="grid-container">
+              <Nav title="Recursos" id="collasible-nav-dropdown" className="dropdown-text-white" style={{ paddingLeft: '50px' }}>
+                <NavDropdown.Item href="/simulados" onClick={closeMenu}>Simulado</NavDropdown.Item>
+                <NavDropdown.Item href="/register-student" onClick={closeMenu}>Faq (Interno)</NavDropdown.Item>
+                {(authRole === "COORDINATORS" || authRole === "TEACHER" || authRole === "ADMINISTRATOR") &&
+                  <NavDropdown.Item as={Link} to="/register-student" onClick={closeMenu}>Aluno</NavDropdown.Item>
                 }
-              {( authRole === "ADMINISTRATOR" || authRole === "COORDINATORS") &&
-                <NavLink className="navLinks" to={"/register-admin-teacher"} >Cadastro </NavLink>
-                }
-               {!isMobile && (
-              <NavDropdown title="Recursos" id="collasible-nav-dropdown" className="dropdown-text-white">
-                <NavDropdown.Item className='disabled' href="/simulados" onClick={closeMenu}>Apostila</NavDropdown.Item>
-               <NavDropdown.Item as={Link} to="/faq-interno" onClick={closeMenu}>Faq (Interno)</NavDropdown.Item>
-               {( authRole === "COORDINATORS" || authRole === "TEACHERS" || authRole === "ADMINISTRATOR") && 
-                    <NavDropdown.Item as={Link} to="/register-student" onClick={closeMenu}>Aluno</NavDropdown.Item> 
-                }
-                {( authRole === "COORDINATORS" || authRole === "TEACHERS" || authRole === "ADMINISTRATOR") && 
-                    <NavDropdown.Item as={Link} to="/cadastrar-curso" onClick={closeMenu}>Cadastro/Curso</NavDropdown.Item> 
-                }
-               <NavDropdown.Item className='disabled' href="/material" onClick={closeMenu}>Material</NavDropdown.Item>
-               {( authRole === "COORDINATORS" || authRole === "TEACHERS" || authRole === "ADMINISTRATOR") && 
-                  <NavDropdown.Item as={Link} to="/cadastrar-perguntas" onClick={closeMenu}>Simulado/Perguntas</NavDropdown.Item>
-                }
-              </NavDropdown>
-                   )}
-             {isMobile && (
-              <div className="grid-container">
-                <Nav title="Recursos" id="collasible-nav-dropdown" className="dropdown-text-white" style={{paddingLeft: '50px'}}>
-                  <NavDropdown.Item href="/simulados" onClick={closeMenu}>Simulado</NavDropdown.Item>
-                  <NavDropdown.Item href="/register-student" onClick={closeMenu}>Faq (Interno)</NavDropdown.Item>
-                  {( authRole === "COORDINATORS" || authRole === "TEACHER" || authRole === "ADMINISTRATOR") && 
-                    <NavDropdown.Item as={Link} to="/register-student" onClick={closeMenu}>Aluno</NavDropdown.Item> 
-                  }
-                  <NavDropdown.Item className='disabled' href="/material" onClick={closeMenu}>Material</NavDropdown.Item>
-                </Nav>
-              </div>
-                  )}
-                <Nav className={`mr-auto ${isMobile && !menuOpen ? 'd-none' : ''}`}>
-                 <span className="navLinks" style={{ cursor: 'pointer' }} onClick={logOut}>Sair</span>
-                </Nav>
-             </Nav>
-            
-         </Navbar.Collapse>
+                <NavDropdown.Item className='disabled' href="/material" onClick={closeMenu}>Material</NavDropdown.Item>
+              </Nav>
+            </div>
+          )}
+          <Nav className={`mr-auto ${isMobile && !menuOpen ? 'd-none' : ''}`}>
+            <span className="navLinks" style={{ cursor: 'pointer' }} onClick={logOut}>Sair</span>
+          </Nav>
+        </Nav>
+      </Navbar.Collapse>
     </Navbar>
   );
 };
