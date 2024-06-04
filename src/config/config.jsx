@@ -400,3 +400,35 @@ export async function startSimulated(mock_exam_id) {
   const data = await response.json();
   return data;
 }  
+
+
+export async function editStudent(formEditStudent, idStudent) {
+  const token = localStorage.getItem("token");
+  const bodyForm = JSON.stringify(formEditStudent);
+  const config = {
+    method: "PATCH",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: bodyForm,
+  };
+  const response = await fetch(`${API}/students/${idStudent}`, config);
+  return response;
+} 
+
+export async function editManagerUser(formEditManagerUser, idManagerUser) {
+  const token = localStorage.getItem("token");
+  const bodyForm = JSON.stringify(formEditManagerUser);
+  const config = {
+    method: "PATCH",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: bodyForm,
+  };
+  const response = await fetch(`${API}/managers/${idManagerUser}`, config);
+
+  return response;
+} 
