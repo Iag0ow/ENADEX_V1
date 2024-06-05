@@ -44,14 +44,14 @@ export default function WelcomeAfterLogin() {
           <img src={SimuladoIcon} alt="Hexágono" className="buttonIcon" />
           Simulados
         </Link>
-        <Link to="/" className="enadexContentButton">
+        <Link to="/banco-de-questoes" className="enadexContentButton">
           <img src={DiamondIcon} alt="Hexágono" className="buttonIcon" />
-          Rank
+          Questões
         </Link>
-        <Link to="/faq-interno" className="enadexContentButton">
+        {/* <Link to="/faq-interno" className="enadexContentButton">
           <img src={FAQicon} alt="Hexágono" className="buttonIcon" />
           FAQ Interno
-        </Link>
+        </Link> */}
         <div className="enfeiteLateral"></div> {/* Adiciona o elemento enfeiteLateral */}
       </div>
     </div>
