@@ -350,7 +350,7 @@ export function ManagerStudent() {
 
                                             <div className="form-group mt-2">
                                                 <label htmlFor="input1" className="labelText">Matrícula</label>
-                                                <input {...register('registration', { value: editStudentData ? editStudentData.registration : '' })} placeholder="Insira o nome completo" type="text" className="form-control" id="input1" />
+                                                <input {...register('registration', { value: editStudentData ? editStudentData.registration : '' })} placeholder="Insira o número de matrícula" type="text" className="form-control" id="input1" />
                                                 {errors.registration && <span className="error-message">{errors.registration.message}</span>}
                                             </div>
 
@@ -458,7 +458,7 @@ export function ManagerStudent() {
 
                                             <div className="form-group mt-2">
                                                 <label htmlFor="input1" className="labelText">Matrícula</label>
-                                                <input {...register('registration')} placeholder="Insira o nome completo" type="text" className="form-control" id="input1" />
+                                                <input {...register('registration')} placeholder="Insira o número de matrícula" type="text" className="form-control" id="input1" />
                                                 {errors.registration && <span className="error-message">{errors.registration.message}</span>}
                                             </div>
 
