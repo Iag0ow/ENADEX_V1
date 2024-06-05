@@ -211,8 +211,7 @@ const QuestionsDatabase = () => {
             className="form-control form-control-color QuestionsDatabase w-7"
             onChange={(e) => setSelectedFilter({ ...selectedFilter, year: e.target.value })}
           >
-            <option disabled value={''}>Anos</option>
-            <option value={''}>Geral</option>
+            <option selected value={''}>Selecionar ano</option>
           {
   
               filtersLoad.length > 0 && filtersLoad[1]['values'].map((value, index) => (

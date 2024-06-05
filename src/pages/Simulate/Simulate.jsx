@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Simulate.css";
 import QuestionsMarkedBox from "../../components/QuestionsMarkedBox/QuestionsMarkedBox";
-import { getQuestionsAndMockById, putExamAnswers, getExamAnswers } from "../../config/config";
+import { getQuestionsAndMockById, putExamAnswers, getExamAnswers, finishExam } from "../../config/config";
 import Loading from "../Loading/Loading";
 import { formatTime } from "../../Hooks/formatTime";
 import { useNavigate } from "react-router-dom";
@@ -55,7 +55,8 @@ export default function Simulate() {
         icon: 'success',
         title: 'Tempo esgotado!',
         text: 'Simulado encerrado e enviado !',
-      }).finally(() => {
+      }).finally(async () => {
+        await finishExam(idMock);
         navigate('/simulados');
       });
     }
@@ -113,6 +114,7 @@ export default function Simulate() {
       cancelButtonText: 'Cancelar'
     }).then(async (result) => {
       if (result.isConfirmed) {
+        await finishExam(idMock);
         navigate('/simulados');
       }
     });
