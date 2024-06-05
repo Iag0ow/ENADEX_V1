@@ -432,3 +432,15 @@ export async function editManagerUser(formEditManagerUser, idManagerUser) {
 
   return response;
 } 
+export async function finishExam(idExam) {
+  const token = localStorage.getItem("token");
+  const config = {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await fetch(`${API}/me/exams/${idExam}/finish`, config);
+  return response;
+} 
