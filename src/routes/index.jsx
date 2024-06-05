@@ -42,7 +42,7 @@ function AppRoutes() {
                   />
                   {/* <Route path="/cadastrar-perguntas" element={signed ? <QuestionRegistration /> : <LadingPage />} /> */}
                   <Route path="/simulados" element={signed ? (authRole === "undefined" ? <SimulatedPanel /> : <WelcomeAfterLogin />) : <LadingPage />} />
-                  <Route path="/orientacoes-do-simulado" element={<Simulated_Guideline />} />
+                  <Route path="/orientacoes-do-simulado" element={signed ? <Simulated_Guideline /> : <LadingPage />} />
                   <Route path="/simulados-concluidos" element={signed ? <CompletedSimulations /> : <LadingPage />} />
                   {/* <Route path="/esqueci-minha-senha" element={signed ? <WelcomeAfterLogin /> : <RecuperacaoSenha />} /> */}
                   <Route path="/register-admin-teacher" element={signed ? <ManagerUsers /> : <LadingPage />} />

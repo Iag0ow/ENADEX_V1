@@ -8,7 +8,8 @@ export default function Simulated_Guideline() {
   const location = useLocation();
   const { simulatedId, simulatedName, simulatedDuration } = location.state || {};
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null); 
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const handleStartSimulated = async () => {
     try {
@@ -18,20 +19,12 @@ export default function Simulated_Guideline() {
       }
       setIsLoading(true);
       const result = await startSimulated(simulatedId); 
-      // console.log("Generated mock_id:", result.mock_id);
-      window.location.reload();
+      navigate(`/simulado/${result._id}`);
     } catch (error) {
-      // console.error("Failed to start simulated:", error);
       setError(error.message); 
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const navigate = useNavigate();
-
-  const handleBackClick = () => {
-    navigate(-1);
   };
 
   const formatDuration = (seconds) => {
@@ -141,7 +134,7 @@ export default function Simulated_Guideline() {
         >
           {isLoading ? <div className="spinner"></div> : "Iniciar Simulado"}
         </button>
-        <Link style={{ textDecoration: "underline", marginTop: "5px" }} onClick={handleBackClick}>Voltar</Link>
+        <Link style={{ textDecoration: "underline", marginTop: "5px" }} to={'/simulados'}>Voltar</Link>
       </div>
       <Footer />
     </div>
