@@ -134,7 +134,7 @@ export default function SimulatedRegisterComponent({ selectedCourse }) {
       } else {
         setIsLoadingSimulated(false);
         const errorData = await response.json();
-        console.error("Failed to create simulated:", errorData);
+        console.error("Falha ao criar simulado:", errorData);
         toast.error("Erro: " + (errorData.error.message[0] || response.statusText), {
           autoClose: 2000,
         });
