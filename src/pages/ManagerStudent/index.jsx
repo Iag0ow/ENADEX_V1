@@ -30,9 +30,11 @@ const createRegisterStudentFormSchema = z.object({
         .toLowerCase(),
     password: z
         .string()
-        .min(6, 'A senha precisa de minimo 6 caracteres'),
+        .min(6, 'A senha precisa de minimo 6 caracteres')
+        .optional(),
     confirmPassword: z
-        .string(),
+        .string()
+        .optional(),
     registration: z
         .string()
         .nonempty('Número de matrícula é obrigatório'),
@@ -188,7 +190,7 @@ export function ManagerStudent() {
             name: data.nameComplet,
             email: data.email,
             semester: data.semester,
-            password: data.password,
+          //  password: data.password,
             course_id: data.course,
             registration: data.registration,
             unity: data.unity
@@ -352,11 +354,11 @@ export function ManagerStudent() {
                                                 {errors.registration && <span className="error-message">{errors.registration.message}</span>}
                                             </div>
 
-                                            <div className="form-group mt-2">
+                                            {/* <div className="form-group mt-2">
                                                 <label htmlFor="input2">Senha</label>
                                                 <input {...register('password', { value: editStudentData ? editStudentData.password : '' })} placeholder="Insira sua senha" type="password" className="form-control" id="input2" />
                                                 {errors.password && <span className="error-message">{errors.password.message}</span>}
-                                            </div>
+                                            </div> */}
 
                                         </div>
                                         <div className="col-md-6">
@@ -397,12 +399,12 @@ export function ManagerStudent() {
                                                 </select>
                                                 {errors.semester && <span className="error-message">{errors.semester.message}</span>}
                                             </div>
-
+{/* 
                                             <div className="form-group mt-2">
                                                 <label htmlFor="input5">Repita sua senha</label>
                                                 <input {...register('confirmPassword', { value: editStudentData ? editStudentData.password : '' })} placeholder="Insira sua senha novamente" type="password" className="form-control" id="input5" />
                                                 {errors.confirmPassword && <span className="error-message">{errors.confirmPassword.message}</span>}
-                                            </div>
+                                            </div> */}
 
                                         </div>
                                     </div>

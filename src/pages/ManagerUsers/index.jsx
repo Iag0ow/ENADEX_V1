@@ -7,6 +7,7 @@ import { getManagers, getCourses, registerAdminTeacher, deactivateManagers, acti
 import Swal from 'sweetalert2';
 import { z } from 'zod';
 import './style.css';
+import { useAuth } from "../../context/AuthContextProvider";
 
 const createRegisterAdminTeacherFormSchema = z.object({
     nameComplet: z
@@ -28,9 +29,11 @@ const createRegisterAdminTeacherFormSchema = z.object({
         .toLowerCase(),
     password: z
         .string()
-        .min(6, 'A senha precisa de minimo 6 caracteres'),
+        .min(6, 'A senha precisa de minimo 6 caracteres')
+        .optional(),
     confirmPassword: z
-        .string(),
+        .string()
+        .optional(),
     selectRole: z
         .string()
         .nonempty('Selecione um tipo'),
@@ -44,6 +47,7 @@ const createRegisterAdminTeacherFormSchema = z.object({
 });
 
 export function ManagerUsers() {
+    const { authRole } = useAuth()
     const { register, handleSubmit, formState: { errors }, reset } = useForm({
         resolver: zodResolver(createRegisterAdminTeacherFormSchema)
     });
@@ -133,7 +137,6 @@ export function ManagerUsers() {
         const editAdminTeacher = {
             name: data.nameComplet,
             email: data.email,
-            password: data.password,
             role: data.selectRole,
             courses_id: data.courseId
         };
@@ -289,7 +292,21 @@ export function ManagerUsers() {
                                 </td>
                                 <td>{renderActiveStatus(manager.active)}</td>
                                 <td>
-                                    <button className="border-0 button-edit" onClick={() => handleAddButtonClickEdit(manager._id)}>Editar</button>
+                                {(authRole === "COORDINATORS" && manager.role === "COORDINATORS") ? (
+                                        <button
+                                            className="rounded border-0 button-edit disabled-button mx-2"
+                                            disabled
+                                        >
+                                            Editar
+                                        </button>
+                                    ) : (
+                                        <button
+                                            className="rounded border-0 button-edit mx-2"
+                                            onClick={() => handleAddButtonClickEdit(manager._id)}
+                                        >
+                                            Editar
+                                        </button>
+                                    )}
                                     <button className="border-0 button-ActiveDeactivate" onClick={() => handleToggleActivationButtonClick(manager._id, manager.active, manager.role)}>
                                         {manager.active ? 'Desativar' : 'Ativar'}
                                     </button>
@@ -324,11 +341,11 @@ export function ManagerUsers() {
                                                 <input {...register('nameComplet', { value: editManagerUserData ? editManagerUserData.name : '' })} placeholder="Insira o nome completo" type="text" className="form-control" id="input1" />
                                                 {errors.nameComplet && <span className="error-message">{errors.nameComplet.message}</span>}
                                             </div>
-                                            <div className="form-group mt-2">
+                                            {/* <div className="form-group mt-2">
                                                 <label htmlFor="input2">Senha</label>
                                                 <input {...register('password')} placeholder="Insira sua senha" type="password" className="form-control" id="input2" />
                                                 {errors.password && <span className="error-message">{errors.password.message}</span>}
-                                            </div>
+                                            </div> */}
                                             <div className="form-group mt-2">
                                                 <label htmlFor="selectRole">Selecione um tipo</label>
                                                 <select className="form-select" id="selectRole" {...register('selectRole')} defaultValue={editManagerUserData ? editManagerUserData.role : ''}>
@@ -346,11 +363,12 @@ export function ManagerUsers() {
                                                 <input {...register('email', { value: editManagerUserData ? editManagerUserData.email : '' })} placeholder="Insira seu e-mail" type="text" className="form-control" id="input4" />
                                                 {errors.email && <span className="error-message">{errors.email.message}</span>}
                                             </div>
-                                            <div className="form-group mt-2">
+                                            
+                                            {/* <div className="form-group mt-2">
                                                 <label htmlFor="input5">Repita sua senha</label>
                                                 <input {...register('confirmPassword')} placeholder="Insira sua senha novamente" type="password" className="form-control" id="input5" />
                                                 {errors.confirmPassword && <span className="error-message">{errors.confirmPassword.message}</span>}
-                                            </div>
+                                            </div> */}
                                             <div className="form-group mt-2">
                                                 <label htmlFor="input3">Selecione os cursos</label>
                                                 {courses.map((course) => (
