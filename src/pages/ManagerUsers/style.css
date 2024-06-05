@@ -221,6 +221,12 @@
     font-size: 15px;
 }
 
+.disabled-button {
+    background-color: #dddddd; 
+    color: #999999; 
+    cursor: not-allowed; 
+}
+
 
 
    
