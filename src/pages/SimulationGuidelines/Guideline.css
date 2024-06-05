@@ -101,7 +101,6 @@
   background-color: #0c7eff; /* Cor alterada quando o mouse passa por cima */
   color: #fff; /* Cor do texto alterada quando o mouse passa por cima */
   border-color: #0c7eff; /* Cor da borda alterada quando o mouse passa por cima */
-  transform: scale(1.05); /* Aumenta o tamanho em 5% */
 }
 
 @media (max-width: 900px) {
