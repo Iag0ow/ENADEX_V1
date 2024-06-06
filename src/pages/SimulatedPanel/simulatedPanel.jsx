@@ -73,7 +73,7 @@ export default function SimulatedPanel() {
                 key={simulated._id}
                 onClick={() => handleSimulatedClick(simulated._id, simulated.name, simulated.duration)}
               >
-                <div className="simulatedText">{simulated.name}</div>
+                <div className="simulatedText">{simulated.name.toUpperCase()}</div>
                 <div className="simulatedInfo">
                   <span className="simulatedDate">Data de criação: </span>
                   <label className="labelDateAndQuestions">{formatDate(simulated.createdAt)}</label>

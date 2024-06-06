@@ -109,7 +109,7 @@
 .enadexContentButton:hover {
   border-color: #0d4688;
   transition: 0.5s;
-  transform: scale(1.05);
+  transform: scale(1.01);
 }
 
 .buttonIcon {

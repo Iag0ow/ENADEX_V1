@@ -190,7 +190,7 @@ export default function QuestionRegistration() {
     try {
       const response = await createQuestion(questionData);
       if (response.ok) {
-        toast.success("Question created successfully!", {
+        toast.success("Questão criada com sucesso!", {
           position: "bottom-left",
           autoClose: 1000,
           hideProgressBar: false,
@@ -203,14 +203,14 @@ export default function QuestionRegistration() {
         setIsLoading(false);
       } else {
         console.error("Failed to create question");
-        toast.error("Error creating question", {
+        toast.error("Erro ao criar questão.", {
           autoClose: 1000,
         });
         setIsLoading(false);
       }
     } catch (error) {
       console.error(error);
-      toast.error("Error creating question", {
+      toast.error("Erro ao criar questão.", {
         autoClose: 1000,
       });
       setIsLoading(false);

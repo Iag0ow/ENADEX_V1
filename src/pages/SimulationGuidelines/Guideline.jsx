@@ -6,7 +6,8 @@ import { startSimulated } from "../../config/config";
 
 export default function Simulated_Guideline() {
   const location = useLocation();
-  const { simulatedId, simulatedName, simulatedDuration } = location.state || {};
+  const { simulatedId, simulatedName, simulatedDuration } =
+    location.state || {};
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -15,13 +16,13 @@ export default function Simulated_Guideline() {
     try {
       setError(null);
       if (!simulatedId) {
-        throw new Error("Simulated ID not found!"); 
+        throw new Error("Simulated ID not found!");
       }
       setIsLoading(true);
-      const result = await startSimulated(simulatedId); 
+      const result = await startSimulated(simulatedId);
       navigate(`/simulado/${result._id}`);
     } catch (error) {
-      setError(error.message); 
+      setError(error.message);
     } finally {
       setIsLoading(false);
     }
@@ -30,14 +31,14 @@ export default function Simulated_Guideline() {
   const formatDuration = (seconds) => {
     const h = Math.floor(seconds / 3600);
     const m = Math.floor((seconds % 3600) / 60);
-    return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+    return `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}`;
   };
 
   return (
     <div>
       <header className="headerGuideline">
         <h1 className="simulatedName">
-         {simulatedName}
+          {simulatedName.toUpperCase()}
         </h1>
       </header>
 
@@ -47,7 +48,9 @@ export default function Simulated_Guideline() {
             <p className="guidelineTitle">Orientações para o Simulado</p>
             <div className="conclusionTime">
               Tempo de conclusão do simulado:{" "}
-              <span className="timerSimulated">{formatDuration(simulatedDuration)}</span>
+              <span className="timerSimulated">
+                {formatDuration(simulatedDuration)}
+              </span>
             </div>
             <p className="largerText">Duração do simulado</p>
             <ul className="bulletList">
@@ -134,7 +137,12 @@ export default function Simulated_Guideline() {
         >
           {isLoading ? <div className="spinner"></div> : "Iniciar Simulado"}
         </button>
-        <Link style={{ textDecoration: "underline", marginTop: "5px" }} to={'/simulados'}>Voltar</Link>
+        <Link
+          style={{ textDecoration: "underline", marginTop: "5px" }}
+          to={"/simulados"}
+        >
+          Voltar
+        </Link>
       </div>
       <Footer />
     </div>
