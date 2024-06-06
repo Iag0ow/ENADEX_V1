@@ -64,6 +64,9 @@ export function ManagerStudent() {
     const [showModalEdit, setShowModalEdit] = useState(false)
     const [editStudentData, setEditStudentData] = useState(null)
     const [selectedStudentId, setSelectedStudentId] = useState(null);
+    const [studentsActivationStatus, setStudentsActivationStatus] = useState({});
+    const [isEditing, setIsEditing] = useState(false)
+    const [isRegister, setIsRegister] = useState(false)
     const modalRef = useRef(null);
 
 
@@ -106,6 +109,7 @@ export function ManagerStudent() {
     }, [reset]);
 
     async function createRegisterStudent(data) {
+        setIsRegister(true)
         const student = {
             name: data.nameComplet,
             email: data.email,
@@ -137,6 +141,8 @@ export function ManagerStudent() {
                 title: 'Erro',
                 text: 'Erro na criação da conta.',
             });
+        } finally {
+            setIsRegister(false)
         }
 
         reset();
@@ -144,6 +150,11 @@ export function ManagerStudent() {
 
     async function handleToggleActivationButtonClick(studentId, isActive) {
         try {
+            setStudentsActivationStatus(prevStatus => ({
+                ...prevStatus,
+                [studentId]: true
+            }))
+
             let response;
             if (isActive) {
                 response = await deactivateStudents(studentId);
@@ -179,23 +190,26 @@ export function ManagerStudent() {
                 title: 'Erro',
                 text: `Erro ao alternar ativação do aluno ${studentId}.`,
             });
+        } finally {
+            setStudentsActivationStatus(prevStatus => ({
+                ...prevStatus,
+                [studentId]: false
+            }))
         }
     }
 
-    async function handleEditStudent(data){
-        console.log(selectedStudentId)
-        console.log(data)
-
+    async function handleEditStudent(data) {
+        setIsEditing(true)
         const studentEdit = {
             name: data.nameComplet,
             email: data.email,
             semester: data.semester,
-          //  password: data.password,
+            //  password: data.password,
             course_id: data.course,
             registration: data.registration,
             unity: data.unity
         };
-    
+
         try {
             const result = await editStudent(studentEdit, selectedStudentId);
             if (result.status === 200) {
@@ -217,7 +231,10 @@ export function ManagerStudent() {
                 title: 'Erro',
                 text: 'Erro na edição da conta.',
             });
+        } finally {
+            setIsEditing(false)
         }
+
 
     }
 
@@ -300,8 +317,12 @@ export function ManagerStudent() {
                                 <td>{renderActiveStatus(student.active)}</td>
                                 <td>
                                     <button className="border-0 button-edit" data-student-id={student._id} onClick={() => handleAddButtonClickEdit(student._id)}>Editar</button>
-                                    <button className="border-0 button-ActiveDeactivate" onClick={() => handleToggleActivationButtonClick(student._id, student.active)}>
-                                        {student.active ? 'Desativar' : 'Ativar'}
+                                    <button className="border-0 button-ActiveDeactivate" onClick={() => handleToggleActivationButtonClick(student._id, student.active)} disabled={studentsActivationStatus[student._id]}>
+                                        {studentsActivationStatus[student._id] ? (
+                                            student.active ? 'Desativando...' : 'Ativando...'
+                                        ) : (
+                                            student.active ? 'Desativar' : 'Ativar'
+                                        )}
                                     </button>
                                 </td>
                             </tr>
@@ -350,7 +371,7 @@ export function ManagerStudent() {
 
                                             <div className="form-group mt-2">
                                                 <label htmlFor="input1" className="labelText">Matrícula</label>
-                                                <input {...register('registration', { value: editStudentData ? editStudentData.registration : '' })} placeholder="Insira o número de matrícula" type="text" className="form-control" id="input1" />
+                                                <input {...register('registration', { value: editStudentData ? editStudentData.registration : '' })} placeholder="Insira o seu número de matrícula" type="text" className="form-control" id="input1" />
                                                 {errors.registration && <span className="error-message">{errors.registration.message}</span>}
                                             </div>
 
@@ -399,7 +420,7 @@ export function ManagerStudent() {
                                                 </select>
                                                 {errors.semester && <span className="error-message">{errors.semester.message}</span>}
                                             </div>
-{/* 
+                                            {/* 
                                             <div className="form-group mt-2">
                                                 <label htmlFor="input5">Repita sua senha</label>
                                                 <input {...register('confirmPassword', { value: editStudentData ? editStudentData.password : '' })} placeholder="Insira sua senha novamente" type="password" className="form-control" id="input5" />
@@ -410,7 +431,9 @@ export function ManagerStudent() {
                                     </div>
                                     <div className="modal-footer">
                                         <div className="px-3">
-                                            <button className="rounded border-0 buttonRegister">Salvar</button>
+                                            <button className="rounded border-0 buttonRegister" disabled={isEditing}>
+                                                {isEditing ? 'Editando...' : 'Salvar'}
+                                            </button>
                                         </div>
                                     </div>
                                 </form>
@@ -458,7 +481,7 @@ export function ManagerStudent() {
 
                                             <div className="form-group mt-2">
                                                 <label htmlFor="input1" className="labelText">Matrícula</label>
-                                                <input {...register('registration')} placeholder="Insira o número de matrícula" type="text" className="form-control" id="input1" />
+                                                <input {...register('registration')} placeholder="Insira o seu número de matrícula" type="text" className="form-control" id="input1" />
                                                 {errors.registration && <span className="error-message">{errors.registration.message}</span>}
                                             </div>
 
@@ -518,7 +541,9 @@ export function ManagerStudent() {
                                     </div>
                                     <div className="modal-footer">
                                         <div className="px-3">
-                                            <button className="rounded border-0 buttonRegister">Cadastrar</button>
+                                            <button className="rounded border-0 buttonRegister" disabled={isRegister}>
+                                                {isRegister ? 'Cadastrando...' : 'Salvar'}
+                                            </button>
                                         </div>
                                     </div>
                                 </form>

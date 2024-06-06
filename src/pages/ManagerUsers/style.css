@@ -226,6 +226,11 @@
     color: #999999; 
     cursor: not-allowed; 
 }
+.disabled-button-ActiveDeactivate {
+    background-color: #dddddd; 
+    color: #999999; 
+    cursor: not-allowed; 
+}
 
 
 

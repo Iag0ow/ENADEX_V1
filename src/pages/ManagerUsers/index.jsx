@@ -58,6 +58,9 @@ export function ManagerUsers() {
     const [editManagerUserData, setEditManagerUserData] = useState(null)
     const [managerCourses, setManagerCourses] = useState({});
     const [selectedIdManagerUserId, setSelectedIdManagerUserId] = useState(null)
+    const [managersActivationStatus, setManagersActivationStatus] = useState({});
+    const [isEditing, setIsEditing] = useState(false)
+    const [isRegister, setIsRegister] = useState(false)
     const modalRef = useRef(null);
 
 
@@ -101,6 +104,7 @@ export function ManagerUsers() {
     }, [reset]);
 
     async function createRegisterAdminTeacher(data) {
+        setIsRegister(true)
         const adminTeacher = {
             name: data.nameComplet,
             email: data.email,
@@ -130,10 +134,12 @@ export function ManagerUsers() {
                 text: 'Erro na criação da conta.',
             });
         }
+        setIsRegister(false)
         reset();
     }
 
-    async function handleEditManagerUser(data){
+    async function handleEditManagerUser(data) {
+        setIsEditing(true)
         const editAdminTeacher = {
             name: data.nameComplet,
             email: data.email,
@@ -162,12 +168,18 @@ export function ManagerUsers() {
                 text: 'Erro na edição da conta.',
             });
         }
-       
+        setIsEditing(false)
+
     }
 
     async function handleToggleActivationButtonClick(managerId, isActive, role) {
         const newRole = renderRole(role)
         try {
+            setManagersActivationStatus(prevStatus => ({
+                ...prevStatus,
+                [managerId]: true
+            }))
+
             let response;
             if (isActive) {
                 response = await deactivateManagers(managerId);
@@ -203,6 +215,11 @@ export function ManagerUsers() {
                 title: 'Erro',
                 text: `Erro ao alternar ativação do aluno ${managerId}.`,
             });
+        } finally {
+            setManagersActivationStatus(prevStatus => ({
+                ...prevStatus,
+                [managerId]: false
+            }))
         }
     }
 
@@ -217,7 +234,7 @@ export function ManagerUsers() {
 
     function handleAddButtonClickEdit(managerId) {
         setSelectedIdManagerUserId(managerId)
-       
+
         const manager = managers.find(manager => manager._id === managerId)
         setEditManagerUserData(manager);
         setManagerCourses(new Set(manager.courses_id.map(course => course._id)));
@@ -292,7 +309,7 @@ export function ManagerUsers() {
                                 </td>
                                 <td>{renderActiveStatus(manager.active)}</td>
                                 <td>
-                                {(authRole === "COORDINATORS" && manager.role === "COORDINATORS") ? (
+                                    {(authRole === "COORDINATORS" && manager.role === "COORDINATORS") ? (
                                         <button
                                             className="rounded border-0 button-edit disabled-button mx-2"
                                             disabled
@@ -307,9 +324,18 @@ export function ManagerUsers() {
                                             Editar
                                         </button>
                                     )}
-                                    <button className="border-0 button-ActiveDeactivate" onClick={() => handleToggleActivationButtonClick(manager._id, manager.active, manager.role)}>
-                                        {manager.active ? 'Desativar' : 'Ativar'}
+                                    <button
+                                        disabled={authRole === "COORDINATORS" && manager.role === "COORDINATORS"}
+                                        className={manager.active ? "border-0 button-ActiveDeactivate disabled-button-ActiveDeactivate" : "border-0 button-ActiveDeactivate disabled-button-ActiveDeactivate"}
+                                        onClick={() => handleToggleActivationButtonClick(manager._id, manager.active, manager.role)}
+                                    >
+                                        {managersActivationStatus[manager._id] ? (
+                                            manager.active ? 'Desativando...' : 'Ativando...'
+                                        ) : (
+                                            manager.active ? 'Desativar' : 'Ativar'
+                                        )}
                                     </button>
+
                                 </td>
                             </tr>
                         ))}
@@ -363,7 +389,7 @@ export function ManagerUsers() {
                                                 <input {...register('email', { value: editManagerUserData ? editManagerUserData.email : '' })} placeholder="Insira seu e-mail" type="text" className="form-control" id="input4" />
                                                 {errors.email && <span className="error-message">{errors.email.message}</span>}
                                             </div>
-                                            
+
                                             {/* <div className="form-group mt-2">
                                                 <label htmlFor="input5">Repita sua senha</label>
                                                 <input {...register('confirmPassword')} placeholder="Insira sua senha novamente" type="password" className="form-control" id="input5" />
@@ -392,7 +418,9 @@ export function ManagerUsers() {
                                     </div>
                                     <div className="modal-footer">
                                         <div className="px-3">
-                                            <button className="rounded border-0 buttonRegister">Salvar</button>
+                                            <button className="rounded border-0 buttonRegister">
+                                            {isEditing ? 'Editando...' : 'Salvar'}
+                                            </button>
                                         </div>
                                     </div>
                                 </form>
@@ -476,7 +504,9 @@ export function ManagerUsers() {
                                     </div>
                                     <div className="modal-footer">
                                         <div className="px-3">
-                                            <button className="rounded border-0 buttonRegister">Cadastrar</button>
+                                            <button className="rounded border-0 buttonRegister">
+                                                 {isRegister ? 'Cadastrando...' : 'Cadastrar'}
+                                            </button>
                                         </div>
                                     </div>
                                 </form>
