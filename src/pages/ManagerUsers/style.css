@@ -232,6 +232,14 @@
     cursor: not-allowed; 
 }
 
+.courses-container {
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
 
 
    
