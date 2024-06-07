@@ -432,6 +432,7 @@ export async function editManagerUser(formEditManagerUser, idManagerUser) {
 
   return response;
 } 
+
 export async function finishExam(idExam) {
   const token = localStorage.getItem("token");
   const config = {
@@ -444,3 +445,19 @@ export async function finishExam(idExam) {
   const response = await fetch(`${API}/me/exams/${idExam}/finish`, config);
   return response;
 } 
+
+export async function registerCourse(formRegisterCourse){
+  const token = localStorage.getItem("token")
+  const bodyForm = JSON.stringify(formRegisterCourse)
+  const config = {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: bodyForm,
+  }
+
+  const response = await fetch(`${API}/courses`, config);
+  return response;
+}
