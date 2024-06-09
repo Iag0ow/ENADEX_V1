@@ -69,7 +69,7 @@ export function ManagerUsers() {
             try {
                 const data = await getManagers();
                 setManagers(data);
-                console.log(data)
+
             } catch (error) {
                 console.error("Erro ao buscar gerentes:", error);
             }
@@ -397,29 +397,31 @@ export function ManagerUsers() {
                                             </div> */}
                                             <div className="form-group mt-2">
                                                 <label htmlFor="input3">Selecione os cursos</label>
-                                                {courses.map((course) => (
-                                                    <div key={course._id} className="form-check">
-                                                        <input
-                                                            className="form-check-input"
-                                                            type="checkbox"
-                                                            id={`courseCheckbox${course._id}`}
-                                                            value={course._id}
-                                                            {...register('courseId')}
-                                                            defaultChecked={managerCourses.has(course._id)}
-                                                        />
-                                                        <label className="form-check-label" htmlFor={`courseCheckbox${course._id}`}>
-                                                            {course.name}
-                                                        </label>
-                                                    </div>
-                                                ))}
-                                                {errors.courseId && <span className="error-message">{errors.courseId.message}</span>}
+                                                <div className="courses-container" style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                                                    {courses.map((course) => (
+                                                        <div key={course._id} className="form-check">
+                                                            <input
+                                                                className="form-check-input"
+                                                                type="checkbox"
+                                                                id={`courseCheckbox${course._id}`}
+                                                                value={course._id}
+                                                                {...register('courseId')}
+                                                                defaultChecked={managerCourses.has(course._id)}
+                                                            />
+                                                            <label className="form-check-label" htmlFor={`courseCheckbox${course._id}`}>
+                                                                {course.name}
+                                                            </label>
+                                                        </div>
+                                                    ))}
+                                                    {errors.courseId && <span className="error-message">{errors.courseId.message}</span>}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="modal-footer">
                                         <div className="px-3">
                                             <button className="rounded border-0 buttonRegister">
-                                            {isEditing ? 'Editando...' : 'Salvar'}
+                                                {isEditing ? 'Editando...' : 'Salvar'}
                                             </button>
                                         </div>
                                     </div>
@@ -484,28 +486,30 @@ export function ManagerUsers() {
                                             </div>
                                             <div className="form-group mt-2">
                                                 <label htmlFor="input3">Selecione os cursos</label>
-                                                {courses.map((course) => (
-                                                    <div key={course._id} className="form-check">
-                                                        <input
-                                                            className="form-check-input"
-                                                            type="checkbox"
-                                                            id={`courseCheckbox${course._id}`}
-                                                            value={course._id}
-                                                            {...register('courseId')}
-                                                        />
-                                                        <label className="form-check-label" htmlFor={`courseCheckbox${course._id}`}>
-                                                            {course.name}
-                                                        </label>
-                                                    </div>
-                                                ))}
-                                                {errors.courseId && <span className="error-message">{errors.courseId.message}</span>}
+                                                <div className="courses-container" style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                                                    {courses.map((course) => (
+                                                        <div key={course._id} className="form-check">
+                                                            <input
+                                                                className="form-check-input"
+                                                                type="checkbox"
+                                                                id={`courseCheckbox${course._id}`}
+                                                                value={course._id}
+                                                                {...register('courseId')}
+                                                            />
+                                                            <label className="form-check-label" htmlFor={`courseCheckbox${course._id}`}>
+                                                                {course.name}
+                                                            </label>
+                                                        </div>
+                                                    ))}
+                                                    {errors.courseId && <span className="error-message">{errors.courseId.message}</span>}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="modal-footer">
                                         <div className="px-3">
                                             <button className="rounded border-0 buttonRegister">
-                                                 {isRegister ? 'Cadastrando...' : 'Cadastrar'}
+                                                {isRegister ? 'Cadastrando...' : 'Cadastrar'}
                                             </button>
                                         </div>
                                     </div>
