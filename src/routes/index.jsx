@@ -23,6 +23,7 @@ import Simulate from "../pages/Simulate/Simulate";
 import CourseManagement from "../pages/Telacadastrodecurso/CourseManagement";
 import SimulatedEdit from "../pages/SimulatedEdit/SimulatedEdit";
 import SimulatedDetails from "../pages/SimulatedDetails/SimulatedDetails";
+import { CoursesRegisterListings } from "../pages/CoursesRegisterListings";
 function AppRoutes() {
   const { signed,loadingReaload,authRole } = useAuth();
   return (
@@ -57,7 +58,7 @@ function AppRoutes() {
                   />
                   <Route 
                     path="/cadastrar-curso" 
-                    element={signed ? (authRole !== "undefined" ? <CourseManagement />: <WelcomeAfterLogin />) : <LadingPage />} 
+                    element={signed ? (authRole !== "undefined" ? <CoursesRegisterListings />: <WelcomeAfterLogin />) : <LadingPage />} 
                   />
                   <Route path="/faq-interno" element={signed ? <FaqInterno /> : <LadingPage />} />
                   <Route path="/simulado/:id" element={signed ? <Simulate /> : <LadingPage />} />

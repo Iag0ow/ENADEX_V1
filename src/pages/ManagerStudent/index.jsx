@@ -54,7 +54,6 @@ const createRegisterStudentFormSchema = z.object({
 
 export function ManagerStudent() {
     const { authRole } = useAuth()
-    console.log(authRole)
     const { register, handleSubmit, formState: { errors }, reset } = useForm({
         resolver: zodResolver(createRegisterStudentFormSchema)
     });
@@ -74,8 +73,7 @@ export function ManagerStudent() {
         async function fetchStudents() {
             try {
                 const data = await getStudents();
-                setStudents(data);
-                console.log(data)
+                setStudents(data);   
             } catch (error) {
                 console.error("Erro ao buscar gerentes:", error);
             }
@@ -249,7 +247,6 @@ export function ManagerStudent() {
     }
 
     function handleAddButtonClickEdit(studentId) {
-        console.log(studentId)
         setSelectedStudentId(studentId)
         const student = students.find(student => student._id === studentId);
         setEditStudentData(student)

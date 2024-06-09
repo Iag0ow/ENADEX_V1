@@ -481,6 +481,22 @@ export async function getAllSimulated() {
   return await data;
 }
 
+export async function registerCourse(formRegisterCourse){
+  const token = localStorage.getItem("token")
+  const bodyForm = JSON.stringify(formRegisterCourse)
+  const config = {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: bodyForm,
+  }
+  const response = await fetch(`${API}/courses`, config);
+  return response;
+}
+
+
 export async function getAllSimulatedQuestions(id){
   const token = localStorage.getItem("token");
   const config = {
