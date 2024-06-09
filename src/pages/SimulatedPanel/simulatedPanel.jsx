@@ -5,7 +5,7 @@ import NavBar from "../../components/NavBar/NavBar";
 import profilePic from "./assets/images/psicopato_profile.svg";
 import search_icon from "./assets/images/search_icon.svg";
 import { useAuth } from "../../context/AuthContextProvider";
-import { getSimulated } from "../../config/config";
+import { getAvaiableSimulated } from "../../config/config";
 
 function formatDuration(seconds) {
   const hours = Math.floor(seconds / 3600);
@@ -30,7 +30,7 @@ export default function SimulatedPanel() {
   useEffect(() => {
     async function fetchSimulateds() {
       setLoading(true);
-      const data = await getSimulated();
+      const data = await getAvaiableSimulated();
       setSimulateds(data);
       setLoading(false);
     }

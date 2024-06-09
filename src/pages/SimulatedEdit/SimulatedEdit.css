@@ -1,0 +1,21 @@
+.btnEditSimulated {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #0fa958;
+  color: white;
+  border-radius: 10px;
+  border: none;
+  font-weight: 500;
+  transition: 0.5s;
+  border: 2px solid transparent;
+  padding: 10px;
+  cursor: pointer;
+  text-align: left;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.btnEditSimulated:hover {
+  background-color: #0da751;
+}
