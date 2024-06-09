@@ -73,11 +73,10 @@ export default function Simulate() {
       question_id: mock[page]._id,
       selected_option_id: questionsMarked[page]
     }
-    if (questionsMarked[page] !== null) {
-      setSavingQuestion(true);
-      await putExamAnswers(body, idMock);
-      setSavingQuestion(false);
-    }
+    setSavingQuestion(true);
+    const selectedOptionId = questionsMarked[page] !== null ? body : { ...body, selected_option_id: null };
+    await putExamAnswers(selectedOptionId, idMock);
+    setSavingQuestion(false);
     if (page < mock.length - 1) {
       setPage(page + 1);
     }
@@ -91,7 +90,11 @@ export default function Simulate() {
 
   const handleQuestionClick = (questionIndex, selectedOptionId) => {
     const newQuestionsMarked = [...questionsMarked];
-    newQuestionsMarked[page] = selectedOptionId;
+    if (newQuestionsMarked[page] === selectedOptionId) {
+      newQuestionsMarked[page] = null;
+    } else {
+      newQuestionsMarked[page] = selectedOptionId;
+    }
     setQuestionsMarked(newQuestionsMarked);
   };
 
@@ -135,7 +138,7 @@ export default function Simulate() {
         <div className="d-flex justify-content-between align-items-center flex-wrap mb-5">
           <QuestionsMarkedBox
             lengthQuestions={mock.length}
-            questionsMarked={questionsMarked.map((selectedOptionId, index) => selectedOptionId !== null ? index + 1 : null)}
+            questionsMarked={questionsMarked.map((selectedOptionId, index) => selectedOptionId !== null && selectedOptionId !== 'null' ? index + 1 : null)}
             responseUserAnswers={responseUserAnswers.map(answer => answer.question_id)}
           />
           <div>
