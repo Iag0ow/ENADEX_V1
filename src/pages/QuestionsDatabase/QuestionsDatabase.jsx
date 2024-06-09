@@ -4,11 +4,14 @@ import "./QuestionsDatabase.css";
 import { getQuestions, getBankQuestionsResponseByStudent, postBankQuestionResponse } from "../../config/config";
 import Questions from "../../components/Questions/Questions";
 import { useAuth } from "../../context/AuthContextProvider";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const QuestionsDatabase = () => {
   const { filtersLoad } = useAuth();
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isLoadingShowQuestions, setIsLoadingShowQuestions] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState({});
   const [studentResponses, setStudentResponses] = useState([]);
   const [showReponseQuestions, setShowReponseQuestions] = useState(false);
@@ -102,6 +105,7 @@ const QuestionsDatabase = () => {
   }, [selectedFilter]);
 
   const handleChange = async (value) => {
+    setIsLoadingShowQuestions(true);
     setShowReponseQuestions(value);
     if (value == true) {
       setLoading(true);
@@ -156,6 +160,7 @@ const QuestionsDatabase = () => {
       setQuestions(questionsForResponse);
       setLoading(false);
     }
+    setIsLoadingShowQuestions(false);
   };
 
   const handleSubmitSearch = (e) => {
@@ -170,17 +175,26 @@ const QuestionsDatabase = () => {
         <h1 className="bold-weight p-3 mt-3">Banco de Questões</h1>
         <div className="mt-2 mb-5 d-flex justify-content-center gap-3 flex-wrap">
           <div>
-          <form onSubmit={handleSubmitSearch}>
-            <input
-              type="text"
-              placeholder="Pesquisar"
-              className="height-input form-control form-control-color w-100 cursor-auto"
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-            />
-          </form>
+            <form onSubmit={handleSubmitSearch} className="search-form">
+              <div className="input-container">
+                <input
+                  type="text"
+                  placeholder="Pesquisar"
+                  className="height-input form-control form-control-color w-100 cursor-auto"
+                  value={searchText}
+                  onChange={(e) => setSearchText(e.target.value)}
+                />
+                <button type="button" onClick={handleSubmitSearch} className="search-button">
+                  <FontAwesomeIcon
+                    icon={faSearch}
+                    className="search-icon"
+                    size="xl"
+                  />
+                </button>
+              </div>
+            </form>
             <div className="form-check mt-3">
-              <input onChange={(e) => handleChange(e.target.checked)} type="checkbox" name="" className="form-check-input" id="" />
+              <input onChange={(e) => handleChange(e.target.checked)} type="checkbox" disabled={isLoadingShowQuestions} className="form-check-input" />
               <label className="text-center">Exibir questões já feitas</label>
             </div>
           </div>

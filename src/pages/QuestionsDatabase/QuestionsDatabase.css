@@ -50,3 +50,33 @@
 .cursor-auto{
     cursor: auto  !important;
 }
+
+.search-form {
+  position: relative;
+  width: 100%;
+}
+
+.input-container {
+  position: relative;
+  width: 100%;
+}
+
+.search-button {
+  position: absolute;
+  top: 55%;
+  right: 20px;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.search-icon {
+  pointer-events: none; 
+  color: #aaa;
+}
+
+.input-container input {
+  padding-right: 50px; 
+}
