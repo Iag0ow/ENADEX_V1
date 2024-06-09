@@ -21,6 +21,8 @@ import { FaqInterno } from "../pages/FaqInterno";
 import { ManagerStudent } from "../pages/ManagerStudent";
 import Simulate from "../pages/Simulate/Simulate";
 import CourseManagement from "../pages/Telacadastrodecurso/CourseManagement";
+import SimulatedEdit from "../pages/SimulatedEdit/SimulatedEdit";
+import SimulatedDetails from "../pages/SimulatedDetails/SimulatedDetails";
 function AppRoutes() {
   const { signed,loadingReaload,authRole } = useAuth();
   return (
@@ -42,6 +44,8 @@ function AppRoutes() {
                   />
                   {/* <Route path="/cadastrar-perguntas" element={signed ? <QuestionRegistration /> : <LadingPage />} /> */}
                   <Route path="/simulados" element={signed ? (authRole === "undefined" ? <SimulatedPanel /> : <WelcomeAfterLogin />) : <LadingPage />} />
+                  <Route path="/editar-simulado" element={signed ? (authRole === "undefined" ? <WelcomeAfterLogin/> : <SimulatedEdit />) : <LadingPage /> } />
+                  <Route path="/detalhes-do-simulado/:id" element={signed ? (authRole === "undefined" ? <WelcomeAfterLogin /> : <SimulatedDetails />) : <LadingPage />} />
                   <Route path="/orientacoes-do-simulado" element={signed ? <Simulated_Guideline /> : <LadingPage />} />
                   <Route path="/simulados-concluidos" element={signed ? <CompletedSimulations /> : <LadingPage />} />
                   {/* <Route path="/esqueci-minha-senha" element={signed ? <WelcomeAfterLogin /> : <RecuperacaoSenha />} /> */}

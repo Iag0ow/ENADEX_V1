@@ -83,6 +83,8 @@ const NavBar = () => {
               {(authRole === "COORDINATORS" || authRole === "TEACHERS" || authRole === "ADMINISTRATOR") &&
                 <NavDropdown.Item as={Link} to="/cadastrar-perguntas" onClick={closeMenu}>Simulado/Perguntas</NavDropdown.Item>
               }
+              {(authRole === "COORDINATORS" || authRole === "TEACHERS" || authRole === "ADMINISTRATOR") &&
+                <NavDropdown.Item as={Link} to="/editar-simulado" onClick={closeMenu}>Editar Simulado</NavDropdown.Item>}
             </NavDropdown>
           )}
           {isMobile && (
