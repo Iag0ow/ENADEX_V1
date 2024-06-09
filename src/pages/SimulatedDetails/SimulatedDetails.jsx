@@ -65,17 +65,18 @@ export default function SimulatedDetails() {
   const [submitting, setSubmitting] = useState(false);
   const [loadingSave, setLoadingSave] = useState(false);
   const [loadingSaveQuestion, setLoadingSaveQuestion] = useState(false);
+  const [allQuestionsSaved, setAllQuestionsSaved] = useState(false);
+  const [refreshData, setRefreshData] = useState(false);
 
   useEffect(() => {
     setLoading(true);
     async function fetchSimulatedDetails() {
-
-      const [ allData, simulatedQuestions ] = await Promise.all([
+      const [allData, simulatedQuestions] = await Promise.all([
         getAllSimulated(),
-        getAllSimulatedQuestions(id)
+        getAllSimulatedQuestions(id),
       ]);
       setAllSimulateds(allData);
-
+  
       const specificSimulated = allData.find((item) => item._id === id);
       if (specificSimulated) {
         specificSimulated.questions = simulatedQuestions;
@@ -97,11 +98,11 @@ export default function SimulatedDetails() {
             })),
           }))
         );
-
+  
         if (specificSimulated.finished || specificSimulated.available) {
           setEditDisabled(true);
         }
-
+  
         if (specificSimulated.finished) {
           setDisponibilizar(false);
           setSwitchDisabled(true);
@@ -120,7 +121,7 @@ export default function SimulatedDetails() {
       setSimulated(specificSimulated);
     }
     fetchSimulatedDetails();
-  }, [id]);
+  }, [id, refreshData]);
 
   const handleEditClick = () => {
     if (isEditing) {
@@ -263,7 +264,7 @@ export default function SimulatedDetails() {
 
   const handleSaveQuestion = async (questionIndex) => {
     const question = questions[questionIndex];
-
+  
     const statementEmpty = question.statements.some(
       (statement) => statement.description.trim() === ""
     );
@@ -276,7 +277,7 @@ export default function SimulatedDetails() {
       });
       return;
     }
-
+  
     if (question.options.length < 2) {
       Swal.fire({
         title: "Erro",
@@ -286,7 +287,7 @@ export default function SimulatedDetails() {
       });
       return;
     }
-
+  
     const correctOptionExists = question.options.some(
       (option) => option.correctOption
     );
@@ -299,7 +300,7 @@ export default function SimulatedDetails() {
       });
       return;
     }
-
+  
     const updatedData = {
       statements: question.statements.map((statement) => ({
         description: convertLineBreaksToBr(statement.description),
@@ -311,73 +312,101 @@ export default function SimulatedDetails() {
           correctOption: option.correctOption,
         })),
     };
-
-    if (question._id.startsWith("temp-")) {
-      await createSimulatedQuestion(id, updatedData);
-    } else {
-      await editSimulatedQuestion(id, question._id, updatedData);
+  
+    try {
+      if (question._id.startsWith("temp-")) {
+        await createSimulatedQuestion(id, updatedData);
+      } else {
+        await editSimulatedQuestion(id, question._id, updatedData);
+      }
+      setIsEditing(false);
+      return true; // Retorna true se a questão foi salva com sucesso
+    } catch (error) {
+      console.error("Erro ao salvar a questão:", error);
+      return false; // Retorna false se houve um erro ao salvar a questão
     }
-    setIsEditing(false);
-
-    Swal.fire({
-      title: "Sucesso",
-      text: "Questão salva com sucesso!",
-      icon: "success",
-      confirmButtonText: "Ok",
-    });
   };
-
-  const handleSave = async (questionIndex) => {
+  
+  const handleSave = async () => {
     setLoadingSave(true);
-
-    if (!simulatedInfo.name.trim()) {
-      Swal.fire({
-        title: "Erro",
-        text: "O título do simulado não pode estar vazio.",
-        icon: "error",
-        confirmButtonText: "Ok",
-      });
-      setLoadingSave(false);
-      return;
+  
+    // Loop através de cada questão e salve-a
+    const allQuestionsSavedSuccessfully = await Promise.all(
+      questions.map(async (question, index) => await handleSaveQuestion(index))
+    );
+  
+    // Verifique se todas as questões foram salvas com sucesso
+    const allQuestionsSaved = allQuestionsSavedSuccessfully.every(
+      (saved) => saved === true
+    );
+  
+    if (allQuestionsSaved) {
+      try {
+        const [hours, minutes] = simulatedInfo.duration.split(":").map(Number);
+        const totalSeconds = hours * 3600 + minutes * 60;
+  
+        const updatedData = {
+          name: simulatedInfo.name,
+          duration: totalSeconds,
+        };
+  
+        await editSimulated(id, updatedData);
+        
+        // Força o recarregamento dos detalhes do simulado
+        setRefreshData(true);
+  
+        Swal.fire({
+          title: "Sucesso",
+          text: "Simulado e questões salvas com sucesso!",
+          icon: "success",
+          confirmButtonText: "Ok",
+        });
+      } catch (error) {
+        console.error("Erro ao salvar o simulado:", error);
+        Swal.fire({
+          title: "Erro",
+          text: "Ocorreu um erro ao salvar o simulado.",
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
+      }
     }
-    
-    await handleSaveQuestion(questionIndex);
-
-    const [hours, minutes] = simulatedInfo.duration.split(":").map(Number);
-    const totalSeconds = hours * 3600 + minutes * 60;
-
-    const updatedData = {
-      name: simulatedInfo.name,
-      duration: totalSeconds,
-    };
-    await editSimulated(id, updatedData);
-    setIsEditing(false);
+  
     setLoadingSave(false);
   };
+  
+  
 
   const handleDeleteQuestion = async (questionID) => {
-    const result = await Swal.fire({
-      title: "Deseja realmente excluir esta questão?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Sim",
-      cancelButtonText: "Não",
-    });
-    if (result.isConfirmed) {
-      await deleteSimulatedQuestion(id, questionID);
-      const updatedQuestions = questions.filter(
-        (question) => question._id !== questionID
-      );
-      setQuestions(updatedQuestions);
-
-      Swal.fire({
-        title: "Sucesso",
-        text: "Questão deletada com sucesso.",
-        icon: "success",
-        confirmButtonText: "Ok",
+    try {
+      const result = await Swal.fire({
+        title: "Deseja realmente excluir esta questão?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sim",
+        cancelButtonText: "Não",
       });
-    }
+  
+      if (result.isConfirmed) {
+        await deleteSimulatedQuestion(id, questionID);
+        const updatedQuestions = questions.filter(
+          (question) => question._id !== questionID
+        );
+        setQuestions(updatedQuestions);
+  
+        Swal.fire({
+          title: "Sucesso",
+          text: "Questão deletada com sucesso.",
+          icon: "success",
+          confirmButtonText: "Ok",
+        });
+      }
+    } catch (error) {
+      
+    } 
+  
   };
+  
 
   // if (loading) {
   //   <h1 className="text-center mt-5 color-text bold-weight">Carregando...</h1>;
