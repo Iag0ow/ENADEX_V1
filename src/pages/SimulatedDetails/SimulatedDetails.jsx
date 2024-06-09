@@ -50,7 +50,7 @@ export default function SimulatedDetails() {
   const { id } = useParams();
   const [simulated, setSimulated] = useState(null);
   const [allSimulateds, setAllSimulateds] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [disponibilizar, setDisponibilizar] = useState(false);
   const [switchDisabled, setSwitchDisabled] = useState(false);
   const [simulatedInfo, setSimulatedInfo] = useState({
@@ -67,13 +67,14 @@ export default function SimulatedDetails() {
   const [loadingSaveQuestion, setLoadingSaveQuestion] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     async function fetchSimulatedDetails() {
-      const allData = await getAllSimulated();
+
+      const [ allData, simulatedQuestions ] = await Promise.all([
+        getAllSimulated(),
+        getAllSimulatedQuestions(id)
+      ]);
       setAllSimulateds(allData);
-      
-      setLoading(true);
-      const simulatedQuestions = await getAllSimulatedQuestions(id);
-      setLoading(false);
 
       const specificSimulated = allData.find((item) => item._id === id);
       if (specificSimulated) {
@@ -115,6 +116,7 @@ export default function SimulatedDetails() {
           setSwitchDisabled(false);
         }
       }
+      setLoading(false);
       setSimulated(specificSimulated);
     }
     fetchSimulatedDetails();
@@ -325,7 +327,7 @@ export default function SimulatedDetails() {
     });
   };
 
-  const handleSave = async () => {
+  const handleSave = async (questionIndex) => {
     setLoadingSave(true);
 
     if (!simulatedInfo.name.trim()) {
@@ -338,8 +340,8 @@ export default function SimulatedDetails() {
       setLoadingSave(false);
       return;
     }
-
-    await handleSaveQuestions();
+    
+    await handleSaveQuestion(questionIndex);
 
     const [hours, minutes] = simulatedInfo.duration.split(":").map(Number);
     const totalSeconds = hours * 3600 + minutes * 60;
@@ -377,9 +379,9 @@ export default function SimulatedDetails() {
     }
   };
 
-  if (loading) {
-    <h1 className="text-center mt-5 color-text bold-weight">Carregando...</h1>;
-  }
+  // if (loading) {
+  //   <h1 className="text-center mt-5 color-text bold-weight">Carregando...</h1>;
+  // }
 
   return (
     <div>
@@ -425,6 +427,11 @@ export default function SimulatedDetails() {
             <span className="text-disponibilizar">Disponibilizar</span>
           </div>
         </div>
+        {loading && (
+          <h1 className="text-center mt-5 color-text bold-weight">
+            Carregando...
+          </h1>
+        )}
         {simulated && (
           <div className="simulatedDetail">
             <h2>
@@ -465,63 +472,74 @@ export default function SimulatedDetails() {
             </p>
 
             <h3>Questões:</h3>
-            {loading ? (
-              <h1 className="text-center mt-5 color-text bold-weight">
-                Carregando...
-              </h1>
-            ) : (
-              <ul>
-                {questions.map((question, questionIndex) => (
-                  <li key={question._id} className="question-item">
-                    <div className="question-header">
-                      <span className="question-index">
-                        Questão {questionIndex + 1}
-                      </span>
-                      <FontAwesomeIcon
-                        icon={faTrashAlt}
-                        size="lg"
-                        className="delete-icon"
-                        onClick={() => handleDeleteQuestion(question._id)}
-                      />
+            <ul>
+              {questions.map((question, questionIndex) => (
+                <li key={question._id} className="question-item">
+                  <div className="question-header">
+                    <span className="question-index">
+                      Questão {questionIndex + 1}
+                    </span>
+                    <FontAwesomeIcon
+                      icon={faTrashAlt}
+                      size="lg"
+                      className="delete-icon"
+                      onClick={() => handleDeleteQuestion(question._id)}
+                    />
+                  </div>
+                  {question.statements.map((statement, statementIndex) => (
+                    <div key={statement._id}>
+                      <b>Enunciado:</b>{" "}
+                      {isEditing ? (
+                        <textarea
+                          name="description"
+                          value={statement.description}
+                          onChange={(e) =>
+                            handleQuestionChange(
+                              e,
+                              questionIndex,
+                              statementIndex
+                            )
+                          }
+                          className="edit-input"
+                          rows="4"
+                          cols="50"
+                        />
+                      ) : (
+                        <div
+                          className="question-description"
+                          dangerouslySetInnerHTML={{
+                            __html: convertLineBreaksToBr(
+                              statement.description
+                            ),
+                          }}
+                        />
+                      )}
                     </div>
-                    {question.statements.map((statement, statementIndex) => (
-                      <div key={statement._id}>
-                        <b>Enunciado:</b>{" "}
+                  ))}
+                  <ul>
+                    {question.options.map((option, optionIndex) => (
+                      <li key={option._id} className="option-item">
                         {isEditing ? (
-                          <textarea
-                            name="description"
-                            value={statement.description}
-                            onChange={(e) =>
-                              handleQuestionChange(
-                                e,
-                                questionIndex,
-                                statementIndex
-                              )
-                            }
-                            className="edit-input"
-                            rows="4"
-                            cols="50"
-                          />
-                        ) : (
-                          <div
-                            className="question-description"
-                            dangerouslySetInnerHTML={{
-                              __html: convertLineBreaksToBr(
-                                statement.description
-                              ),
-                            }}
-                          />
-                        )}
-                      </div>
-                    ))}
-                    <ul>
-                      {question.options.map((option, optionIndex) => (
-                        <li key={option._id} className="option-item">
-                          {isEditing ? (
-                            <div className="option-edit-container">
-                              <textarea
-                                name="description"
-                                value={option.description}
+                          <div className="option-edit-container">
+                            <textarea
+                              name="description"
+                              value={option.description}
+                              onChange={(e) =>
+                                handleOptionChange(
+                                  e,
+                                  questionIndex,
+                                  optionIndex
+                                )
+                              }
+                              className="edit-input"
+                              rows="2"
+                              cols="50"
+                            />
+                            <label className="option-checkbox-label">
+                              <input
+                                type="checkbox"
+                                name="correctOption"
+                                checked={option.correctOption}
                                 onChange={(e) =>
                                   handleOptionChange(
                                     e,
@@ -529,80 +547,62 @@ export default function SimulatedDetails() {
                                     optionIndex
                                   )
                                 }
-                                className="edit-input"
-                                rows="2"
-                                cols="50"
+                                className="option-checkbox"
                               />
-                              <label className="option-checkbox-label">
-                                <input
-                                  type="checkbox"
-                                  name="correctOption"
-                                  checked={option.correctOption}
-                                  onChange={(e) =>
-                                    handleOptionChange(
-                                      e,
-                                      questionIndex,
-                                      optionIndex
-                                    )
-                                  }
-                                  className="option-checkbox"
-                                />
+                              Opção correta
+                            </label>
+                          </div>
+                        ) : (
+                          <div className="option-view-container">
+                            <div
+                              className="option-text"
+                              dangerouslySetInnerHTML={{
+                                __html: convertLineBreaksToBr(
+                                  option.description
+                                ),
+                              }}
+                            />
+                            {option.correctOption && (
+                              <span className="correct-option-text">
                                 Opção correta
-                              </label>
-                            </div>
-                          ) : (
-                            <div className="option-view-container">
-                              <div
-                                className="option-text"
-                                dangerouslySetInnerHTML={{
-                                  __html: convertLineBreaksToBr(
-                                    option.description
-                                  ),
-                                }}
-                              />
-                              {option.correctOption && (
-                                <span className="correct-option-text">
-                                  Opção correta
-                                </span>
-                              )}
-                            </div>
-                          )}
-                        </li>
-                      ))}
-                    </ul>
-                    {isEditing && question.options.length < 5 && (
-                      <div className="buttons-container">
-                        <button
-                          onClick={() => handleAddOption(questionIndex)}
-                          className="add-option-button"
-                        >
-                          Adicionar alternativa
-                        </button>
-                        <button
-                          onClick={() => handleSaveQuestion(questionIndex)}
-                          className={`save-question-button ${
-                            loadingSaveQuestion ? "loading" : ""
-                          }`}
-                          disabled={loadingSaveQuestion}
-                        >
-                          {loadingSaveQuestion ? (
-                            <>
-                              <FontAwesomeIcon icon={faSpinner} spin />
-                              &nbsp; Salvando...
-                            </>
-                          ) : (
-                            <>
-                              <FontAwesomeIcon icon={faSave} /> Salvar Questão
-                            </>
-                          )}
-                        </button>
-                      </div>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            )}
-
+                              </span>
+                            )}
+                          </div>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                  {isEditing && question.options.length < 5 && (
+                    <div className="buttons-container">
+                      <button
+                        onClick={() => handleAddOption(questionIndex)}
+                        className="add-option-button"
+                      >
+                        Adicionar alternativa
+                      </button>
+                      <button
+                        onClick={() => handleSave(questionIndex)}
+                        className={`save-question-button ${
+                          loadingSaveQuestion ? "loading" : ""
+                        }`}
+                        disabled={loadingSaveQuestion}
+                      >
+                        {loadingSaveQuestion ? (
+                          <>
+                            <FontAwesomeIcon icon={faSpinner} spin />
+                            &nbsp; Salvando...
+                          </>
+                        ) : (
+                          <>
+                            <FontAwesomeIcon icon={faSave} /> Salvar Questão
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  )}
+                </li>
+              ))}
+            </ul>
             {isEditing && (
               <div className="buttons-container">
                 <button
