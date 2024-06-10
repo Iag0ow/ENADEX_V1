@@ -8,11 +8,11 @@
 .userInfo {
   margin: 0 auto;
   max-width: 96%;
-  min-height: 110px; 
+  min-height: 110px;
   background-color: #d9d9d9;
   border-radius: 10px;
   display: flex;
-  flex-wrap: wrap; 
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   margin-top: 20px;
@@ -23,19 +23,19 @@
   display: flex;
   flex-direction: column;
   margin-left: 10px;
-  flex-grow: 1; 
+  flex-grow: 1;
 }
 
 .profilePic {
   width: 90px;
-  height: 90px; 
+  height: 90px;
   margin: 10px;
 }
 
 .userName {
   color: #161616;
   font-weight: bold;
-  font-size: 18px; 
+  font-size: 18px;
 }
 
 .userLabels {
@@ -43,8 +43,8 @@
   flex-wrap: wrap;
 }
 .mediaAcertos,
-.simulatedsRealized { 
-  min-width: 120px; 
+.simulatedsRealized {
+  min-width: 120px;
   max-width: 300px;
   height: 30px;
   color: white;
@@ -52,15 +52,15 @@
   border-radius: 10px;
   font-weight: bold;
   font-size: 14px;
-  margin-top: 10px; 
+  margin-top: 10px;
   padding: 5px;
   text-align: center;
 }
 
 .generateSimulated {
   display: flex;
-  justify-content: flex-end; 
-  margin-right: 10px; 
+  justify-content: flex-end;
+  margin-right: 10px;
   margin-bottom: 18px;
 }
 
@@ -86,33 +86,52 @@
   transform: scale(1.05);
 }
 
-.searchBarWrapper {
+.actionBarWrapper {
   margin-top: 20px;
+  margin-left: 30px;
   display: flex;
-  justify-content: center;
+  justify-content: left;
+  align-items: center;
 }
 
 .searchBar {
-  width: calc(100% - 70px);
-  max-width: 100%;
-  height: 50px;
-  background-color: #d9d9d9;
-  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+.checkboxContainer {
   display: flex;
   align-items: center;
 }
 
+.checkboxContainer input[type="checkbox"] {
+  margin-right: 5px; /* Espaçamento entre o checkbox e o rótulo */
+}
+.searchInputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
 .searchIcon {
-  margin-left: 15px;
-  margin-right: 10px;
+  position: absolute;
+  left: 10px;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
 }
 
 .searchInput {
-  flex: 1;
-  border: none;
-  background-color: transparent;
-  font-size: 16px;
+  width: 400px;
+  padding: 8px 8px 8px 30px; /* Espaçamento interno com espaço para o ícone */
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   outline: none;
+  transition: border-color 0.3s;
+}
+
+.searchInput:focus {
+  border-color: #007bff;
 }
 .simulatedWrapper {
   display: flex;
@@ -157,7 +176,6 @@
 .simulatedQuestions {
   font-size: 18px;
   font-weight: bold;
-
 }
 
 .labelDateAndQuestions {
@@ -199,16 +217,14 @@
   }
   .mediaAcertos,
   .simulatedsRealized {
-    width: calc(
-      80% - 10px
-    );
+    width: calc(80% - 10px);
     height: 30px;
     color: white;
     background-color: #0693fa;
     border-radius: 10px;
     font-weight: bold;
     font-size: 14px;
-    margin-top: 10px; 
+    margin-top: 10px;
     padding: 5px;
     text-align: center;
   }
@@ -223,7 +239,7 @@
   .userName {
     color: #161616;
     font-weight: bold;
-    font-size: 18px; 
+    font-size: 18px;
     margin-bottom: 0px;
   }
   .searchBar {
@@ -238,7 +254,6 @@
 }
 
 @media (max-width: 450px) {
-
   .simulatedWrapper {
     width: calc(100% - 30px);
     max-width: 100%;
@@ -260,16 +275,14 @@
   }
   .mediaAcertos,
   .simulatedsRealized {
-    width: calc(
-      90% - 10px
-    );
+    width: calc(90% - 10px);
     height: 30px;
     color: white;
     background-color: #0693fa;
     border-radius: 10px;
     font-weight: bold;
-    font-size: 14px; 
-    margin-top: 10px; 
+    font-size: 14px;
+    margin-top: 10px;
     padding: 5px;
     text-align: center;
   }
@@ -279,12 +292,12 @@
     margin-bottom: 18px;
     width: 100%;
     margin-right: 0px;
-    text-align: center; 
+    text-align: center;
   }
   .userName {
     color: #161616;
     font-weight: bold;
-    font-size: 18px; 
+    font-size: 18px;
     margin-bottom: 0px;
   }
   .searchBar {
@@ -299,13 +312,11 @@
 }
 
 @media (max-width: 375px) {
-
   .buttonsHolder {
     align-items: center;
     justify-content: center;
-  
   }
-  .twoButtons{
+  .twoButtons {
     width: 100%;
     height: 40px;
 
@@ -323,8 +334,8 @@
     display: inline-flex;
     flex-direction: column;
     align-items: center;
-    height: 200px; 
-    justify-content: center; 
+    height: 200px;
+    justify-content: center;
   }
 
   .textRight {
