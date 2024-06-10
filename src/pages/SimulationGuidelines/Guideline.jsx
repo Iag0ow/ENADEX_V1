@@ -3,7 +3,7 @@ import "./Guideline.css";
 import Footer from "../../components/Footer/Footer";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { startSimulated } from "../../config/config";
-
+import { formatTime } from "../../Hooks/formatTime";
 export default function Simulated_Guideline() {
   const location = useLocation();
   const { simulatedId, simulatedName, simulatedDuration } =
@@ -28,11 +28,11 @@ export default function Simulated_Guideline() {
     }
   };
 
-  const formatDuration = (seconds) => {
-    const h = Math.floor(seconds / 3600);
-    const m = Math.floor((seconds % 3600) / 60);
-    return `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}`;
-  };
+  // const formatDuration = (seconds) => {
+  //   const h = Math.floor(seconds / 3600);
+  //   const m = Math.floor((seconds % 3600) / 60);
+  //   return `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}`;
+  // };
 
   return (
     <div>
@@ -49,14 +49,14 @@ export default function Simulated_Guideline() {
             <div className="conclusionTime">
               Tempo de conclusão do simulado:{" "}
               <span className="timerSimulated">
-                {formatDuration(simulatedDuration)}
+                {formatTime(simulatedDuration)}
               </span>
             </div>
             <p className="largerText">Duração do simulado</p>
             <ul className="bulletList">
               <li>
                 O tempo de realização do simulado pelo discente deverá ocorrer
-                no prazo de {formatDuration(simulatedDuration)} horas;
+                no prazo de {formatTime(simulatedDuration)} horas;
               </li>
             </ul>
 

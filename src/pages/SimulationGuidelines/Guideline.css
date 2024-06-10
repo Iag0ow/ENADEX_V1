@@ -36,7 +36,7 @@
   font-family: "Montserrat", sans-serif;
 }
 .timerSimulated {
-  background-color: #12123c;
+  background-color: #0e3975;
   color: white;
   font-family: "Montserrat", sans-serif;
   border-radius: 10px;
@@ -44,6 +44,7 @@
   text-align: center;
   padding: 3px;
   margin-left: 5px;
+  letter-spacing: 1.5px;
 }
 .guidelineContent {
   margin: 20px;
@@ -80,7 +81,7 @@
 }
 
 .btnStartSimulated {
-  background-color: #0693fa;
+  background-color: #0e3975;
   color: #fff;
   border-radius: 10px;
   width: 620px;
@@ -91,16 +92,15 @@
   justify-content: center;
   font-size: 22px;
   transition: background-color 0.5s, border-color 0.5s, color 0.5s,
-    transform 0.3s; /* Adicionando transição */
+    transform 0.3s; 
   border: 2px solid transparent;
   font-family: "Montserrat", sans-serif;
   font-weight: 600;
 }
 
 .btnStartSimulated:hover {
-  background-color: #0c7eff; /* Cor alterada quando o mouse passa por cima */
-  color: #fff; /* Cor do texto alterada quando o mouse passa por cima */
-  border-color: #0c7eff; /* Cor da borda alterada quando o mouse passa por cima */
+  background-color: #21334b;
+  color: #fff;
 }
 
 @media (max-width: 900px) {
@@ -116,7 +116,7 @@
     justify-content: center;
     font-size: 22px;
     transition: background-color 0.5s, border-color 0.5s, color 0.5s,
-      transform 0.3s; /* Adicionando transição */
+      transform 0.3s; 
     border: 2px solid transparent;
     font-family: "Montserrat", sans-serif;
     font-weight: 600;
@@ -146,7 +146,7 @@
     padding-right: 10px;
   }
 }
-/* Guideline.css */
+
 .spinner {
   border: 4px solid rgba(0, 0, 0, 0.1);
   width: 24px;
