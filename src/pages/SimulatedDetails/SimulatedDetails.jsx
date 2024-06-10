@@ -76,7 +76,7 @@ export default function SimulatedDetails() {
         getAllSimulatedQuestions(id),
       ]);
       setAllSimulateds(allData);
-  
+
       const specificSimulated = allData.find((item) => item._id === id);
       if (specificSimulated) {
         specificSimulated.questions = simulatedQuestions;
@@ -98,11 +98,11 @@ export default function SimulatedDetails() {
             })),
           }))
         );
-  
+
         if (specificSimulated.finished || specificSimulated.available) {
           setEditDisabled(true);
         }
-  
+
         if (specificSimulated.finished) {
           setDisponibilizar(false);
           setSwitchDisabled(true);
@@ -264,7 +264,7 @@ export default function SimulatedDetails() {
 
   const handleSaveQuestion = async (questionIndex) => {
     const question = questions[questionIndex];
-  
+
     const statementEmpty = question.statements.some(
       (statement) => statement.description.trim() === ""
     );
@@ -277,7 +277,7 @@ export default function SimulatedDetails() {
       });
       return;
     }
-  
+
     if (question.options.length < 2) {
       Swal.fire({
         title: "Erro",
@@ -287,7 +287,7 @@ export default function SimulatedDetails() {
       });
       return;
     }
-  
+
     const correctOptionExists = question.options.some(
       (option) => option.correctOption
     );
@@ -300,7 +300,7 @@ export default function SimulatedDetails() {
       });
       return;
     }
-  
+
     const updatedData = {
       statements: question.statements.map((statement) => ({
         description: convertLineBreaksToBr(statement.description),
@@ -312,7 +312,7 @@ export default function SimulatedDetails() {
           correctOption: option.correctOption,
         })),
     };
-  
+
     try {
       if (question._id.startsWith("temp-")) {
         await createSimulatedQuestion(id, updatedData);
@@ -326,35 +326,35 @@ export default function SimulatedDetails() {
       return false; // Retorna false se houve um erro ao salvar a questão
     }
   };
-  
+
   const handleSave = async () => {
     setLoadingSave(true);
-  
+
     // Loop através de cada questão e salve-a
     const allQuestionsSavedSuccessfully = await Promise.all(
       questions.map(async (question, index) => await handleSaveQuestion(index))
     );
-  
+
     // Verifique se todas as questões foram salvas com sucesso
     const allQuestionsSaved = allQuestionsSavedSuccessfully.every(
       (saved) => saved === true
     );
-  
+
     if (allQuestionsSaved) {
       try {
         const [hours, minutes] = simulatedInfo.duration.split(":").map(Number);
         const totalSeconds = hours * 3600 + minutes * 60;
-  
+
         const updatedData = {
           name: simulatedInfo.name,
           duration: totalSeconds,
         };
-  
+
         await editSimulated(id, updatedData);
-        
+
         // Força o recarregamento dos detalhes do simulado
         setRefreshData(true);
-  
+
         Swal.fire({
           title: "Sucesso",
           text: "Simulado e questões salvas com sucesso!",
@@ -371,11 +371,9 @@ export default function SimulatedDetails() {
         });
       }
     }
-  
+
     setLoadingSave(false);
   };
-  
-  
 
   const handleDeleteQuestion = async (questionID) => {
     try {
@@ -386,14 +384,14 @@ export default function SimulatedDetails() {
         confirmButtonText: "Sim",
         cancelButtonText: "Não",
       });
-  
+
       if (result.isConfirmed) {
         await deleteSimulatedQuestion(id, questionID);
         const updatedQuestions = questions.filter(
           (question) => question._id !== questionID
         );
         setQuestions(updatedQuestions);
-  
+
         Swal.fire({
           title: "Sucesso",
           text: "Questão deletada com sucesso.",
@@ -401,16 +399,21 @@ export default function SimulatedDetails() {
           confirmButtonText: "Ok",
         });
       }
-    } catch (error) {
-      
-    } 
-  
+    } catch (error) {}
   };
-  
 
-  // if (loading) {
-  //   <h1 className="text-center mt-5 color-text bold-weight">Carregando...</h1>;
-  // }
+  const getHeaderTitle = () => {
+    if (simulated) {
+      if (simulated.finished) {
+        return `Simulado finalizado`;
+      } else if (simulated.available) {
+        return `Simulado disponível`;
+      } else {
+        return `Simulado em construção`;
+      }
+    }
+    return `Detalhes do Simulado`;
+  };
 
   return (
     <div>
@@ -424,7 +427,8 @@ export default function SimulatedDetails() {
             />{" "}
             Voltar
           </Link>
-          <h1 className="title">Detalhes do Simulado</h1>
+          <h1 className="simulated-title">{getHeaderTitle()}</h1>
+
           <div className="icons">
             <FontAwesomeIcon
               className={`edit-icon ${editDisabled ? "disabled" : ""}`}
@@ -508,12 +512,14 @@ export default function SimulatedDetails() {
                     <span className="question-index">
                       Questão {questionIndex + 1}
                     </span>
-                    <FontAwesomeIcon
-                      icon={faTrashAlt}
-                      size="lg"
-                      className="delete-icon"
-                      onClick={() => handleDeleteQuestion(question._id)}
-                    />
+                    {isEditing && (
+                      <FontAwesomeIcon
+                        icon={faTrashAlt}
+                        size="lg"
+                        className="delete-icon"
+                        onClick={() => handleDeleteQuestion(question._id)}
+                      />
+                    )}
                   </div>
                   {question.statements.map((statement, statementIndex) => (
                     <div key={statement._id}>

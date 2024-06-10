@@ -582,3 +582,17 @@ export async function deleteSimulatedQuestion(id, questionID) {
   const data = await response.json();
   return data;
 }
+
+export async function getFinishedSimulated() {
+  const token = localStorage.getItem("token");
+  const config = {
+    method: "GET",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await fetch(`${API}/me/exams/finished`, config);
+  const data = await response.json();
+  return await data;
+}
