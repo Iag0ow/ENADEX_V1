@@ -21,7 +21,7 @@ export default function SimulatedRegisterComponent({ selectedCourse }) {
     alternatives: [{ text: "" }],
     correctOption: null,
   };
-  const optionsInitialValues = [{ label: "A)", id: 0 }];
+  const optionsInitialValues = [{ id: 0 }];
   const [options, setOptions] = useState(optionsInitialValues);
   const [questionData, setQuestionData] = useState(questionDataInitialValues);
   const [simulatedSucess, setSimulatedSucess] = useState(false);
@@ -41,17 +41,9 @@ export default function SimulatedRegisterComponent({ selectedCourse }) {
       return;
     }
 
-    const deletedOption = options.find((option) => option.id === idToRemove);
-    setDeletedOptions([...deletedOptions, deletedOption.label.trim()]);
-
     const updatedOptions = options.filter((option) => option.id !== idToRemove);
 
-    const reorderedOptions = updatedOptions.map((option, index) => ({
-      ...option,
-      id: index,
-    }));
-
-    setOptions(reorderedOptions);
+    setOptions(updatedOptions);
 
     if (correctOption === idToRemove) {
       setCorrectOption(null);
@@ -64,31 +56,9 @@ export default function SimulatedRegisterComponent({ selectedCourse }) {
       return;
     }
 
-    let nextLetter;
-    if (deletedOptions.length > 0) {
-      const lastDeletedOption = deletedOptions.pop();
-      nextLetter = lastDeletedOption.replace(/[()]/g, "");
-    } else {
-      const lastOptionLetter = options[options.length - 1].label
-        .trim()
-        .charAt(0);
-      nextLetter = String.fromCharCode(lastOptionLetter.charCodeAt(0) + 1);
-    }
+    const newOption = { id: options.length };
 
-    const newOption = { label: ` ${nextLetter})`, id: options.length };
-
-    const indexToInsert = options.findIndex(
-      (option) => option.label.trim() > ` ${nextLetter})`.trim()
-    );
-
-    const newOptions =
-      indexToInsert === -1
-        ? [...options, newOption]
-        : [
-            ...options.slice(0, indexToInsert),
-            newOption,
-            ...options.slice(indexToInsert),
-          ];
+    const newOptions = [...options, newOption];
 
     setOptions(newOptions);
     setQuestionData({
@@ -305,7 +275,7 @@ export default function SimulatedRegisterComponent({ selectedCourse }) {
             disabled={!simulatedSucess}
             id="questionInput"
             className="inputQuestion"
-            placeholder="Pergunta"
+            placeholder="Ex: O nosso Planeta é esférico?"
             rows={1}
             onChange={(e) => {
               e.target.style.height = "auto";
@@ -322,12 +292,12 @@ export default function SimulatedRegisterComponent({ selectedCourse }) {
           {options.map((option, index) => (
             <div key={option.id} className="optionContainer">
               <div className="optionInputContainer">
-                <span>{option.label}</span>
+                <span>{String.fromCharCode(index + 65)})</span>
                 <textarea
                   disabled={!simulatedSucess}
                   id={`optionText_${option.id}`}
                   className="inputOption"
-                  placeholder={`Questão ${option.label}`}
+                  placeholder={`Questão ${String.fromCharCode(index + 65)}`}
                   rows={1}
                   onChange={(e) => {
                     e.target.style.height = "auto";
