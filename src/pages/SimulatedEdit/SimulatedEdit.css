@@ -64,7 +64,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #0fa958;
+  background-color: #0D4688;
   color: white;
   border-radius: 10px;
   border: 2px solid transparent;
@@ -80,8 +80,8 @@
 }
 
 .btnEditSimulated:hover {
-  background-color: #0da751;
-  border-color: #0da751;
+  background-color: #27568d;
+  border-color: #0D4688;
 }
 
 .btnEditSimulated span {
