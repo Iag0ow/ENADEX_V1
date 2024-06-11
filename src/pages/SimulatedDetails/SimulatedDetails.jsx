@@ -6,7 +6,6 @@ import {
   faEdit,
   faSave,
   faTrashAlt,
-  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import "./SimulatedDetails.css";
@@ -65,7 +64,6 @@ export default function SimulatedDetails() {
   const [submitting, setSubmitting] = useState(false);
   const [loadingSave, setLoadingSave] = useState(false);
   const [loadingSaveQuestion, setLoadingSaveQuestion] = useState(false);
-  const [allQuestionsSaved, setAllQuestionsSaved] = useState(false);
   const [refreshData, setRefreshData] = useState(false);
 
   useEffect(() => {
@@ -160,6 +158,7 @@ export default function SimulatedDetails() {
           setSwitchDisabled(false);
         }
         setSubmitting(false);
+        setRefreshData((prev) => !prev);
       });
     } else {
       Swal.fire({
@@ -175,6 +174,7 @@ export default function SimulatedDetails() {
           setSwitchDisabled(true);
         }
         setSubmitting(false);
+        setRefreshData((prev) => !prev);
       });
     }
   };
@@ -320,10 +320,10 @@ export default function SimulatedDetails() {
         await editSimulatedQuestion(id, question._id, updatedData);
       }
       setIsEditing(false);
-      return true; // Retorna true se a questão foi salva com sucesso
+      return true;
     } catch (error) {
       console.error("Erro ao salvar a questão:", error);
-      return false; // Retorna false se houve um erro ao salvar a questão
+      return false;
     }
   };
 
@@ -352,7 +352,6 @@ export default function SimulatedDetails() {
 
         await editSimulated(id, updatedData);
 
-        // Força o recarregamento dos detalhes do simulado
         setRefreshData(true);
 
         Swal.fire({
