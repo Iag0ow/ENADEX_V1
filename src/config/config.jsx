@@ -481,9 +481,9 @@ export async function getAllSimulated() {
   return await data;
 }
 
-export async function registerCourse(formRegisterCourse){
-  const token = localStorage.getItem("token")
-  const bodyForm = JSON.stringify(formRegisterCourse)
+export async function registerCourse(formRegisterCourse) {
+  const token = localStorage.getItem("token");
+  const bodyForm = JSON.stringify(formRegisterCourse);
   const config = {
     method: "POST",
     headers: {
@@ -491,13 +491,12 @@ export async function registerCourse(formRegisterCourse){
       Authorization: `Bearer ${token}`,
     },
     body: bodyForm,
-  }
+  };
   const response = await fetch(`${API}/courses`, config);
   return response;
 }
 
-
-export async function getAllSimulatedQuestions(id){
+export async function getAllSimulatedQuestions(id) {
   const token = localStorage.getItem("token");
   const config = {
     method: "GET",
@@ -536,8 +535,13 @@ export async function provideSimulated(id) {
     },
   };
   const response = await fetch(`${API}/mock-exams/${id}/available`, config);
-  const data = await response.json();
-  return data;
+
+  if (response.status === 204) {
+    return;
+  } else {
+    const data = await response.json();
+    return data;
+  }
 }
 
 export async function finishSimulated(id) {
@@ -550,8 +554,13 @@ export async function finishSimulated(id) {
     },
   };
   const response = await fetch(`${API}/mock-exams/${id}/finish`, config);
-  const data = await response.json();
-  return data;
+
+  if (response.status === 204) {
+    return;
+  } else {
+    const data = await response.json();
+    return data;
+  }
 }
 
 export async function editSimulatedQuestion(id, questionID, updatedData) {
@@ -564,7 +573,10 @@ export async function editSimulatedQuestion(id, questionID, updatedData) {
     },
     body: JSON.stringify(updatedData),
   };
-  const response = await fetch(`${API}/mock-exams/${id}/questions/${questionID}`, config);
+  const response = await fetch(
+    `${API}/mock-exams/${id}/questions/${questionID}`,
+    config
+  );
   const data = await response.json();
   return data;
 }
@@ -578,7 +590,10 @@ export async function deleteSimulatedQuestion(id, questionID) {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await fetch(`${API}/mock-exams/${id}/questions/${questionID}`, config);
+  const response = await fetch(
+    `${API}/mock-exams/${id}/questions/${questionID}`,
+    config
+  );
   const data = await response.json();
   return data;
 }
