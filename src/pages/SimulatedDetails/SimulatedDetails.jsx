@@ -383,23 +383,43 @@ export default function SimulatedDetails() {
         confirmButtonText: "Sim",
         cancelButtonText: "Não",
       });
-
+  
       if (result.isConfirmed) {
-        await deleteSimulatedQuestion(id, questionID);
-        const updatedQuestions = questions.filter(
-          (question) => question._id !== questionID
-        );
-        setQuestions(updatedQuestions);
-
-        Swal.fire({
-          title: "Sucesso",
-          text: "Questão deletada com sucesso.",
-          icon: "success",
-          confirmButtonText: "Ok",
-        });
+        const response = await deleteSimulatedQuestion(id, questionID);
+  
+        if (response.status === 204) {
+          // Exclusão bem-sucedida
+          const updatedQuestions = questions.filter(
+            (question) => question._id !== questionID
+          );
+  
+          setQuestions(updatedQuestions); // Atualiza o estado local após a exclusão
+  
+          Swal.fire({
+            title: "Sucesso",
+            text: "Questão deletada com sucesso.",
+            icon: "success",
+            confirmButtonText: "Ok",
+          });
+  
+          // Recarrega os simulados
+          setRefreshData((prev) => !prev);
+        } else {
+          // Outro status diferente de 204, trata como erro
+          throw new Error("Erro ao excluir a questão.");
+        }
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error("Erro ao excluir a questão:", error);
+      Swal.fire({
+        title: "Erro",
+        text: "Ocorreu um erro ao excluir a questão.",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    }
   };
+  
 
   const getHeaderTitle = () => {
     if (simulated) {
@@ -614,7 +634,7 @@ export default function SimulatedDetails() {
                       >
                         Adicionar alternativa
                       </button>
-                      <button
+                      {/* <button
                         onClick={() => handleSave(questionIndex)}
                         className={`save-question-button ${
                           loadingSaveQuestion ? "loading" : ""
@@ -631,7 +651,7 @@ export default function SimulatedDetails() {
                             <FontAwesomeIcon icon={faSave} /> Salvar Questão
                           </>
                         )}
-                      </button>
+                      </button> */}
                     </div>
                   )}
                 </li>

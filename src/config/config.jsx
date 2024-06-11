@@ -594,9 +594,9 @@ export async function deleteSimulatedQuestion(id, questionID) {
     `${API}/mock-exams/${id}/questions/${questionID}`,
     config
   );
-  const data = await response.json();
-  return data;
+  return response; // Retorna diretamente a resposta
 }
+
 
 export async function getFinishedSimulated() {
   const token = localStorage.getItem("token");
