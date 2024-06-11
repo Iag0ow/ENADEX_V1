@@ -8,6 +8,7 @@ import { useAuth } from "../../context/AuthContextProvider";
 import {
   getAvaiableSimulated,
   getFinishedSimulated,
+  getResumeAnswers,
 } from "../../config/config";
 
 function formatDuration(seconds) {
@@ -40,7 +41,14 @@ export default function SimulatedPanel() {
     async function fetchSimulateds() {
       setLoading(true);
       const availableSimulateds = await getAvaiableSimulated();
-      const finishedSimulateds = await getFinishedSimulated();
+      let finishedSimulatedsForFilter = await getFinishedSimulated();
+
+      const finishedSimulateds = await Promise.all(
+        finishedSimulatedsForFilter.map(async (simulated) => {
+          const details = await getResumeAnswers(simulated._id);
+          return { ...simulated, details };
+        })
+      );
       setSimulateds(availableSimulateds);
       setFinishedSimulateds(finishedSimulateds);
       setLoading(false);
@@ -102,7 +110,10 @@ export default function SimulatedPanel() {
               checked={showFinished}
               onChange={() => setShowFinished(!showFinished)}
             />
-            <label className="FinishedSimulatedcheckboxLabel" htmlFor="showSimulados">
+            <label
+              className="FinishedSimulatedcheckboxLabel"
+              htmlFor="showSimulados"
+            >
               Exibir simulados já feitos
             </label>
           </div>
@@ -124,15 +135,19 @@ export default function SimulatedPanel() {
                   <div
                     className="btnRealizedSimulated"
                     key={simulated._id}
-                    onClick={() =>
-                      handleSimulatedClick(
-                        simulated._id,
-                        showFinished ? simulated.mock_exam_id.name : simulated.name,
-                        showFinished
-                          ? simulated.mock_exam_id.duration
-                          : simulated.duration
-                      )
-                    }
+                    onClick={() => {
+                      if (!showFinished) {
+                        handleSimulatedClick(
+                          simulated._id,
+                          showFinished
+                            ? simulated.mock_exam_id.name
+                            : simulated.name,
+                          showFinished
+                            ? simulated.mock_exam_id.duration
+                            : simulated.duration
+                        );
+                      }
+                    }}
                   >
                     <div className="simulatedText">
                       {(showFinished
@@ -148,9 +163,34 @@ export default function SimulatedPanel() {
                       </span>
                       <label className="labelDateAndQuestions">
                         {formatDate(
-                          showFinished ? simulated.finishedAt : simulated.createdAt
+                          showFinished
+                            ? simulated.finishedAt
+                            : simulated.createdAt
                         )}
                       </label>
+                      {showFinished && (
+                        <>
+                          <span className="simulatedDate">
+                            {showFinished && "Acertos:"}
+                          </span>
+                          <label className="labelDateAndQuestions correctAnswered">
+                            {simulated.details.correct}
+                          </label>
+                          <span className="simulatedDate">
+                            {showFinished && "Erros:"}
+                          </span>
+                          <label className="labelDateAndQuestions incorrect">
+                            {simulated.details.incorrect}
+                          </label>
+                          <span className="simulatedDate">
+                            {showFinished && "Sem resposta:"}
+                          </span>
+                          <label className="labelDateAndQuestions unanswered">
+                            {simulated.details.unanswered}
+                          </label>
+                        </>
+                      )}
+
                       {!showFinished && (
                         <>
                           <span className="simulatedQuestions">Duração:</span>
