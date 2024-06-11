@@ -72,7 +72,7 @@ const NavBar = () => {
           {!isMobile && (
             <NavDropdown title="Recursos" id="collasible-nav-dropdown" className="dropdown-text-white">
               <NavDropdown.Item className='disabled' href="/simulados" onClick={closeMenu}>Apostila</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/faq-interno" onClick={closeMenu}>Faq (Interno)</NavDropdown.Item>
+              {/* <NavDropdown.Item as={Link} to="/faq-interno" onClick={closeMenu}>Faq (Interno)</NavDropdown.Item> */}
               {(authRole === "COORDINATORS" || authRole === "TEACHERS" || authRole === "ADMINISTRATOR") &&
                 <NavDropdown.Item as={Link} to="/register-student" onClick={closeMenu}>Aluno</NavDropdown.Item>
               }
