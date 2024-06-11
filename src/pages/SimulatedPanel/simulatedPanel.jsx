@@ -135,17 +135,19 @@ export default function SimulatedPanel() {
                   <div
                     className="btnRealizedSimulated"
                     key={simulated._id}
-                    onClick={() =>
-                      handleSimulatedClick(
-                        simulated._id,
-                        showFinished
-                          ? simulated.mock_exam_id.name
-                          : simulated.name,
-                        showFinished
-                          ? simulated.mock_exam_id.duration
-                          : simulated.duration
-                      )
-                    }
+                    onClick={() => {
+                      if (!showFinished) {
+                        handleSimulatedClick(
+                          simulated._id,
+                          showFinished
+                            ? simulated.mock_exam_id.name
+                            : simulated.name,
+                          showFinished
+                            ? simulated.mock_exam_id.duration
+                            : simulated.duration
+                        );
+                      }
+                    }}
                   >
                     <div className="simulatedText">
                       {(showFinished
