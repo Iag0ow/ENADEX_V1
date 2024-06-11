@@ -596,3 +596,16 @@ export async function getFinishedSimulated() {
   const data = await response.json();
   return await data;
 }
+export async function getResumeAnswers(examId) {
+  const token = localStorage.getItem("token");
+  const config = {
+    method: "GET",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await fetch(`${API}/me/exams/${examId}/answers/resume`, config);
+  const data = await response.json();
+  return await data;
+}

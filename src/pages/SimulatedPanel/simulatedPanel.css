@@ -198,7 +198,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #0fa958;
+  background-color: #0d4688eb;
   color: white;
   border-radius: 10px;
   border: none;
@@ -405,4 +405,16 @@
     margin-top: 40px;
     margin-bottom: 20px;
   }
+}
+.correctAnswered,.incorrect,.unanswered{
+  border: 3px solid;
+}
+.correctAnswered{
+   border-color: #26c126;
+}
+.incorrect{
+   border-color: #FF6347;
+}
+.unanswered{
+   border-color: #B0BEC5;
 }
